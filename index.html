@@ -94,12 +94,16 @@
     </nav>
     <a class="hdr-call" href="tel:0662450378">
       <svg viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke-linecap="square" stroke-linejoin="miter" aria-hidden="true"><path d="M5 3h3.5l1.5 5-2.5 1.5a12.5 12.5 0 0 0 7 7L16 14l5 1.5V19a2 2 0 0 1-2 2A18 18 0 0 1 3 5a2 2 0 0 1 2-2Z"/></svg>
-      <span class="lbl">電話</span><span class="tel">06-6245-0378</span>
+      <span class="lbl">電話する</span><span class="tel">06-6245-0378</span>
     </a>
   </div>
 </header>
 
 <main id="top">
+
+  <nav class="mnav" aria-label="ページ内リンク">
+    <a href="#care">診療案内</a><a href="#hours">診療時間</a><a href="#docs">医師紹介</a><a href="#access">アクセス</a>
+  </nav>
 
   <!-- 1. HERO — station board -->
   <section class="hero">
@@ -123,7 +127,7 @@
               <svg viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke-linecap="square" stroke-linejoin="miter" aria-hidden="true"><path d="M5 3h3.5l1.5 5-2.5 1.5a12.5 12.5 0 0 0 7 7L16 14l5 1.5V19a2 2 0 0 1-2 2A18 18 0 0 1 3 5a2 2 0 0 1 2-2Z"/></svg>
               <span class="tel">06-6245-0378</span>
             </span>
-            <span class="cap">外来直通・タップで発信</span>
+            <span class="cap"><span class="cap-m">外来直通・タップで発信</span><span class="cap-d">外来直通・受付につながります</span></span>
           </a>
           <a class="btn-ghost" href="#hours">診療時間を見る</a>
         </div>
@@ -143,7 +147,7 @@
   <!-- 2. 選ばれる理由 -->
   <section class="why">
     <div class="wrap why-grid">
-      <div class="why-tile"><span class="tick"></span><h3>からだも、こころも。</h3><p>内科と精神科を、ひとつの窓口で。動悸や眠れないなど、からだにあらわれるサインも、同じ院内でご相談いただけます。</p></div>
+      <div class="why-tile"><span class="tick"></span><h3>ひとつの受付で、どちらも。</h3><p>内科も、精神科も、同じ受付・同じ待合です。動悸や眠れないなど、からだにあらわれるサインも、そのままご相談いただけます。</p></div>
       <div class="why-tile"><span class="tick"></span><h3>予約なしで立ち寄れる</h3><p>昼休みや外出の合間に、そのまま。金曜など一部の枠は完全予約制です（受付は17:45まで）。</p></div>
       <div class="why-tile"><span class="tick"></span><h3><span class="nowrap">本町駅</span>から<span class="nowrap num">徒歩3分</span></h3><p>カネセ中央ビル1階。通りに面した、入りやすい入口です。</p></div>
     </div>
@@ -153,7 +157,7 @@
   <section id="care">
     <div class="wrap">
       <div class="sec-head">
-        <div class="kicker"></div>
+        <div class="kicker"><span>Medical Services</span></div>
         <h2 class="sec-title">診療案内</h2>
       </div>
       <div class="care-grid">
@@ -164,7 +168,7 @@
             <li>生活習慣病（高血圧・糖尿病・脂質異常症）</li>
             <li>健診後のフォロー・健康相談</li>
           </ul>
-          <span class="chip chip-note">予約なしで受診できます（曜日により予約制）</span>
+          <span class="chip chip-note">予約なしで受診できます（金曜など一部の枠は予約制）</span>
         </div>
         <div class="care-card c-shin">
           <div class="care-head"><span class="care-glyph">心</span><h3>こころのご相談（精神科）</h3></div>
@@ -173,26 +177,26 @@
             <li>気分が沈む・意欲が出ない</li>
             <li>休職・復職のご相談（診断書に対応）</li>
           </ul>
-          <p class="safety-line">受付も待合も内科と共通です。内科を受診されるのと同じかたちで、ご来院いただけます。</p>
-          <span class="chip chip-note">ご予約をおすすめします</span>
+          <p class="safety-line">受付も待合も、内科と同じです。内科にかかるのと同じように、そのままお越しください。</p>
+          <span class="chip chip-note">お電話でのご予約がスムーズです（内科と同じ番号です）</span>
         </div>
         <div class="care-bridge">同じ院内で、同じ日に。</div>
-        <div class="care-card c-netsu">
+        <div class="care-card c-netsu care-mini">
           <div class="care-head"><span class="care-glyph">熱</span><h3>発熱外来</h3></div>
           <ul>
             <li>発熱・かぜ症状の方の診療</li>
             <li>受診の流れをお電話でご案内します</li>
             <li>院内の動線に配慮して対応します</li>
           </ul>
-          <div class="note-row">来院前に、まずお電話ください</div>
+          <a class="note-row note-call" href="tel:0662450378">来院前に、まずお電話ください　<span class="num">06-6245-0378</span></a>
         </div>
-        <div class="care-card c-bou">
+        <div class="care-card c-bou care-mini">
           <div class="care-head"><span class="care-glyph">防</span><h3>各種予防接種</h3></div>
           <ul>
             <li>インフルエンザなど各種ワクチン</li>
-            <li>ワクチンの種類により在庫の確認が必要です</li>
-            <li>事前にお電話でご相談ください</li>
+            <li>種類により在庫の確認が必要です</li>
           </ul>
+          <a class="note-row note-call" href="tel:0662450378">在庫確認のため、まずお電話ください　<span class="num">06-6245-0378</span></a>
         </div>
       </div>
       <p class="care-scope">症状やご相談内容に応じて、適切な医療機関のご紹介も行います。</p>
@@ -206,14 +210,14 @@
       <source srcset="photos/waiting.webp" type="image/webp">
       <img src="photos/waiting.jpg" width="1067" height="552" alt="なかむらクリニックの待合スペース。白い長椅子と木のテーブル、観葉植物のある明るい空間" loading="lazy">
     </picture>
-    <div class="caption">待合スペース — カネセ中央ビル1階</div>
+    <div class="caption">待合スペース — 昼休みに立ち寄れる、明るい待合です</div>
   </section>
 
   <!-- 5. 診療時間 -->
   <section class="hours-sec" id="hours">
     <div class="wrap">
       <div class="sec-head">
-        <div class="kicker"></div>
+        <div class="kicker"><span>Hours</span></div>
         <h2 class="sec-title">診療時間</h2>
       </div>
       <div class="legend">
@@ -270,7 +274,7 @@
           <ul class="hours-notes">
             <li>受付は17:45まで、診察は18:00までです</li>
             <li>土曜日は第2・第4週のみ、午前は10:00から診療します</li>
-            <li>「●完全予約制」の枠では内科・精神科いずれも診療しています（お電話でご予約ください）</li>
+            <li>「●完全予約制」の枠では内科・精神科いずれも診療しています（<a class="note-tel" href="tel:0662450378">お電話 06-6245-0378</a> でご予約ください）</li>
             <li>予約なしでもそのままご来院いただけます（ご予約の方優先）</li>
             <li>休診：木曜・日曜・祝日</li>
           </ul>
@@ -279,6 +283,7 @@
             <ul>
               <li>保険証（マイナ保険証）をご持参ください</li>
               <li>お薬手帳や健診結果があれば、あわせてお持ちください</li>
+              <li>ご予約のお電話で、症状をくわしくお話しいただく必要はありません。ご希望の日時だけでも結構です</li>
               <li>保険診療です</li>
               <li>こころのご相談も、同じ受付でどうぞ</li>
             </ul>
@@ -291,9 +296,9 @@
               <svg viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke-linecap="square" stroke-linejoin="miter" aria-hidden="true"><path d="M5 3h3.5l1.5 5-2.5 1.5a12.5 12.5 0 0 0 7 7L16 14l5 1.5V19a2 2 0 0 1-2 2A18 18 0 0 1 3 5a2 2 0 0 1 2-2Z"/></svg>
               <span class="tel">06-6245-0378</span>
             </span>
-            <span class="cap">外来直通・タップで発信</span>
+            <span class="cap"><span class="cap-m">外来直通・タップで発信</span><span class="cap-d">外来直通・受付につながります</span></span>
           </a>
-          <p class="sub">受付時間内におかけください</p>
+          <p class="sub">お電話には受付スタッフが出ます。「はじめてです」とお伝えいただくだけで大丈夫です。<br>受付は診療日の17:45まで。</p>
         </div>
       </div>
     </div>
@@ -303,9 +308,10 @@
   <section id="docs">
     <div class="wrap">
       <div class="sec-head">
-        <div class="kicker"></div>
+        <div class="kicker"><span>Doctor</span></div>
         <h2 class="sec-title wood">医師紹介</h2>
       </div>
+      <div class="doc-grid">
       <div class="doc-body">
         <p class="doc-ruby">いしかわ よしひろ</p>
         <p><span class="doc-name">院長　石川 賀弘</span><span class="doc-chip">内科</span></p>
@@ -313,7 +319,12 @@
         <p>お待たせしないこと。そして、診察を急がせないこと。はたらく皆さまが通いやすいクリニックであるために、この2つを大切にしています。</p>
         <p>血圧や血糖の数値のことも、最近眠れないことも、どちらも同じ受付から。気になっていることを、そのままお話しください。</p>
         <div class="doc-sub"><span class="n">精神科 担当医</span><span class="doc-chip" style="margin-left:0">精神科</span></div>
-        <p class="doc-sub-line">精神科の診療は、担当医が丁寧にお話をうかがいます。内科の診察から、同じ院内でそのままご相談いただくこともできます。</p>
+        <p class="doc-sub-line">精神科の診療は、担当医がじっくりお話をうかがいます。話す順番も、うまくまとまっているかも、気にしなくて大丈夫。内科の診察から、同じ院内でそのままご相談いただくこともできます。</p>
+      </div>
+      <aside class="doc-panel" aria-hidden="true">
+        <div class="roundels"><span class="roundel r-nai">内</span><span class="roundel-link"></span><span class="roundel r-shin">心</span></div>
+        <p class="doc-panel-quote">体調の相談のついでに、<br>眠りのことも話せる場所に。</p>
+      </aside>
       </div>
     </div>
   </section>
@@ -322,7 +333,7 @@
   <section class="access-sec" id="access">
     <div class="wrap">
       <div class="sec-head">
-        <div class="kicker"></div>
+        <div class="kicker"><span>Access &amp; Info</span></div>
         <h2 class="sec-title wood">アクセス・医院概要</h2>
       </div>
       <div class="access-grid">
@@ -346,12 +357,26 @@
           <div class="spec-row"><dt>院長</dt><dd>石川 賀弘</dd></div>
           <div class="spec-row"><dt>診療科目</dt><dd>内科・精神科</dd></div>
           <div class="spec-row"><dt>所在地</dt><dd>〒541-0054　大阪府大阪市中央区南本町3丁目1-12<br>カネセ中央ビル1階</dd></div>
-          <div class="spec-row"><dt>電話</dt><dd><a class="tel-big" href="tel:0662450378">06-6245-0378</a>（外来直通）<small>代表電話：06-6245-1568</small></dd></div>
+          <div class="spec-row"><dt>電話</dt><dd><a class="tel-big" href="tel:0662450378">06-6245-0378</a>（外来直通）<small>代表電話（診療のご予約以外）：06-6245-1568</small></dd></div>
           <div class="spec-row"><dt>最寄駅</dt><dd>Osaka Metro 御堂筋線「本町駅」徒歩3分<small>※ 専用駐車場はありません。お車の際は近隣のコインパーキングをご利用ください</small></dd></div>
           <div class="spec-row"><dt>休診日</dt><dd>木曜・日曜・祝日</dd></div>
           <div class="spec-row"><dt>処方</dt><dd>院外処方</dd></div>
         </dl>
       </div>
+    </div>
+  </section>
+
+  <!-- 9.5 closing conversion band -->
+  <section class="close-cta">
+    <div class="wrap">
+      <p class="close-line">からだのことも、こころのことも。<br>まずは、お電話でご相談ください。</p>
+      <a class="btn-call" href="tel:0662450378">
+        <span class="row">
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke-linecap="square" stroke-linejoin="miter" aria-hidden="true"><path d="M5 3h3.5l1.5 5-2.5 1.5a12.5 12.5 0 0 0 7 7L16 14l5 1.5V19a2 2 0 0 1-2 2A18 18 0 0 1 3 5a2 2 0 0 1 2-2Z"/></svg>
+          <span class="tel">06-6245-0378</span>
+        </span>
+        <span class="cap"><span class="cap-m">外来直通・タップで発信</span><span class="cap-d">外来直通・受付につながります</span></span>
+      </a>
     </div>
   </section>
 
