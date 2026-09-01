@@ -1,5 +1,9 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="なかむらクリニック">
-  <rect width="64" height="64" rx="14" fill="#0E6E77"/>
-  <rect x="27" y="14" width="10" height="36" rx="3" fill="#fff"/>
-  <rect x="14" y="27" width="36" height="10" rx="3" fill="#fff"/>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="な">
+  <rect x="0" y="0" width="64" height="64" rx="8" fill="#F0533A"/>
+  <g transform="translate(1,2.5)" stroke="#FFFFFF" stroke-width="5" fill="none" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M12 22 L30 19"/>
+    <path d="M25 11 C22 19 17 28 10 34"/>
+    <path d="M41 12 C43 15 44.5 18 45 21"/>
+    <path d="M41 26 C40 32 39 38 36.5 43 C35 46.5 30.5 48 29.5 44.5 C28.7 41.5 32.5 39.8 36 41.5 C41 44 47 46 52 44.5"/>
+  </g>
 </svg>
