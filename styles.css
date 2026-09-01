@@ -106,7 +106,7 @@ section{padding-block:64px}
 /* ---------- hero ---------- */
 .hero{padding-top:48px;padding-bottom:56px}
 .hero-grid{display:grid;gap:32px}
-/* 本町バッジ: 1. LINE HUES — 内=vermilion, 心=ink, 熱=ink, 防=plant, 駅=vermilion, 院=ink;
+/* 本町バッジ: 1. LINE HUES — 体=vermilion(内科), 心=ink(精神科), 熱=ink, 防=plant, 駅=vermilion, 院=ink;
    no other hue enters a badge. 2. FILLED = walk-in department, OUTLINED double-ring =
    call-first service (mirrors the ◎/● chips — never mix). 3. Vermilion in a circle = line
    color, vermilion in a rounded rect = action; circles are never clickable, buttons are
@@ -114,9 +114,9 @@ section{padding-block:64px}
    32px except the footer pair. 5. Ring is always the disc's own hue; gap always
    transparent; no shadows; no gradients except 50/50 hard-split connectors. */
 .roundels{display:flex;align-items:center}
-.roundel{width:44px;height:44px;border-radius:50%;border-style:solid;border-width:1.5px;padding:3px;background-clip:content-box;position:relative;display:flex;align-items:center;justify-content:center;font-family:var(--font-display);font-weight:700;font-size:19px;color:#fff}
-.roundel.r-nai{background:var(--vermilion);border-color:var(--vermilion)}
-.roundel.r-shin{background:var(--ink);border-color:var(--ink)}
+.roundel{width:44px;height:44px;border-radius:50%;border-style:solid;border-width:1.5px;padding:3.5px;background-clip:content-box;position:relative;display:flex;align-items:center;justify-content:center;font-family:var(--font-display);font-weight:700;font-size:19px;color:#fff}
+.roundel.r-nai{background-color:var(--vermilion);border-color:var(--vermilion)}
+.roundel.r-shin{background-color:var(--ink);border-color:var(--ink)}
 .roundel.r-nai::after{content:"";position:absolute;right:-1.5px;top:50%;transform:translateY(-50%);width:4.5px;height:2px;background:var(--vermilion)}
 .roundel.r-shin::after{content:"";position:absolute;left:-1.5px;top:50%;transform:translateY(-50%);width:4.5px;height:2px;background:var(--ink)}
 .roundel-link{width:28px;height:2px;background:linear-gradient(90deg,var(--vermilion) 0 50%,var(--ink) 50% 100%);margin-inline:6px}
@@ -163,10 +163,10 @@ section{padding-block:64px}
 .care-card.c-netsu::before{background:var(--ink)}
 .care-card.c-bou::before{background:var(--plant)}
 .care-head{display:flex;align-items:center;gap:14px;margin-bottom:14px}
-.care-glyph{width:40px;height:40px;border-radius:50%;border-style:solid;border-width:1.5px;padding:2.5px;background-clip:content-box;position:relative;flex:none;display:flex;align-items:center;justify-content:center;font-family:var(--font-display);font-weight:700;font-size:18px;color:#fff}
+.care-glyph{width:40px;height:40px;border-radius:50%;border-style:solid;border-width:1.5px;padding:3px;background-clip:content-box;position:relative;flex:none;display:flex;align-items:center;justify-content:center;font-family:var(--font-display);font-weight:700;font-size:18px;color:#fff}
 .care-glyph::after{content:"";position:absolute;top:-1.5px;left:50%;transform:translateX(-50%);width:2px;height:4px}
-.c-nai .care-glyph{background:var(--vermilion);border-color:var(--vermilion)}
-.c-shin .care-glyph{background:var(--ink);border-color:var(--ink)}
+.c-nai .care-glyph{background-color:var(--vermilion);border-color:var(--vermilion)}
+.c-shin .care-glyph{background-color:var(--ink);border-color:var(--ink)}
 .c-netsu .care-glyph{background:transparent;border-color:var(--ink);color:var(--ink)}
 .c-bou .care-glyph{background:transparent;border-color:var(--plant);color:var(--plant)}
 .c-netsu .care-glyph::before,.c-bou .care-glyph::before{content:"";position:absolute;inset:2.5px;border:1.5px solid currentColor;border-radius:50%}
@@ -246,12 +246,13 @@ section{padding-block:64px}
 /* ---------- アクセス ---------- */
 .access-sec{background:var(--card);border-top:1px solid var(--line)}
 .access-grid{display:grid;gap:40px}
+.access-side{align-self:start}
 .ph-frame{border:1px solid var(--line-warm);border-radius:var(--radius)}
 .cap-taupe{background:rgba(168,150,132,.12);border-top:1px solid var(--line-warm);padding:8px 12px;font-size:11px;color:var(--ink-2)}
 .route{display:flex;align-items:center;gap:0;margin-top:20px}
 .route .stop{width:24px;height:24px;flex:none;border-radius:50%;border-style:solid;border-width:1px;padding:1.5px;background-clip:content-box;position:relative;display:flex;align-items:center;justify-content:center;color:#fff;font-family:var(--font-display);font-weight:700;font-size:10px}
-.route .st-eki{background:var(--vermilion);border-color:var(--vermilion)}
-.route .st-in{background:var(--ink);border-color:var(--ink)}
+.route .st-eki{background-color:var(--vermilion);border-color:var(--vermilion)}
+.route .st-in{background-color:var(--ink);border-color:var(--ink)}
 .route .leg{flex:1;max-width:64px;height:2px;background:linear-gradient(90deg,var(--vermilion) 0 50%,var(--ink) 50% 100%)}
 .route-labels{display:flex;justify-content:space-between;max-width:280px;font-size:12px;color:var(--ink-2);margin-top:6px}
 .map-btn{margin-top:20px;width:100%}
@@ -261,7 +262,7 @@ section{padding-block:64px}
 .spec-row dd{color:var(--ink)}
 .spec-row .tel-big{font-family:var(--font-body);font-feature-settings:'tnum';font-weight:700;font-size:20px;color:var(--vermilion-text);text-decoration:none;white-space:nowrap}
 .spec-row small{display:block;font-size:12px;color:var(--ink-2)}
-@media (min-width:768px){.access-grid{grid-template-columns:7fr 5fr;gap:48px}}
+@media (min-width:768px){.access-grid{grid-template-columns:5fr 7fr;gap:48px}.access-grid .access-side{order:2}.access-grid .spec-list{order:1}}
 
 /* ---------- 施設基準 ---------- */
 .kijun{padding-block:32px 48px}
@@ -292,9 +293,9 @@ footer{background:var(--ink);color:var(--paper);padding:48px 0 48px}
 @media (max-width:767px){footer{padding-bottom:110px}}
 
 /* ---------- sticky mobile bar ---------- */
-.mbar{position:fixed;left:0;right:0;bottom:0;z-index:110;background:var(--card);border-top:1px solid var(--line);box-shadow:0 -4px 16px rgba(23,23,28,.10);padding:8px;padding-bottom:calc(8px + env(safe-area-inset-bottom));display:none;grid-template-columns:34fr 66fr;gap:8px;transform:translateY(110%);transition:transform .2s}
+.mbar{position:fixed;left:0;right:0;bottom:0;z-index:110;background:var(--card);border-top:1px solid var(--line);box-shadow:0 -4px 16px rgba(23,23,28,.10);padding:8px;padding-bottom:calc(8px + env(safe-area-inset-bottom));display:none;grid-template-columns:1fr 1.7fr;gap:8px;transform:translateY(110%);transition:transform .2s}
 .mbar.show{transform:translateY(0)}
-.mbar .m-map{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;border:1.5px solid var(--ink);border-radius:var(--radius-cta);text-decoration:none;color:var(--ink);min-height:48px;font-family:var(--font-display);font-weight:700;font-size:14px}
+.mbar .m-map{display:flex;align-items:center;justify-content:center;border:1.5px solid var(--ink);border-radius:var(--radius-cta);text-decoration:none;color:var(--ink);min-height:48px;font-family:var(--font-display);font-weight:700;font-size:14px}
 .mbar .m-map small{font-size:11px;font-weight:400;color:var(--ink-2)}
 .mbar .m-map .mrow{display:flex;align-items:center;gap:6px}
 .mbar .m-map svg{width:16px;height:16px;stroke:currentColor}
