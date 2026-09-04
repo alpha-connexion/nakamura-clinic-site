@@ -135,8 +135,10 @@
       <div>
         <div class="hero-photo">
           <picture>
-            <source srcset="photos/entrance.webp" type="image/webp">
-            <img class="ph" src="photos/entrance.jpg" width="1067" height="552" alt="なかむらクリニックの入口。クリーム色の壁に朱色のクリニック名サインと観葉植物" loading="eager" fetchpriority="high">
+            <source media="(min-width:768px)" type="image/webp" sizes="(min-width:1024px) 340px, 32vw" srcset="photos/hero-v-400.webp 400w, photos/hero-v-800.webp 800w">
+            <source media="(min-width:768px)" type="image/jpeg" sizes="(min-width:1024px) 340px, 32vw" srcset="photos/hero-v-400.jpg 400w, photos/hero-v-800.jpg 800w">
+            <source type="image/webp" sizes="100vw" srcset="photos/hero-h-480.webp 480w, photos/hero-h-960.webp 960w, photos/hero-h-1440.webp 1440w">
+            <img class="ph" src="photos/hero-h-960.jpg" width="960" height="640" alt="なかむらクリニックの入口。クリーム色の壁に朱色のクリニック名サインと観葉植物" loading="eager" fetchpriority="high">
           </picture>
           <div class="caption">カネセ中央ビル1階・入口</div>
         </div>
@@ -205,8 +207,9 @@
   <!-- 4. 待合スペース band -->
   <section class="band">
     <picture>
-      <source srcset="photos/waiting.webp" type="image/webp">
-      <img src="photos/waiting.jpg" width="1067" height="552" alt="なかむらクリニックの待合スペース。白い長椅子と木のテーブル、観葉植物のある明るい空間" loading="lazy">
+      <source type="image/webp" sizes="100vw" srcset="photos/band-960.webp 960w, photos/band-1600.webp 1600w, photos/band-2400.webp 2400w">
+      <source type="image/jpeg" sizes="100vw" srcset="photos/band-960.jpg 960w, photos/band-1600.jpg 1600w, photos/band-2400.jpg 2400w">
+      <img src="photos/band-1600.jpg" width="1600" height="900" alt="なかむらクリニックの待合スペース。白い長椅子と木のテーブル、観葉植物のある空間" loading="lazy">
     </picture>
   </section>
 

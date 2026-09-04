@@ -131,7 +131,7 @@ section{padding-block:64px}
 .hero-cta .btn-call{width:100%}
 .hero-photo{position:relative;margin-top:8px}
 .hero-photo .ph{border:1px solid var(--line);border-radius:var(--radius)}
-@media (min-width:768px){.hero-photo .ph{aspect-ratio:3/4;object-fit:cover;object-position:38% center;width:100%}}
+@media (min-width:768px){.hero-photo .ph{aspect-ratio:3/4;object-fit:cover;width:100%}}
 .hero-photo::before{content:"";position:absolute;top:-12px;left:-12px;width:60px;height:60px;border-top:2px solid var(--vermilion);border-left:2px solid var(--vermilion);pointer-events:none}
 .caption{background:var(--card);border-top:1px solid var(--line);padding:8px 12px;font-size:12px;color:var(--ink-2);letter-spacing:.04em}
 @media (min-width:768px){
