@@ -454,6 +454,10 @@ html:active-view-transition .care-lane{transition:none}
 .c-nai .rt .rt-to{fill:var(--ink)}
 .c-shin .rt .rt-from{fill:var(--ink)}
 .c-shin .rt .rt-to{fill:var(--vermilion)}
+/* lane door links: an existing self-recognition item becomes the way into its channel page — text stays ink, only the arrow is orange (text role) */
+.lane-more{color:inherit;text-decoration:none;border-bottom:1px solid var(--line);transition:border-color .12s}
+.lane-more span{color:var(--vermilion-text);font-weight:700;margin-left:6px}
+.lane-more:hover{border-color:var(--ink)}
 /* legend = the same three branches as HTML, beneath the drawing (dash bullets inherit .care-card li) */
 .route-legend{list-style:none;font-size:13px}
 .route-legend li{font-size:13px;line-height:1.8}

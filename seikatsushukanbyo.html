@@ -36,21 +36,40 @@
       "inLanguage": "ja",
       "lastReviewed": "2026-10-01",
       "about": [
-        { "@type": "MedicalCondition", "name": "高血圧症" },
-        { "@type": "MedicalCondition", "name": "2型糖尿病" },
-        { "@type": "MedicalCondition", "name": "脂質異常症" }
+        {
+          "@type": "MedicalCondition",
+          "name": "高血圧症"
+        },
+        {
+          "@type": "MedicalCondition",
+          "name": "2型糖尿病"
+        },
+        {
+          "@type": "MedicalCondition",
+          "name": "脂質異常症"
+        }
       ],
-      "audience": { "@type": "Patient" },
-      "isPartOf": { "@type": "WebSite", "url": "https://nakamura.n-clinics.jp/" },
+      "audience": {
+        "@type": "Patient"
+      },
+      "isPartOf": {
+        "@type": "WebSite",
+        "url": "https://nakamura.n-clinics.jp/"
+      },
       "mainEntityOfPage": "https://nakamura.n-clinics.jp/seikatsushukanbyo.html",
-      "publisher": { "@id": "https://nakamura.n-clinics.jp/#clinic" }
+      "publisher": {
+        "@id": "https://nakamura.n-clinics.jp/#clinic"
+      }
     },
     {
       "@type": "MedicalClinic",
       "@id": "https://nakamura.n-clinics.jp/#clinic",
       "name": "なかむらクリニック",
       "telephone": "+81-6-6245-0378",
-      "medicalSpecialty": ["PrimaryCare", "Psychiatric"],
+      "medicalSpecialty": [
+        "PrimaryCare",
+        "Psychiatric"
+      ],
       "address": {
         "@type": "PostalAddress",
         "postalCode": "541-0054",
@@ -60,26 +79,114 @@
         "addressCountry": "JP"
       },
       "openingHoursSpecification": [
-        { "@type": "OpeningHoursSpecification", "dayOfWeek": ["Monday","Tuesday","Wednesday","Friday"], "opens": "09:00", "closes": "13:00" },
-        { "@type": "OpeningHoursSpecification", "dayOfWeek": ["Monday","Tuesday","Wednesday","Friday"], "opens": "14:00", "closes": "17:45" }
+        {
+          "@type": "OpeningHoursSpecification",
+          "dayOfWeek": [
+            "Monday",
+            "Tuesday",
+            "Wednesday",
+            "Friday"
+          ],
+          "opens": "09:00",
+          "closes": "13:00"
+        },
+        {
+          "@type": "OpeningHoursSpecification",
+          "dayOfWeek": [
+            "Monday",
+            "Tuesday",
+            "Wednesday",
+            "Friday"
+          ],
+          "opens": "14:00",
+          "closes": "17:45"
+        }
       ]
     },
     {
       "@type": "BreadcrumbList",
       "itemListElement": [
-        { "@type": "ListItem", "position": 1, "name": "ホーム", "item": "https://nakamura.n-clinics.jp/" },
-        { "@type": "ListItem", "position": 2, "name": "健康診断のあとの相談・生活習慣病", "item": "https://nakamura.n-clinics.jp/seikatsushukanbyo.html" }
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "ホーム",
+          "item": "https://nakamura.n-clinics.jp/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "健康診断のあとの相談・生活習慣病",
+          "item": "https://nakamura.n-clinics.jp/seikatsushukanbyo.html"
+        }
       ]
     },
     {
       "@type": "FAQPage",
       "mainEntity": [
-        { "@type": "Question", "name": "健康診断の結果を見てもらうだけでも受診できますか。", "acceptedAnswer": { "@type": "Answer", "text": "はい。結果用紙と保険証をお持ちください。診察のうえ、必要な検査や治療をご提案します。" } },
-        { "@type": "Question", "name": "勤務先で受けた健診の結果でも大丈夫ですか。", "acceptedAnswer": { "@type": "Answer", "text": "はい。他の医療機関で受けた健診の結果でも構いません。" } },
-        { "@type": "Question", "name": "血液検査の結果はいつ分かりますか。", "acceptedAnswer": { "@type": "Answer", "text": "検査は院内で行い、結果は次の診察でご説明します。" } },
-        { "@type": "Question", "name": "すでにお薬を飲んでいますが、保険者から特定保健指導の案内が届きました。", "acceptedAnswer": { "@type": "Answer", "text": "高血圧・糖尿病・脂質異常症のお薬を飲んでいる方は、保険者が行う特定保健指導の対象外となります。案内の内容についてはご加入の健康保険にご確認ください。" } },
-        { "@type": "Question", "name": "眠れないことも相談できますか。", "acceptedAnswer": { "@type": "Answer", "text": "内科の診察でも伺います。精神科の診察が必要な場合は、同じ受付でご案内します。" } },
-        { "@type": "Question", "name": "薬だけを受け取ることはできますか。", "acceptedAnswer": { "@type": "Answer", "text": "診察のうえでの処方となります。状態が落ち着いている方には、長めの処方についてご相談いただけます。" } }
+        {
+          "@type": "Question",
+          "name": "健康診断の結果を見てもらうだけでも受診できますか。",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "はい。結果用紙と保険証をお持ちください。診察のうえ、必要な検査や治療をご提案します。"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "勤務先で受けた健診の結果でも大丈夫ですか。",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "はい。他の医療機関で受けた健診の結果でも構いません。"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "血液検査の結果はいつ分かりますか。",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "検査は院内で行い、結果は次の診察でご説明します。"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "すでにお薬を飲んでいますが、保険者から特定保健指導の案内が届きました。",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "高血圧・糖尿病・脂質異常症のお薬を飲んでいる方は、保険者が行う特定保健指導の対象外となります。案内の内容についてはご加入の健康保険にご確認ください。"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "眠れないことも相談できますか。",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "内科の診察でも伺います。精神科の診察が必要な場合は、同じ受付でご案内します。"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "薬だけを受け取ることはできますか。",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "診察のうえでの処方となります。状態が落ち着いている方には、長めの処方についてご相談いただけます。"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "糖尿病の治療のお薬を保険で使えるのは、どのような場合ですか。",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "診察と検査のうえで糖尿病と診断された方が対象です。お薬の種類は、体の状態や合併症の有無に合わせて医師が選びます。"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "痩せることを目的に処方してもらえますか。",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "行っていません。糖尿病の治療に必要な方に確実にお届けするためです。体重のことが気になる方は、生活習慣の見直しや、必要に応じた検査からご相談ください。"
+          }
+        }
       ]
     }
   ]
@@ -211,6 +318,40 @@
     </div>
   </section>
 
+  <!-- 進む道すじ（決定マップ） -->
+  <section class="pg-sec pg-sec-alt" id="michisuji">
+    <div class="wrap">
+      <div class="sec-head">
+        <div class="kicker"><span>Next Steps</span></div>
+        <h2 class="sec-title">健診の結果から、進む道すじをお伝えします。</h2>
+      </div>
+      <ol class="pg-paths">
+        <li><b>いまは生活習慣の見直しから</b>数値の程度によっては、まず食事・運動・睡眠・お酒の見直しから始め、期間を決めて再確認します。</li>
+        <li><b>追加の検査で確かめる</b>そのときだけの変動かどうかを、採血や尿検査で確かめます。</li>
+        <li><b>治療を始める</b>治療が必要と判断した場合は、方針を書面にしてお渡しし、通院のペースを一緒に決めます。</li>
+        <li><b>専門的な治療が必要なとき</b>連携医療機関をご紹介します。紹介状は保険診療で作成します。</li>
+      </ol>
+      <p class="pg-note">診察の中で、ご自身がどれにあたるかをお伝えします。</p>
+    </div>
+  </section>
+
+  <!-- お薬について -->
+  <section class="pg-sec" id="kusuri">
+    <div class="wrap">
+      <div class="sec-head">
+        <div class="kicker"><span>Medication</span></div>
+        <h2 class="sec-title">お薬について。</h2>
+      </div>
+      <div class="pg-body">
+        <p>糖尿病と診断された方には、飲み薬や注射を含めて、体の状態に合わせてお薬を選びます。GLP-1受容体作動薬も、その選択肢のひとつです。</p>
+        <p>高血圧・脂質異常症のお薬も同様に、数値と生活の状況を見ながら、必要な期間を一緒に決めていきます。</p>
+      </div>
+      <div class="pg-policy">
+        <p><b>体重を減らすことだけを目的としたお薬の処方は行っていません。</b><br>糖尿病の治療に必要な方に、確実にお届けするためです。</p>
+      </div>
+    </div>
+  </section>
+
   <!-- 書面の計画 -->
   <section class="pg-sec pg-sec-alt" id="keikaku">
     <div class="wrap">
@@ -296,6 +437,8 @@
         <details class="pg-faq"><summary>勤務先で受けた健診の結果でも大丈夫ですか。</summary><p>はい。他の医療機関で受けた健診の結果でも構いません。</p></details>
         <details class="pg-faq"><summary>血液検査の結果はいつ分かりますか。</summary><p>検査は院内で行い、結果は次の診察でご説明します。</p></details>
         <details class="pg-faq"><summary>すでにお薬を飲んでいますが、保険者から特定保健指導の案内が届きました。</summary><p>高血圧・糖尿病・脂質異常症のお薬を飲んでいる方は、保険者が行う特定保健指導の対象外となります。案内の内容についてはご加入の健康保険にご確認ください。</p></details>
+        <details class="pg-faq"><summary>糖尿病の治療のお薬を保険で使えるのは、どのような場合ですか。</summary><p>診察と検査のうえで糖尿病と診断された方が対象です。お薬の種類は、体の状態や合併症の有無に合わせて医師が選びます。</p></details>
+        <details class="pg-faq"><summary>痩せることを目的に処方してもらえますか。</summary><p>行っていません。糖尿病の治療に必要な方に確実にお届けするためです。体重のことが気になる方は、生活習慣の見直しや、必要に応じた検査からご相談ください。</p></details>
         <details class="pg-faq"><summary>眠れないことも相談できますか。</summary><p>内科の診察でも伺います。精神科の診察が必要な場合は、同じ受付でご案内します。<a href="/hataraku.html">詳しくはこちら</a></p></details>
         <details class="pg-faq"><summary>薬だけを受け取ることはできますか。</summary><p>診察のうえでの処方となります。状態が落ち着いている方には、長めの処方についてご相談いただけます。</p></details>
       </div>

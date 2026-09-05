@@ -69,3 +69,11 @@
 
 .c-nai-glyph{background-color:var(--vermilion) !important;border-color:var(--vermilion) !important}
 .c-shin-glyph{background-color:var(--ink) !important;border-color:var(--ink) !important}
+
+/* BLOCK: .pg-seikatsu — 進む道すじ / お薬について (merged from the GLP-1 playbook; 病名ベース, no product names) */
+.pg-paths{list-style:none;counter-reset:p;display:grid;gap:10px;max-width:760px}
+.pg-paths li{counter-increment:p;background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:14px 16px 14px 50px;position:relative;font-size:14.5px;line-height:1.85;color:var(--ink)}
+.pg-paths li::before{content:counter(p);position:absolute;left:14px;top:15px;width:22px;height:22px;border:1.5px solid var(--ink);border-radius:var(--radius);font-family:var(--font-body);font-feature-settings:'tnum';font-weight:700;font-size:12px;display:flex;align-items:center;justify-content:center}
+.pg-paths b{display:block;font-family:var(--font-display);font-weight:700;font-size:16px;margin-bottom:2px}
+.pg-note{margin-top:14px;font-size:14px;color:var(--ink-2)}
+.pg-policy{max-width:760px;margin-top:20px;border:1px solid var(--line);border-left:4px solid var(--ink);border-radius:var(--radius);background:var(--card);padding:14px 18px;font-size:14.5px;line-height:1.9}
