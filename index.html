@@ -2,6 +2,7 @@
 <html lang="ja">
 <head>
 <meta charset="UTF-8">
+<script>document.documentElement.classList.add('js')</script>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>なかむらクリニック｜本町駅3分の内科・精神科｜大阪市中央区南本町</title>
 <meta name="description" content="御堂筋線「本町駅」徒歩3分の内科・精神科クリニック。かぜ・発熱、高血圧・糖尿病などの生活習慣病、健診後のフォローから、不眠・ストレス・気分の落ち込みなどこころのご相談、休職・復職のご相談まで。予約なしでも受診できます（一部完全予約制）。">
@@ -59,8 +60,8 @@
       ],
       "medicalSpecialty": ["PrimaryCare", "Psychiatric"],
       "availableService": [
-        { "@type": "MedicalProcedure", "name": "内科 外来診療（生活習慣病・かぜ・発熱 など）" },
-        { "@type": "MedicalProcedure", "name": "精神科 外来診療（不眠・ストレス・気分の落ち込み など）" }
+        { "@type": "MedicalProcedure", "name": "内科 外来診療（生活習慣病・健診後フォロー・かぜ・発熱外来）" },
+        { "@type": "MedicalProcedure", "name": "精神科 外来診療（不眠・気分の落ち込み・休職/復職相談）" }
       ],
       "description": "御堂筋線「本町駅」徒歩3分の内科・精神科クリニック。生活習慣病などの一般内科と、不眠・ストレスなどこころのご相談。予約なしでも受診できます（一部完全予約制）。",
       "availableLanguage": "ja",
@@ -149,56 +150,91 @@
   <!-- 2. 選ばれる理由 -->
   <section class="why">
     <div class="wrap why-grid">
-      <div class="why-tile"><span class="tick"></span><h3>ひとつの受付で、どちらも。</h3><p>内科も、精神科も、同じ受付・同じ待合です。動悸や眠れないなど、からだにあらわれるサインも、そのままご相談いただけます。</p></div>
+      <div class="why-tile"><span class="tick"></span><h3>ひとつの受付で、どちらも。</h3><p>内科も、精神科も、同じ受付・同じ待合です。からだにあらわれるサインも、そのままご相談いただけます。</p></div>
       <div class="why-tile"><span class="tick"></span><h3>予約なしで立ち寄れる</h3><p>昼休みや外出の合間に、そのまま。※ 金曜など一部の枠は完全予約制です。</p></div>
       <div class="why-tile"><span class="tick"></span><h3><span class="nowrap">本町駅</span>から<span class="nowrap num">徒歩3分</span></h3><p>カネセ中央ビル1階。通りに面した、入りやすい入口です。</p></div>
     </div>
   </section>
 
-  <!-- 3. 診療案内 -->
+  <!-- 3. 診療案内 — 体×心 lanes: one reception, two doors. Both lanes always in the DOM.
+       No-JS: switch is display:none, lanes stack. Same-day wording stays out of this section until CONFIRM #1. -->
   <section id="care">
     <div class="wrap">
       <div class="sec-head">
         <div class="kicker"><span>Medical Services</span></div>
         <h2 class="sec-title">診療案内</h2>
+        <p class="sec-lead">ひとつの受付から、ふたつの診療科へ。</p>
       </div>
-      <div class="care-grid">
-        <div class="care-card c-nai">
-          <div class="care-head"><span class="care-glyph">体</span><h3>一般内科</h3></div>
-          <ul>
-            <li>かぜなどの体調不良（発熱の方は「発熱外来」へ）</li>
-            <li>生活習慣病（高血圧・糖尿病・脂質異常症）</li>
-            <li>健診後のフォロー・健康相談</li>
-          </ul>
+
+      <div class="care-lanes">
+        <!-- SWITCH: rectangular text tabs (2px radius). The 体/心 roundel below is never the control. -->
+        <div class="care-switch" role="tablist" aria-label="診療科を選ぶ">
+          <a role="tab" id="tab-naika" href="#naika" aria-controls="naika" aria-selected="true" data-lane="nai"><b>内科</b><small>からだのこと</small></a>
+          <a role="tab" id="tab-seishinka" href="#seishinka" aria-controls="seishinka" aria-selected="false" tabindex="-1" data-lane="shin"><b>精神科</b><small>こころのこと</small></a>
         </div>
-        <div class="care-card c-shin">
-          <div class="care-head"><span class="care-glyph">心</span><h3>精神科</h3></div>
-          <ul>
-            <li>眠れない・疲れが取れない</li>
-            <li>気分が沈む・意欲が出ない</li>
-            <li>休職・復職のご相談（診断書に対応）</li>
-          </ul>
-          <p class="safety-line">受付も待合も、内科と同じです。内科にかかるのと同じように、そのままお越しください。</p>
-        </div>
-        <div class="care-bridge">同じ院内で、同じ日に。</div>
-        <div class="care-card c-netsu care-mini">
-          <div class="care-head"><span class="care-glyph">熱</span><h3>発熱外来</h3></div>
-          <ul>
-            <li>発熱・かぜ症状の方の診療</li>
-            <li>受診の流れをお電話でご案内します</li>
-            <li>院内の動線に配慮して対応します</li>
-          </ul>
-          <div class="note-row">来院前に、まずお電話ください</div>
-        </div>
-        <div class="care-card c-bou care-mini">
-          <div class="care-head"><span class="care-glyph">防</span><h3>各種予防接種</h3></div>
-          <ul>
-            <li>インフルエンザなど各種ワクチン</li>
-            <li>種類により在庫の確認が必要です</li>
-          </ul>
-          <div class="note-row">在庫の確認のため、事前にお電話ください</div>
+
+        <div class="care-stage">
+          <!-- LANE 体 (default) -->
+          <article class="care-card care-lane c-nai is-on" id="naika" role="tabpanel" aria-labelledby="tab-naika">
+            <div class="care-head"><span class="care-glyph" aria-hidden="true">体</span><h3>一般内科</h3></div>
+            <p class="lane-promise">健診で気になった数値も、急なかぜも。</p>
+            <div class="lane-body">
+              <div class="lane-main">
+                <h4 class="lane-h">こんなときに</h4>
+                <ul>
+                  <li>健診で「要再検査」「要精密検査」と言われた（血圧・血糖・コレステロール）</li>
+                  <li>高血圧・糖尿病・脂質異常症などの生活習慣病を、続けて診てほしい</li>
+                  <li>のどの痛み・せき・鼻水などのかぜ症状（発熱がある方は下の「発熱外来」へ）</li>
+                  <li>頭痛・胃の痛み・だるさなど、いつもと違う体調</li>
+                  <li>はたらきながら、かかりつけ医をもっておきたい</li>
+                </ul>
+              </div>
+              <div class="lane-aside">
+                <h4 class="lane-h">はじめての日の流れ</h4>
+                <ol class="lane-flow"><li>受付</li><li>問診票</li><li>診察</li><li>お会計・院外処方せん</li></ol>
+                <p class="lane-book">◎の枠は予約なしでどうぞ。<a href="#hours">診療時間を見る</a></p>
+              </div>
+            </div>
+            <!-- 発熱外来 = 内科 triage sub-row. Outlined double-ring 熱 = call-first (badge rule 2). Never shown in the 心 lane. -->
+            <div class="care-sub c-netsu">
+              <span class="care-glyph" aria-hidden="true">熱</span>
+              <div><h4>発熱外来</h4><p>発熱・かぜ症状の方は、来院前にまずお電話ください。院内の動線に配慮してご案内します。</p></div>
+            </div>
+          </article>
+
+          <!-- LANE 心 -->
+          <article class="care-card care-lane c-shin" id="seishinka" role="tabpanel" aria-labelledby="tab-seishinka">
+            <div class="care-head"><span class="care-glyph" aria-hidden="true">心</span><h3>精神科</h3></div>
+            <p class="lane-promise">眠りのこと、気持ちのこと、仕事のこと。まずは話すところから。</p>
+            <div class="lane-body">
+              <div class="lane-main">
+                <h4 class="lane-h">こんなときに</h4>
+                <ul>
+                  <li>寝つけない・夜中に目が覚める日が、何週間も続いている</li>
+                  <li>朝起きるのがつらい、仕事に集中できない、ミスが増えた</li>
+                  <li>気分が沈む、好きだったことに気が向かない</li>
+                  <li>休職・復職のご相談（診断書についてもご相談ください）</li>
+                  <li>「受診するほどかな」と迷っている段階でも</li>
+                </ul>
+              </div>
+              <div class="lane-aside">
+                <p class="safety-line">受付も待合も、内科と同じです。</p>
+                <h4 class="lane-h">はじめての日の流れ</h4>
+                <ol class="lane-flow"><li>受付</li><li>問診票</li><li>診察</li><li>お会計・次回のご案内</li></ol>
+                <!-- GATED (CONFIRM #1). Variant A/B replacement text is in notes. -->
+                <p class="lane-book">受診できる枠は、お電話の際にご案内します。<a href="#hours">診療時間を見る</a></p>
+              </div>
+            </div>
+          </article>
         </div>
       </div>
+
+      <!-- UTILITY: 予防接種 — 自費, no intent signal, one line. 防 = green governance site (1). Not pressable. -->
+      <div class="care-util c-bou">
+        <span class="care-glyph" aria-hidden="true">防</span>
+        <p><b>予防接種</b>インフルエンザなど。種類・在庫の確認のため、事前にお電話ください。</p>
+      </div>
+
       <p class="care-scope">症状やご相談内容に応じて、適切な医療機関のご紹介も行います。</p>
       <p class="online-line">※ オンライン診療にも対応しています。詳しくはお電話でお問い合わせください。</p>
     </div>
@@ -211,6 +247,7 @@
       <source type="image/jpeg" sizes="100vw" srcset="photos/band-960.jpg 960w, photos/band-1600.jpg 1600w, photos/band-2400.jpg 2400w">
       <img src="photos/band-1600.jpg" width="1600" height="900" alt="なかむらクリニックの待合スペース。白い長椅子と木のテーブル、観葉植物のある空間" loading="lazy">
     </picture>
+    <div class="caption">待合スペース　内科・精神科 共通</div>
   </section>
 
   <!-- 5. 診療時間 -->
@@ -274,7 +311,7 @@
           <ul class="hours-notes">
             <li>受付は17:45まで、診察は18:00までです</li>
             <li>土曜日は第2・第4週のみ、午前は10:00から診療します</li>
-            <li>「●完全予約制」の枠では内科・精神科いずれも診療しています（お電話でご予約ください）</li>
+            <li>精神科は担当医の診療日にご案内します。日程はお電話でご確認ください</li>
             <li>予約なしでもそのままご来院いただけます（ご予約の方優先）</li>
             <li>休診：木曜・日曜・祝日</li>
           </ul>
@@ -285,7 +322,8 @@
               <li>保険証（マイナ保険証）をご持参ください</li>
               <li>お薬手帳や健診結果があれば、あわせてお持ちください</li>
               <li>ご予約のお電話で、症状をくわしくお話しいただく必要はありません。ご希望の日時だけでも結構です</li>
-              <li>保険診療です</li>
+              <li>診察は保険診療です（予防接種や診断書などの文書料は保険外です）</li>
+              <li>診断書などの文書は、診察のうえ医師が必要と判断した場合に作成します</li>
               <li>こころのご相談も、同じ受付でどうぞ</li>
             </ul>
           </div>
@@ -320,7 +358,7 @@
         <p>お待たせしないこと。そして、診察を急がせないこと。はたらく皆さまが通いやすいクリニックであるために、この2つを大切にしています。</p>
         <p>血圧や血糖の数値のことも、最近眠れないことも、どちらも同じ受付から。気になっていることを、そのままお話しください。</p>
         <div class="doc-sub"><span class="n">精神科 担当医</span><span class="doc-chip" style="margin-left:0">精神科</span></div>
-        <p class="doc-sub-line">精神科の診療は、担当医がじっくりお話をうかがいます。話す順番も、うまくまとまっているかも、気にしなくて大丈夫。内科の診察から、同じ院内でそのままご相談いただくこともできます。</p>
+        <p class="doc-sub-line">精神科の診療は、担当医がじっくりお話をうかがいます。話す順番も、うまくまとまっているかも、気にしなくて大丈夫。内科の診察で気になったことは、同じ院内で精神科の担当医におつなぎします。</p>
       </div>
       <aside class="doc-panel" aria-hidden="true">
         <div class="roundels"><span class="roundel r-nai">体</span><span class="roundel-link"></span><span class="roundel r-shin">心</span></div>
@@ -458,6 +496,42 @@
       es.forEach(function(e){ bar.classList.toggle('show', !e.isIntersecting); });
     }).observe(hero);
   })();
+// 体×心 lane switch — APG tablist, hash deep links (#naika / #seishinka), View Transitions, reduced-motion aware
+(function(){
+  var sec=document.getElementById('care');if(!sec)return;
+  var tabs=[].slice.call(sec.querySelectorAll('[role="tab"]'));
+  var still=matchMedia('(prefers-reduced-motion: reduce)');
+  function panelOf(t){return document.getElementById(t.getAttribute('aria-controls'));}
+  function apply(tab){
+    tabs.forEach(function(t){
+      var on=t===tab;
+      t.setAttribute('aria-selected',on?'true':'false');t.tabIndex=on?0:-1;
+      panelOf(t).classList.toggle('is-on',on);
+    });
+    sec.dataset.lane=tab.dataset.lane;
+  }
+  function go(tab,focus){
+    var href=tab.getAttribute('href');
+    if(location.hash!==href)history.replaceState(null,'',href);
+    if(tab.getAttribute('aria-selected')!=='true'){
+      (document.startViewTransition&&!still.matches)?document.startViewTransition(function(){apply(tab);}):apply(tab);
+    }
+    if(focus)tab.focus();
+  }
+  function tabFor(hash){for(var i=0;i<tabs.length;i++){if(tabs[i].getAttribute('href')===hash)return tabs[i];}return null;}
+  sec.addEventListener('click',function(e){
+    var t=e.target.closest('[role="tab"]');if(!t)return;
+    e.preventDefault();go(t);
+  });
+  sec.addEventListener('keydown',function(e){
+    var i=tabs.indexOf(e.target);if(i<0)return;
+    var n={ArrowRight:i+1,ArrowLeft:i-1,Home:0,End:tabs.length-1}[e.key];if(n===undefined)return;
+    e.preventDefault();go(tabs[(n+tabs.length)%tabs.length],true);
+  });
+  addEventListener('hashchange',function(){var t=tabFor(location.hash);if(t)go(t);});
+  var t0=tabFor(location.hash);
+  if(t0){apply(t0);sec.scrollIntoView({behavior:'instant',block:'start'});}
+})();
 </script>
 </body>
 </html>

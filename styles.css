@@ -2,7 +2,8 @@
 :root{
   /* ORANGE GOVERNANCE — three non-overlapping roles:
      --vermilion MARK ONLY: wordmark, badges, kicker bar, corner keylines, why-ticks,
-       pull-line rule, is-today rail/glyph, focus ring, theme-color. NEVER behind white
+       pull-line rule, is-today rail/glyph, focus ring, theme-color, lane rail
+       (.care-switch [aria-selected=true]::before). NEVER behind white
        text under 19px bold. NEVER as a digit color.
      --vermilion-action: THE one resting fill for every button and chip (white text 4.6:1 AA).
      --vermilion-press: hover/active of -action only — never at rest.
@@ -10,7 +11,8 @@
        本日 tags, table sup, note-call numbers).
      PHONE-DIGIT INVARIANT: a phone number renders in exactly two states — #FFF inside a
        --vermilion-action fill, or --vermilion-text on light ground; footer digits #FAFAF8
-       on ink. #F0533A never renders a digit. */
+       on ink. #F0533A never renders a digit.
+     LANE-PLATE INVARIANT: a tab never takes --vermilion-action; a tab is a sign, not a call. */
   --vermilion:#F0533A;
   --vermilion-action:#D63C24;
   --vermilion-press:#B92F1A;
@@ -26,7 +28,7 @@
   --taupe:#A89684;
   --wood:#A97C52;
   /* GREEN GOVERNANCE — plant green = 予防 and reassurance surfaces ONLY. Three sanctioned
-     sites: (1) 防 badge + c-bou spine; (2) .safety-line callout; (3) .doc-panel background.
+     sites: (1) 防 badge + .care-util plant spine; (2) .safety-line callout; (3) .doc-panel background.
      FORBIDDEN on: CTAs, links, phone numbers, hours chips, nav, headlines, anything
      pressable. Flat green <=5% of any viewport. Vermilion remains the sole action color. */
   --plant:#2F6B4F;
@@ -112,7 +114,13 @@ section{padding-block:64px}
    color, vermilion in a rounded rect = action; circles are never clickable, buttons are
    never circular. 4. One notch max: solo 12 o'clock, pairs face each other; none under
    32px except the footer pair. 5. Ring is always the disc's own hue; gap always
-   transparent; no shadows; no gradients except 50/50 hard-split connectors. */
+   transparent; no shadows; no gradients except 50/50 hard-split connectors.
+   6. LANE SWITCH (診療案内 only): tabs are text-only rectangles; the 体/心 roundel in the lane head is
+      never the hit target. 体 and 心 are both walk-in departments = both stay FILLED in every state.
+      Double-ring stays reserved for call-first (熱/防).
+   7. LANE HUE: --lane (vermilion|ink) colours exactly three surfaces — tab rail, #care kicker bar,
+      card spine. REJECTED for 診療案内: 3D/room tours, parallax, scroll-driven reveals, auto-cycling
+      tabs, hover-only content, symptom checkers/chat, animated illustrations, blue/dark 心 mode, sound. */
 .roundels{display:flex;align-items:center}
 .roundel{width:44px;height:44px;border-radius:50%;border-style:solid;border-width:1.5px;padding:3.5px;background-clip:content-box;position:relative;display:flex;align-items:center;justify-content:center;font-family:var(--font-display);font-weight:700;font-size:19px;color:#fff}
 .roundel.r-nai{background-color:var(--vermilion);border-color:var(--vermilion)}
@@ -155,13 +163,10 @@ section{padding-block:64px}
 @media (min-width:768px){.why-grid{grid-template-columns:repeat(3,1fr);gap:32px}}
 
 /* ---------- 診療案内 route-line cards ---------- */
-.care-grid{display:grid;gap:24px;max-width:1040px}
 .care-card{position:relative;background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:28px 28px 28px 32px}
 .care-card::before{content:"";position:absolute;left:0;top:0;bottom:0;width:4px}
 .care-card.c-nai::before{background:var(--vermilion)}
 .care-card.c-shin::before{background:var(--ink)}
-.care-card.c-netsu::before{background:var(--ink)}
-.care-card.c-bou::before{background:var(--plant)}
 .care-head{display:flex;align-items:center;gap:14px;margin-bottom:14px}
 .care-glyph{width:40px;height:40px;border-radius:50%;border-style:solid;border-width:1.5px;padding:3px;background-clip:content-box;position:relative;flex:none;display:flex;align-items:center;justify-content:center;font-family:var(--font-display);font-weight:700;font-size:18px;color:#fff}
 .care-glyph::after{content:"";position:absolute;top:-1.5px;left:50%;transform:translateX(-50%);width:2px;height:4px}
@@ -179,16 +184,8 @@ section{padding-block:64px}
 .care-card li{font-size:14px;line-height:1.9;padding-left:16px;position:relative;color:var(--ink)}
 .care-card li::before{content:"";position:absolute;left:2px;top:.85em;width:8px;height:1.5px;background:var(--ink-2)}
 .safety-line{font-size:14px;font-weight:600;color:var(--ink);margin:12px 0 14px;border-left:3px solid var(--plant);background:var(--plant-tint);padding:10px 12px;border-radius:var(--radius)}
-.note-row{border-left:4px solid var(--vermilion-text);background:rgba(240,83,58,.06);border-radius:var(--radius);padding:10px 12px;font-size:13px;font-weight:600;color:var(--ink);margin-bottom:14px}
-.care-bridge{text-align:center;font-size:13px;font-family:var(--font-accent);font-weight:500;color:var(--ink);letter-spacing:.08em;display:flex;align-items:center;gap:16px}
-.care-bridge::before,.care-bridge::after{content:"";flex:1;height:1px;background:var(--line-warm)}
 .care-scope{margin-top:24px;text-align:center;font-size:13px;color:var(--ink-2)}
 .online-line{margin-top:10px;text-align:center;font-size:13px;color:var(--ink-2)}
-@media (min-width:768px){
-  .care-grid{grid-template-columns:1fr 1fr;margin-inline:auto}
-  .care-bridge{grid-column:1/-1;order:3}
-  .care-card.c-nai{order:1}.care-card.c-shin{order:2}.care-card.c-netsu{order:4}.care-card.c-bou{order:5}
-}
 
 /* ---------- waiting-room band ---------- */
 .band{padding:0;border-block:1px solid var(--line);position:relative}
@@ -306,7 +303,7 @@ footer{background:var(--ink);color:var(--paper);padding:48px 0 48px}
 @media (max-width:767px){.mbar{display:grid}}
 @media (max-width:360px){.mbar .m-call{flex-direction:column;gap:0}.mbar .m-call .tel{font-size:13px}}
 
-@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{transition:none!important}}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{transition:none!important}::view-transition-group(*),::view-transition-old(*),::view-transition-new(*){animation:none!important}}
 
 /* ---------- review-pass additions ---------- */
 .chip-note{display:inline-block;font-size:12px;font-weight:600;letter-spacing:.04em;padding:4px 10px;border-radius:var(--radius);background:var(--paper);border:1px solid var(--line);color:var(--ink-2);white-space:nowrap}
@@ -357,13 +354,8 @@ footer{background:var(--ink);color:var(--paper);padding:48px 0 48px}
   section{padding-block:48px}
   .hero{padding-top:40px;padding-bottom:48px}
   .care-card{padding:20px 20px 20px 24px}
-  .care-grid{gap:16px}
   .sec-head{margin-bottom:24px}
   section[id]{scroll-margin-top:64px}
-  .care-mini{padding:16px 16px 16px 20px}
-  .care-mini .care-glyph{width:32px;height:32px;font-size:15px}
-  .care-mini h3{font-size:17px}
-  .care-mini li{font-size:13px}
   .hours-list .chip{font-size:13px;padding:4px 11px}
 }
 @media (max-width:480px){.chip-note{white-space:normal;line-height:1.6;text-align:left}}
@@ -376,3 +368,73 @@ footer{background:var(--ink);color:var(--paper);padding:48px 0 48px}
 /* ---------- closing conversion band (item 10) ---------- */
 .close-cta{background:var(--ink);padding-block:56px;text-align:center}
 .close-cta .close-line{font-family:var(--font-display);font-weight:700;font-size:clamp(20px,2.4vw,26px);line-height:1.8;color:var(--paper);margin-bottom:24px}
+
+/* ---------- 診療案内 体×心 lanes ----------
+   LANE GOVERNANCE — the active lane is ONE token, --lane (vermilion|ink). It colours exactly three
+   surfaces: the selected tab's 3px top rail, #care .kicker::before, and the card spine (already
+   per-card). Never a new hue, tint, photo swap, blue/dark mode, or a roundel fill change.
+   Tabs are rectangles (2px radius), text-only; the plate is hairline/paper; a tab NEVER takes
+   --vermilion-action (a tab is a sign, not a call). The 40px 体/心 roundel stays in the lane head
+   and is never the control. Both lanes always in the DOM; no-JS = switch hidden, lanes stack. */
+#care{--lane:var(--vermilion)}
+#care[data-lane="shin"]{--lane:var(--ink)}
+#care .kicker::before{background:var(--lane);transition:background-color .16s}
+.sec-lead{margin-top:10px;font-family:var(--font-accent);font-weight:500;font-size:15px;letter-spacing:.06em;color:var(--ink)}
+.care-lanes{max-width:1040px}
+
+/* switch (enhanced only) */
+.care-switch{display:none}
+.js .care-switch{position:relative;z-index:1;display:grid;grid-template-columns:1fr 1fr;border:1px solid var(--line);border-bottom:0;border-radius:var(--radius) var(--radius) 0 0;background:var(--paper)}
+.care-switch [role="tab"]{position:relative;display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:56px;padding:8px 12px;text-decoration:none;color:var(--ink-2);font-family:var(--font-display);line-height:1.4;transition:color .12s,background .12s}
+.care-switch [role="tab"]+[role="tab"]{border-left:1px solid var(--line)}
+.care-switch [role="tab"] b{font-size:16px;font-weight:700;letter-spacing:.04em}
+.care-switch [role="tab"] small{font-size:11px;letter-spacing:.06em}
+.care-switch [role="tab"]::before{content:"";position:absolute;left:-1px;right:-1px;top:-1px;height:3px;background:transparent}   /* lane-hue rail */
+.care-switch [role="tab"]:hover{color:var(--ink)}
+.care-switch [role="tab"]:focus-visible{outline-offset:-3px}
+.care-switch [aria-selected="true"]{color:var(--ink);background:var(--card);cursor:default}
+.care-switch [aria-selected="true"]::before{background:var(--lane);view-transition-name:lane-rail}
+.care-switch [aria-selected="true"]::after{content:"";position:absolute;left:0;right:0;bottom:-1px;height:1px;background:var(--card)}   /* fuses tab into the card */
+
+/* stage: both lanes stacked in ONE grid cell → stage height never changes on switch */
+.care-stage{display:grid;gap:16px;container:care-stage / inline-size}
+.js .care-stage{gap:0;view-transition-name:care-stage}
+.js .care-lane{grid-area:1/1;visibility:hidden;opacity:0;transition:opacity .25s ease,visibility 0s linear .25s;border-top-left-radius:0;border-top-right-radius:0}
+.js .care-lane.is-on{visibility:visible;opacity:1;transition:opacity .25s ease,visibility 0s}
+
+/* View Transitions (progressive). VT owns the fade while active; CSS crossfade runs alone elsewhere. */
+::view-transition-old(care-stage),::view-transition-new(care-stage){animation-duration:.25s}
+::view-transition-group(lane-rail){animation-duration:.25s;animation-timing-function:cubic-bezier(.2,0,0,1)}
+html:active-view-transition .care-lane{transition:none}
+
+/* lane internals */
+.care-glyph{font-size:19px}   /* ORANGE floor: white glyph on #F0533A must be >=19px (pre-existing 18px breach) */
+.lane-promise{font-family:var(--font-display);font-weight:500;font-size:16px;line-height:1.7;color:var(--ink);margin-bottom:16px}
+.lane-body{display:grid;gap:14px}
+.care-lane ul{margin-bottom:0}
+.lane-h{font-size:12px;font-weight:700;letter-spacing:.12em;color:var(--steel-text);margin-bottom:6px}
+.lane-flow{list-style:none;display:flex;flex-wrap:wrap;gap:6px 14px;counter-reset:s;font-size:13px;color:var(--ink)}
+.lane-flow li{counter-increment:s;display:inline-flex;align-items:center;gap:6px}
+.lane-flow li::before{content:counter(s);font-family:var(--font-body);font-feature-settings:'tnum';font-weight:700;font-size:11px;width:18px;height:18px;border:1px solid var(--ink);border-radius:var(--radius);display:inline-flex;align-items:center;justify-content:center}
+.lane-book{font-size:13px;color:var(--ink);margin-top:12px}
+.lane-book a{text-decoration:underline;text-underline-offset:3px}
+.lane-aside .safety-line{margin:0 0 14px}
+.care-sub{display:flex;gap:12px;align-items:flex-start;margin-top:18px;padding-top:14px;border-top:1px solid var(--line)}
+.care-sub h4{font-size:15px;line-height:1.5}
+.care-sub p{font-size:13px;line-height:1.8;color:var(--ink)}
+.care-sub .care-glyph,.care-util .care-glyph{width:32px;height:32px;font-size:14px;padding:2px;margin-top:2px}
+.care-sub .care-glyph::before,.care-util .care-glyph::before{inset:2px}
+
+/* utility strip — 予防接種: plant spine (green site 1), nothing pressable */
+.care-util{display:flex;align-items:flex-start;gap:12px;max-width:1040px;margin-top:16px;padding:12px 16px;background:var(--card);border:1px solid var(--line);border-left:4px solid var(--plant);border-radius:var(--radius);font-size:13px;line-height:1.8;color:var(--ink)}
+.care-util b{font-family:var(--font-display);font-weight:700;margin-right:8px}
+
+/* the lone lane keys its interior off its OWN width, not the viewport */
+@container care-stage (min-width:600px){
+  .lane-body{grid-template-columns:minmax(0,1fr) minmax(240px,38%);gap:28px;align-items:start}
+}
+@media (min-width:768px){
+  .care-lanes,.care-util{margin-inline:auto}
+  .js .care-switch{width:min(100%,480px)}          /* folder-tab: strip fuses into the card's top-left */
+  .js .care-lane{border-top-right-radius:var(--radius)}
+}
