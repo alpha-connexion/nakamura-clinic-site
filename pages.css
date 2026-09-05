@@ -1,0 +1,71 @@
+/* =========================================================
+   PAGE-SPECIFIC STYLES — appended per channel page.
+   Each block is scoped to its page's body class (.pg-*).
+   Do not edit styles.css from here; only add to this file.
+   ========================================================= */
+
+/* ---------------------------------------------------------
+   BLOCK: shared .pg-* channel-page components — used by both
+   /hataraku.html (.pg-hataraku) and /seikatsushukanbyo.html
+   (.pg-seikatsu). No new rules needed for .pg-seikatsu: it
+   reuses every class below as-is (crumb, hero, sec, body,
+   doc-table, doc-notes, scope-list, faq-list, updated, mini
+   glyphs). Add new rules only if a future page needs a shape
+   these don't cover — keep selectors generic (.pg-*) so both
+   pages keep benefiting from one source of truth.
+   --------------------------------------------------------- */
+.pg-crumb{padding-top:16px;font-size:12px;color:var(--ink-2)}
+.pg-crumb a{color:var(--ink-2);text-decoration:underline}
+
+.pg-hero{padding-block:40px 32px}
+.pg-hero h1{font-size:clamp(28px,4vw,44px);line-height:1.4;letter-spacing:.01em;color:var(--ink);margin-top:16px;text-wrap:balance}
+.pg-lead{font-family:var(--font-accent);font-weight:500;font-size:clamp(15px,1.8vw,18px);line-height:1.8;color:var(--ink);margin-top:14px;max-width:42em}
+.pg-hide-d{display:none}
+@media (min-width:640px){.pg-hide-d{display:inline}}
+
+.pg-sec{padding-block:48px}
+.pg-sec-alt{background:var(--card)}
+
+.pg-body{font-size:15px;line-height:1.9;color:var(--ink);margin-bottom:12px;max-width:42em}
+.pg-body:last-child{margin-bottom:0}
+
+.pg-check-list{list-style:none;display:grid;gap:8px;margin:16px 0;max-width:32em}
+.pg-check-list li{font-size:14px;line-height:1.7;padding-left:18px;position:relative;color:var(--ink)}
+.pg-check-list li::before{content:"";position:absolute;left:2px;top:.85em;width:8px;height:1.5px;background:var(--ink-2)}
+
+.pg-steps{list-style:none;display:grid;gap:20px;counter-reset:none;max-width:640px}
+.pg-steps li{display:flex;gap:16px;align-items:flex-start}
+.pg-step-n{flex:none;width:32px;height:32px;border-radius:50%;border:1.5px solid var(--ink);display:flex;align-items:center;justify-content:center;font-family:var(--font-display);font-weight:700;font-size:14px;color:var(--ink)}
+.pg-steps h4{font-size:15px;font-weight:700;color:var(--ink);margin-bottom:4px}
+.pg-steps p{font-size:14px;line-height:1.8;color:var(--ink-2)}
+
+.pg-doc-table-wrap{overflow-x:auto;border:1px solid var(--line);border-radius:var(--radius);background:var(--card)}
+.pg-doc-table{width:100%;border-collapse:collapse;min-width:560px}
+.pg-doc-table th,.pg-doc-table td{border-bottom:1px solid var(--line);padding:14px 16px;text-align:left;font-size:14px;vertical-align:top}
+.pg-doc-table thead th{font-family:var(--font-display);font-weight:700;font-size:13px;color:var(--ink);background:var(--paper)}
+.pg-doc-table tbody tr:last-child td{border-bottom:0}
+.pg-doc-table td:first-child{font-weight:600;color:var(--ink);white-space:nowrap;display:flex;align-items:center;gap:8px}
+.pg-mini-glyph{width:26px;height:26px;font-size:12px;padding:2px}
+.pg-tax{display:block;font-size:12px;color:var(--ink-2);font-weight:400}
+.pg-doc-notes{list-style:none;margin-top:16px;display:grid;gap:6px;max-width:42em}
+.pg-doc-notes li{font-size:13px;color:var(--ink-2);padding-left:1.2em;text-indent:-1.2em}
+.pg-doc-notes li::before{content:"・";color:var(--ink-2)}
+.pg-doc-notes a{color:var(--vermilion-text);text-decoration:underline}
+
+.pg-scope-list{list-style:none;display:grid;gap:10px;max-width:42em}
+.pg-scope-list li{font-size:14px;line-height:1.8;color:var(--ink);padding-left:18px;position:relative}
+.pg-scope-list li::before{content:"";position:absolute;left:2px;top:.85em;width:8px;height:1.5px;background:var(--ink-2)}
+
+.pg-faq-list{display:grid;gap:1px;background:var(--line);border:1px solid var(--line);border-radius:var(--radius);overflow:hidden;max-width:760px}
+.pg-faq{background:var(--card);padding:16px 18px}
+.pg-faq summary{cursor:pointer;font-weight:600;font-size:14.5px;color:var(--ink);list-style:none;display:flex;justify-content:space-between;align-items:center;gap:12px}
+.pg-faq summary::-webkit-details-marker{display:none}
+.pg-faq summary::after{content:"+";flex:none;font-size:18px;color:var(--ink-2);font-weight:400}
+.pg-faq[open] summary::after{content:"−"}
+.pg-faq p{font-size:14px;line-height:1.85;color:var(--ink-2);margin-top:10px}
+.pg-faq p a{color:var(--vermilion-text);text-decoration:underline}
+
+.pg-updated{padding-block:16px 32px;text-align:center;font-size:12px;color:var(--ink-2)}
+
+.c-nai-glyph{background-color:var(--vermilion) !important;border-color:var(--vermilion) !important}
+.c-shin-glyph{background-color:var(--ink) !important;border-color:var(--ink) !important}

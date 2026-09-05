@@ -5,7 +5,7 @@
 <script>document.documentElement.classList.add('js')</script>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>なかむらクリニック｜本町駅3分の内科・精神科｜大阪市中央区南本町</title>
-<meta name="description" content="御堂筋線「本町駅」徒歩3分、大阪市中央区南本町の内科・精神科。予約なしでも受診できます（一部完全予約制）。かぜ・発熱や生活習慣病、健診の「要再検査」のご相談から、不眠・ストレス・気分の落ち込み、休職・復職のご相談まで、ひとつの受付でどうぞ。">
+<meta name="description" content="御堂筋線「本町駅」徒歩3分、大阪市中央区南本町の内科・精神科。予約なしでも受診できます（一部完全予約制）。かぜ・発熱や生活習慣病、健診の「要再検査」のご相談から、検査で大きな異常がなかった続く体調、不眠・気分の落ち込みのご相談まで、ひとつの受付でどうぞ。">
 <meta name="robots" content="index,follow,max-image-preview:large">
 <link rel="canonical" href="https://nakamura.n-clinics.jp/">
 <meta name="theme-color" content="#F0533A">
@@ -80,7 +80,8 @@
           "availableService": [
             { "@type": "MedicalProcedure", "name": "生活習慣病の継続治療（高血圧・糖尿病・脂質異常症）" },
             { "@type": "MedicalProcedure", "name": "健診の要再検査・要精密検査のご相談" },
-            { "@type": "MedicalProcedure", "name": "発熱外来（発熱のある方は来院前にお電話）" }
+            { "@type": "MedicalProcedure", "name": "発熱外来（発熱のある方は来院前にお電話）" },
+            { "@type": "MedicalProcedure", "name": "だるさ・動悸・めまい・頭痛など、続く体調のご相談" }
           ]
         },
         {
@@ -193,14 +194,17 @@
     </div>
   </section>
 
-  <!-- 3. 診療案内 — 体×心 lanes: one reception, two doors. Both lanes always in the DOM.
-       No-JS: switch is display:none, lanes stack. Same-day wording stays out of this section until CONFIRM #1. -->
+  <!-- 3. 診療案内 — 体×心 lanes: one reception, two doors, and what happens AFTER the visit.
+       Right column = lane-specific ROUTE STRIP (路線図). State is bound to the lane's OWN class
+       (.c-nai/.c-shin), never #care[data-lane] or --lane (JS-off safety). No view-transition-name
+       on any SVG node. Both strips share one viewBox → identical height. Gated vocabulary
+       stays out of this file entirely until the matching clinic confirmation (see strategy doc). -->
   <section id="care">
     <div class="wrap">
       <div class="sec-head">
         <div class="kicker"><span>Medical Services</span></div>
         <h2 class="sec-title">診療案内</h2>
-        <p class="sec-lead">ひとつの受付から、ふたつの診療科へ。</p>
+        <p class="sec-lead">診察のあとに、どう進むか。</p>
       </div>
 
       <div class="care-lanes">
@@ -214,21 +218,38 @@
           <!-- LANE 体 (default) -->
           <article class="care-card care-lane c-nai is-on" id="naika" role="tabpanel" aria-labelledby="tab-naika">
             <div class="care-head"><span class="care-glyph" aria-hidden="true">体</span><h3>一般内科</h3></div>
-            <p class="lane-promise">健診で気になった数値も、急なかぜも。</p>
+            <p class="lane-promise">健診で気になった数値も、急なかぜも、続く症状も。</p>
             <div class="lane-body">
               <div class="lane-main">
                 <h4 class="lane-h">こんなときに</h4>
                 <ul>
-                  <li>健診で「要再検査」「要精密検査」と言われた（血圧・血糖・コレステロールなど）</li>
+                  <li>健診で「要再検査」「要精密検査」と言われた（血圧・血糖・コレステロール・肝機能など）</li>
                   <li>高血圧・糖尿病・脂質異常症などの生活習慣病を、続けて診てほしい</li>
                   <li>のどの痛み・せき・鼻水などのかぜ症状（発熱がある方は下の「発熱外来」へ）</li>
-                  <li>頭痛・胃の痛み・だるさなど、いつもと違う体調</li>
-                  <li>はたらきながら、かかりつけ医をもっておきたい</li>
+                  <li>胸やけ・胃もたれ・お腹の調子がすぐれない日が続く</li>
+                  <li>だるさ・動悸・めまい・頭痛が続く（検査で大きな異常がなかったときも）</li>
                 </ul>
               </div>
               <div class="lane-aside">
-                <h4 class="lane-h">はじめての日の流れ</h4>
-                <ol class="lane-flow"><li>受付</li><li>問診票</li><li>診察</li><li>お会計・院外処方せん</li></ol>
+                <h4 class="lane-h">診察・検査のあとは</h4>
+                <svg class="rt" viewBox="0 0 240 136" aria-hidden="true" focusable="false">
+                  <circle class="rt-from" cx="28" cy="70" r="7.5"/>
+                  <text class="rt-origin" x="28" y="94" text-anchor="middle">診察・検査</text>
+                  <path d="M35.5 70H70"/>
+                  <path d="M70 26V114"/>
+                  <path d="M70 26H92"/><path class="rt-end" d="M92 19V33"/>
+                  <path d="M70 70H92"/><path class="rt-end" d="M92 63V77"/>
+                  <path d="M70 114H92"/>
+                  <circle class="rt-to" cx="99.5" cy="114" r="7.5"/>
+                  <text x="100" y="26" dy=".35em">治療をつづける</text>
+                  <text x="100" y="70" dy=".35em">連携先へご紹介</text>
+                  <text x="112" y="114" dy=".35em">精神科の担当医へ</text>
+                </svg>
+                <ul class="route-legend">
+                  <li><b>治療をつづける</b>当院で対応できるものは、治療のご相談を始めます。</li>
+                  <li><b>連携先へご紹介</b>精密検査や専門的な治療が必要なときは、症状に応じた医療機関をご紹介します。</li>
+                  <li><b>精神科の担当医へ</b>眠りや気持ちのことは、院内の精神科の担当医へご案内します。</li>
+                </ul>
                 <p class="lane-book">◎の枠は予約なしでどうぞ。<a href="#hours">診療時間を見る</a></p>
               </div>
             </div>
@@ -256,9 +277,26 @@
               </div>
               <div class="lane-aside">
                 <p class="safety-line">受付も待合も、内科と同じです。</p>
-                <h4 class="lane-h">はじめての日の流れ</h4>
-                <ol class="lane-flow"><li>受付</li><li>問診票</li><li>診察</li><li>お会計・次回のご案内</li></ol>
-                <!-- GATED (CONFIRM #1). Variant A/B replacement text is in notes. -->
+                <h4 class="lane-h">お話をうかがったあとは</h4>
+                <svg class="rt" viewBox="0 0 240 136" aria-hidden="true" focusable="false">
+                  <circle class="rt-from" cx="28" cy="70" r="7.5"/>
+                  <text class="rt-origin" x="28" y="94" text-anchor="middle">診察</text>
+                  <path d="M35.5 70H70"/>
+                  <path d="M70 26V114"/>
+                  <path d="M70 26H92"/><path class="rt-end" d="M92 19V33"/>
+                  <path d="M70 70H92"/><path class="rt-end" d="M92 63V77"/>
+                  <path d="M70 114H92"/>
+                  <circle class="rt-to" cx="99.5" cy="114" r="7.5"/>
+                  <text x="100" y="26" dy=".35em">通院をつづける</text>
+                  <text x="100" y="70" dy=".35em">連携先へご紹介</text>
+                  <text x="112" y="114" dy=".35em">からだのことは内科で</text>
+                </svg>
+                <ul class="route-legend">
+                  <li><b>通院をつづける</b>次回のご案内をします。通院のなかで続けてご相談いただけます。</li>
+                  <li><b>連携先へご紹介</b>専門的な治療が必要なときは、症状に応じた医療機関をご紹介します。</li>
+                  <li><b>からだのことは内科で</b>血圧や体重など、からだの面は院内の内科で診ます。</li>
+                </ul>
+                <!-- GATED (CONFIRM #1). Variant A/B replacement text is in care-spec-notes. -->
                 <p class="lane-book">精神科をはじめて受診される方は、まずお電話ください。受診できる枠をご案内します。<a href="#hours">診療時間を見る</a></p>
               </div>
             </div>
@@ -272,7 +310,6 @@
         <p><b>予防接種</b>インフルエンザなど。種類・在庫の確認のため、事前にお電話ください。</p>
       </div>
 
-      <p class="care-scope">精密検査や専門的な治療が必要なときは、症状に応じた医療機関をご紹介します。</p>
       <p class="online-line">※ オンライン診療にも対応しています。詳しくはお電話でお問い合わせください。</p>
     </div>
   </section>
@@ -354,7 +391,7 @@
             <ul>
               <li>予約なしでも受診できます。ご予約の方を優先してご案内します（水曜午後・金曜・土曜午後は完全予約制）</li>
               <li>マイナ保険証（または資格確認書）をご持参ください</li>
-              <li>お薬手帳や健診結果があれば、あわせてお持ちください</li>
+              <li>お薬手帳や、健康診断・ストレスチェックの結果があれば、あわせてお持ちください</li>
               <li>ご予約のお電話で、症状をくわしくお話しいただく必要はありません。ご希望の日時だけでも結構です</li>
               <li>診察は保険診療です（予防接種や診断書などの文書料は保険外です）</li>
               <li>診断書などの文書は、診察のうえ医師が必要と判断した場合に作成します</li>
@@ -392,7 +429,7 @@
         <p>お待たせする時間は、できるだけ短く。診察の時間は、急がせない。はたらく皆さまが通いやすいクリニックであるために、この2つを大切にしています。</p>
         <p>血圧や血糖の数値のことも、眠りや気持ちのことも、分けずにお話しください。どこから診ていくかは、診察室で一緒に整理します。</p>
         <div class="doc-sub"><span class="n">精神科 担当医</span><span class="doc-chip" style="margin-left:0">精神科</span></div>
-        <p class="doc-sub-line">精神科の診療は、担当医がお話をうかがうところから始めます。話す順番も、うまくまとまっているかも、気にしなくて大丈夫です。内科の診察で気になったことは、同じ院内で精神科の担当医におつなぎします。</p>
+        <p class="doc-sub-line">精神科の診療は、担当医がお話をうかがうところから始めます。話す順番も、うまくまとまっているかも、気にしなくて大丈夫です。</p>
       </div>
       <aside class="doc-panel" aria-hidden="true">
         <div class="roundels"><span class="roundel r-nai">体</span><span class="roundel-link"></span><span class="roundel r-shin">心</span></div>
