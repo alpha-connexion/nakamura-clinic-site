@@ -414,7 +414,8 @@ html:active-view-transition .care-lane{transition:none}
 .care-lane ul{margin-bottom:0}
 .lane-h{font-size:12px;font-weight:700;letter-spacing:.12em;color:var(--steel-text);margin-bottom:6px}
 .lane-flow{list-style:none;display:flex;flex-wrap:wrap;gap:6px 14px;counter-reset:s;font-size:13px;color:var(--ink)}
-.lane-flow li{counter-increment:s;display:inline-flex;align-items:center;gap:6px}
+.lane-flow li{counter-increment:s;display:inline-flex;align-items:center;gap:6px;padding-left:0}
+.lane-flow li::before{position:static;background:transparent;top:auto;left:auto}
 .lane-flow li::before{content:counter(s);font-family:var(--font-body);font-feature-settings:'tnum';font-weight:700;font-size:11px;width:18px;height:18px;border:1px solid var(--ink);border-radius:var(--radius);display:inline-flex;align-items:center;justify-content:center}
 .lane-book{font-size:13px;color:var(--ink);margin-top:12px}
 .lane-book a{text-decoration:underline;text-underline-offset:3px}
