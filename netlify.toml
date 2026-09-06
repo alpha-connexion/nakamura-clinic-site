@@ -17,6 +17,16 @@
     Cache-Control = "public, max-age=604800, must-revalidate"
 
 [[headers]]
+  for = "/site.js"
+  [headers.values]
+    Cache-Control = "public, max-age=604800, must-revalidate"
+
+[[headers]]
+  for = "/pages.css"
+  [headers.values]
+    Cache-Control = "public, max-age=604800, must-revalidate"
+
+[[headers]]
   for = "/favicon.svg"
   [headers.values]
     Cache-Control = "public, max-age=1209600"

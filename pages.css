@@ -17,16 +17,100 @@
 .pg-crumb{padding-top:16px;font-size:12px;color:var(--ink-2)}
 .pg-crumb a{color:var(--ink-2);text-decoration:underline}
 
+/* ---------------------------------------------------------
+   BLOCK: .pg-plate — the channel-page sign that replaces the hero.
+   The glyph takes its hue from the plate's own .c-nai/.c-shin via the
+   existing styles.css descendant selectors. The plate carries NO
+   fact-strip, NO call button and NO ghost button — conversion is held
+   by the sticky header button, the mobile bar, .hours-mini's phone
+   line and the closing band.
+   --------------------------------------------------------- */
+.pg-plate{background:var(--paper);border-bottom:1px solid var(--line);padding-block:28px 32px}
+.pg-plate .pg-crumb{padding-top:0}
+.pg-plate .care-glyph{width:40px;height:40px;font-size:19px;margin-top:14px}
+.pg-plate .roundels{margin-top:14px}
+.pg-plate h1{font-family:var(--font-display);font-weight:700;font-size:clamp(28px,4vw,44px);line-height:1.4;letter-spacing:.01em;color:var(--ink);margin-top:12px;font-feature-settings:'palt';text-wrap:balance}
+.pg-acts{list-style:none;display:flex;flex-wrap:wrap;margin-top:24px;border-top:1px solid var(--line)}
+.pg-acts li{flex:1 1 200px;border-bottom:1px solid var(--line)}
+.pg-acts a{display:flex;align-items:center;min-height:48px;padding:10px 4px;font-family:var(--font-display);font-weight:700;font-size:var(--t-sub);color:var(--ink);text-decoration:none}
+@media (min-width:768px){.pg-acts li+li{border-left:1px solid var(--line)}.pg-acts a{padding-inline:16px}}
+
+/* ---------------------------------------------------------
+   BLOCK: .pg-band — the full-bleed breathing band (two fills).
+   CRITICAL: the corner mark sits at left:24px, NOT var(--gutter) — it
+   mirrors .band::before exactly (panel-relative decoration, deliberately
+   unaligned to the text column). The wrapper MUST carry .c-nai or
+   .c-shin (disc and glyph hues bind to it).
+   FILL A — .pg-band--route (seikatsu Ch.2): left = the 4-branch strip,
+   right = the numbered legend.
+   FILL B — .pg-band--hinge (hataraku Ch.3): left = .hinge-mark (体
+   glyph + .roundel-link + 心 glyph with .c-shin-glyph), right = h3 +
+   three .pg-body paragraphs.
+   --------------------------------------------------------- */
+.pg-band{padding:0;background:var(--card);border-block:1px solid var(--line);position:relative}
+.pg-band::before{content:"";position:absolute;top:-12px;left:24px;width:60px;height:60px;border-top:2px solid var(--vermilion);border-left:2px solid var(--vermilion);z-index:1;pointer-events:none}
+.pg-band .wrap{padding-block:40px}
+@media (min-width:768px){.pg-band .wrap{display:grid;gap:48px;align-items:center;padding-block:56px}
+  .pg-band--route .wrap{grid-template-columns:minmax(0,420px) minmax(0,1fr)}
+  .pg-band--hinge .wrap{grid-template-columns:minmax(0,180px) minmax(0,1fr)}}
+.pg-band .rt{max-width:420px;margin:0}
+.hinge-mark{display:flex;align-items:center;gap:0}
+.hinge-mark .care-glyph{width:40px;height:40px;font-size:19px}
+
+/* ---------------------------------------------------------
+   BLOCK: .norikae — the end-of-content hand-off card (channel pages,
+   /hajimete.html, /404.html). The whole row is the link; text stays
+   ink, only the arrow is orange (text role). Nothing round is
+   pressable. On index.html the hand-off is the lighter .nk-line
+   instead, appended under each lane's .route-legend.
+   --------------------------------------------------------- */
+.norikae{max-width:760px;margin:0 auto 28px;background:var(--card);border:1px solid var(--line);border-radius:var(--radius);display:grid}
+.nk-row{display:flex;align-items:center;gap:14px;min-height:64px;padding:14px 18px;text-decoration:none;color:var(--ink);border-bottom:1px solid var(--line)}
+.norikae .nk-row:last-child{border-bottom:0}
+.nk-mark{width:24px;height:2px;flex:none;background:linear-gradient(90deg,var(--vermilion) 0 50%,var(--ink) 50% 100%)}
+.nk-text{flex:1;font-size:var(--t-sub);line-height:1.7;border-bottom:1px solid var(--line);padding-bottom:1px}
+.nk-row:hover .nk-text{border-color:var(--ink)}
+.nk-arrow{color:var(--vermilion-text);font-weight:700;flex:none}
+.nk-line{margin-top:10px;font-size:var(--t-note)}
+.nk-line a{color:var(--ink);text-decoration:none;border-bottom:1px solid var(--steel);padding-bottom:1px}
+.nk-line a span{color:var(--vermilion-text);font-weight:700;margin-left:6px}
+
+/* ---------------------------------------------------------
+   BLOCK: .hours-mini — the hours summary of record on every non-home
+   page. .hm-rule is the fixed string, never paraphrased. The card
+   never grows a table, chips, or a .call-card. Its phone line
+   satisfies the phone-digit invariant (--vermilion-text on light
+   ground). /hajimete.html drops the second .hm-links row (it would
+   link to itself).
+   --------------------------------------------------------- */
+.hours-mini{max-width:760px;margin:0 auto 8px;background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:18px 20px}
+.hours-mini p{font-size:var(--t-sub);line-height:1.9;color:var(--ink)}
+.hm-times{font-weight:600}
+.hm-rule,.hm-off{color:var(--ink-2)}
+.hm-call{margin-top:8px}
+.hm-call .tel-big{font-family:var(--font-body);font-feature-settings:'tnum';font-weight:700;font-size:20px;color:var(--vermilion-text);text-decoration:none;white-space:nowrap}
+.hm-links{margin-top:10px;display:grid;gap:8px;font-size:var(--t-note)}
+.hm-links a{color:var(--ink);text-decoration:none;border-bottom:1px solid var(--steel);padding-bottom:1px;min-height:44px;display:flex;align-items:center}
+.hm-links a span{color:var(--vermilion-text);font-weight:700;margin-left:6px}
+
+/* JP TYPOGRAPHY (design-system corrections) — pretty wraps on flowing body copy; table cells never force horizontal scroll. */
+.pg-body,.pg-faq p,.route-legend li,.pg-scope-list li{text-wrap:pretty}
+.pg-doc-table td{overflow-wrap:anywhere}
+
 .pg-hero{padding-block:40px 32px}
 .pg-hero h1{font-size:clamp(28px,4vw,44px);line-height:1.4;letter-spacing:.01em;color:var(--ink);margin-top:16px;text-wrap:balance}
 .pg-lead{font-family:var(--font-accent);font-weight:500;font-size:clamp(15px,1.8vw,18px);line-height:1.8;color:var(--ink);margin-top:14px;max-width:42em}
-.pg-hide-d{display:none}
-@media (min-width:640px){.pg-hide-d{display:inline}}
+.pg-br-d{display:none}
+@media (min-width:640px){.pg-br-d{display:inline}}
 
-.pg-sec{padding-block:48px}
-.pg-sec-alt{background:var(--card)}
+.pg-sec{padding-block:var(--band)}
+.pg-sub{margin-top:var(--sec)}
+.pg-sec-alt{background:var(--card);border-block:1px solid var(--line)}
+/* note panels inside a channel-page chapter get more room than the 診療案内 lane cards; the 4px spine + 40px 体/心 head stay reserved for those two lanes. */
+.pg-sec .care-card,.pg-sub .care-card{max-width:var(--measure-wide);padding:22px 24px 22px 26px}
+.pg-sec .care-card::before{width:3px}
 
-.pg-body{font-size:15px;line-height:1.9;color:var(--ink);margin-bottom:12px;max-width:42em}
+.pg-body{font-size:var(--t-body);line-height:1.9;color:var(--ink);margin-bottom:12px;max-width:42em}
 .pg-body:last-child{margin-bottom:0}
 
 .pg-check-list{list-style:none;display:grid;gap:8px;margin:16px 0;max-width:32em}
@@ -44,13 +128,28 @@
 .pg-doc-table th,.pg-doc-table td{border-bottom:1px solid var(--line);padding:14px 16px;text-align:left;font-size:14px;vertical-align:top}
 .pg-doc-table thead th{font-family:var(--font-display);font-weight:700;font-size:13px;color:var(--ink);background:var(--paper)}
 .pg-doc-table tbody tr:last-child td{border-bottom:0}
-.pg-doc-table td:first-child{font-weight:600;color:var(--ink);white-space:nowrap;display:flex;align-items:center;gap:8px}
-.pg-mini-glyph{width:26px;height:26px;font-size:12px;padding:2px}
+.pg-doc-table td:first-child{font-weight:600;color:var(--ink);white-space:nowrap;display:table-cell}
+.cell-k{display:inline-flex;align-items:center;gap:8px}
+/* AA FIX (launch blocker) — white glyph on #F0533A must be >=19px (styles.css:410 ORANGE floor). */
+.pg-mini-glyph{width:32px;height:32px;font-size:19px;padding:2px}
+.pg-mini-glyph::after{width:2px;height:4px}
 .pg-tax{display:block;font-size:12px;color:var(--ink-2);font-weight:400}
 .pg-doc-notes{list-style:none;margin-top:16px;display:grid;gap:6px;max-width:42em}
 .pg-doc-notes li{font-size:13px;color:var(--ink-2);padding-left:1.2em;text-indent:-1.2em}
 .pg-doc-notes li::before{content:"・";color:var(--ink-2)}
 .pg-doc-notes a{color:var(--vermilion-text);text-decoration:underline}
+
+/* MOBILE TABLES — stacked rows below 640px, no sideways drag. data-l attributes on every
+   body cell of every .pg-doc-table carry the column label into the ::before content. */
+@media (max-width:639px){
+  .pg-doc-table{min-width:0}
+  .pg-doc-table thead{position:absolute;width:1px;height:1px;clip-path:inset(50%);overflow:hidden}
+  .pg-doc-table tr{display:block;border-bottom:1px solid var(--line);padding:14px 16px}
+  .pg-doc-table tbody tr:last-child{border-bottom:0}
+  .pg-doc-table td{display:block;border:0;padding:0 0 6px}
+  .pg-doc-table td:first-child{font-family:var(--font-display);font-weight:700;font-size:var(--t-h4)}
+  .pg-doc-table td:not(:first-child)::before{content:attr(data-l) "　";color:var(--steel-text);font-weight:700;font-size:var(--t-cap)}
+}
 
 .pg-scope-list{list-style:none;display:grid;gap:10px;max-width:42em}
 .pg-scope-list li{font-size:14px;line-height:1.8;color:var(--ink);padding-left:18px;position:relative}
@@ -58,7 +157,7 @@
 
 .pg-faq-list{display:grid;gap:1px;background:var(--line);border:1px solid var(--line);border-radius:var(--radius);overflow:hidden;max-width:760px}
 .pg-faq{background:var(--card);padding:16px 18px}
-.pg-faq summary{cursor:pointer;font-weight:600;font-size:14.5px;color:var(--ink);list-style:none;display:flex;justify-content:space-between;align-items:center;gap:12px}
+.pg-faq summary{cursor:pointer;font-weight:600;font-size:var(--t-sub);color:var(--ink);list-style:none;display:flex;justify-content:space-between;align-items:center;gap:12px}
 .pg-faq summary::-webkit-details-marker{display:none}
 .pg-faq summary::after{content:"+";flex:none;font-size:18px;color:var(--ink-2);font-weight:400}
 .pg-faq[open] summary::after{content:"−"}
@@ -72,8 +171,26 @@
 
 /* BLOCK: .pg-seikatsu — 進む道すじ / お薬について (merged from the GLP-1 playbook; 病名ベース, no product names) */
 .pg-paths{list-style:none;counter-reset:p;display:grid;gap:10px;max-width:760px}
-.pg-paths li{counter-increment:p;background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:14px 16px 14px 50px;position:relative;font-size:14.5px;line-height:1.85;color:var(--ink)}
+.pg-paths li{counter-increment:p;background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:14px 16px 14px 50px;position:relative;font-size:var(--t-sub);line-height:1.85;color:var(--ink)}
 .pg-paths li::before{content:counter(p);position:absolute;left:14px;top:15px;width:22px;height:22px;border:1.5px solid var(--ink);border-radius:var(--radius);font-family:var(--font-body);font-feature-settings:'tnum';font-weight:700;font-size:12px;display:flex;align-items:center;justify-content:center}
 .pg-paths b{display:block;font-family:var(--font-display);font-weight:700;font-size:16px;margin-bottom:2px}
 .pg-note{margin-top:14px;font-size:14px;color:var(--ink-2)}
-.pg-policy{max-width:760px;margin-top:20px;border:1px solid var(--line);border-left:4px solid var(--ink);border-radius:var(--radius);background:var(--card);padding:14px 18px;font-size:14.5px;line-height:1.9}
+.pg-policy{max-width:760px;margin-top:20px;border:1px solid var(--line);border-left:4px solid var(--ink);border-radius:var(--radius);background:var(--card);padding:14px 18px;font-size:var(--t-sub);line-height:1.9}
+
+/* ---------------------------------------------------------
+   BLOCK: .pg-doc-page — the DOCUMENT template (/shisetsu-kijun.html,
+   /privacy.html). No hero, no plate glyph, no photo, no .kicker, no
+   .pg-sec-alt alternation, no .close-cta, no .norikae, no .mnav, no
+   card fill on tables, no min-width forcing a horizontal scroll.
+   Vermilion appears only in the header brand, the header call button
+   and the footer. This template exists so the next legal notice
+   arrives already designed instead of wearing a marketing hero.
+   --------------------------------------------------------- */
+.pg-doc-page main{background:var(--paper)}
+.pg-doc-head{border-top:1px solid var(--ink);margin-top:8px;padding-top:18px}
+.pg-doc-page h1{font-family:var(--font-display);font-weight:700;font-size:var(--t-h2);color:var(--ink);letter-spacing:.01em}
+.pg-doc-page section{padding-block:var(--sec)}
+.pg-doc-page h2{font-size:var(--t-h3);color:var(--ink);margin-bottom:12px}
+.pg-doc-page .doc-col{max-width:var(--measure);font-size:var(--t-note);line-height:1.9;color:var(--ink-2)}
+.pg-doc-page table{width:100%;border-collapse:collapse;min-width:0}
+.pg-doc-page th,.pg-doc-page td{border-bottom:1px solid var(--line);padding:12px 0;text-align:left;font-size:var(--t-note);vertical-align:top}

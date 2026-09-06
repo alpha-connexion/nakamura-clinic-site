@@ -8,7 +8,7 @@
      --vermilion-action: THE one resting fill for every button and chip (white text 4.6:1 AA).
      --vermilion-press: hover/active of -action only — never at rest.
      --vermilion-text: the only orange rendered AS text/glyph on light bg (tel links,
-       本日 tags, table sup, note-call numbers).
+       本日 tags, table sup, lane-more arrows).
      PHONE-DIGIT INVARIANT: a phone number renders in exactly two states — #FFF inside a
        --vermilion-action fill, or --vermilion-text on light ground; footer digits #FAFAF8
        on ink. #F0533A never renders a digit.
@@ -22,10 +22,8 @@
   --paper:#F6F5F1;
   --card:#FFFFFF;
   --line:#E3E2DD;
-  --line-warm:#E3DED4;
   --steel:#8E939B;
   --steel-text:#6B7077;
-  --taupe:#A89684;
   --wood:#A97C52;
   /* GREEN GOVERNANCE — plant green = 予防 and reassurance surfaces ONLY. Three sanctioned
      sites: (1) 防 badge + .care-util plant spine; (2) .safety-line callout; (3) .doc-panel background.
@@ -41,7 +39,22 @@
   --font-accent:'Shippori Mincho','Hiragino Mincho ProN','Yu Mincho',serif;
   --radius:2px;
   --radius-cta:6px;
+  /* SPACING & TYPE — unify channel pages to the HOME rhythm; do NOT re-token .wrap. */
+  --band:48px;
+  --sec:32px;
+  --head:24px;
+  --t-hero:clamp(32px,4.2vw,54px);
+  --t-h2:clamp(24px,3vw,32px);
+  --t-h3:20px;
+  --t-h4:15px;
+  --t-body:16px;
+  --t-sub:14px;
+  --t-note:13px;
+  --t-cap:12px;
+  --measure:38em;
+  --measure-wide:46em;
 }
+@media (min-width:768px){:root{--band:80px;--sec:40px;--head:32px}}
 *{box-sizing:border-box;margin:0;padding:0}
 html{scroll-behavior:smooth}
 body{font-family:var(--font-body);font-size:16px;line-height:1.9;letter-spacing:.03em;color:var(--ink);background:var(--paper);-webkit-font-smoothing:antialiased;line-break:strict}
@@ -51,6 +64,9 @@ a{color:inherit}
 img{max-width:100%;height:auto;display:block}
 svg{display:block}
 .nowrap{white-space:nowrap}
+.skip{position:absolute;left:-9999px}
+.skip:focus{left:0;top:0;z-index:200;padding:12px 16px;background:var(--ink);color:var(--paper);text-decoration:none;font-weight:700}
+main:focus{outline:none}
 .num{font-family:var(--font-body);font-feature-settings:'tnum';font-weight:700}
 .vh{position:absolute;width:1px;height:1px;clip-path:inset(50%);overflow:hidden;white-space:nowrap}
 section[id]{scroll-margin-top:80px}
@@ -84,6 +100,7 @@ header{position:sticky;top:0;z-index:100;background:var(--card);border-bottom:1p
 nav.main{display:none;align-items:center;gap:22px}
 nav.main a{font-size:14px;font-weight:600;text-decoration:none;color:var(--ink);padding-block:4px;border-bottom:2px solid transparent}
 nav.main a:hover{border-color:var(--vermilion)}
+nav.main a[aria-current="page"]{border-color:var(--vermilion)}
 .hdr-call{display:inline-flex;align-items:center;gap:8px;background:var(--vermilion-action);color:#fff;text-decoration:none;border-radius:var(--radius-cta);min-height:44px;padding:8px 16px;font-weight:700;font-size:14px;transition:background .12s}
 .hdr-call:hover{background:var(--vermilion-press)}
 .hdr-call svg{width:18px;height:18px;stroke:#fff}
@@ -95,13 +112,30 @@ nav.main a:hover{border-color:var(--vermilion)}
 }
 @media (max-width:1023px){.hdr-call .tel{display:none}}
 
+/* ---------- header rank 2 (.hdr-util) — ≥1024px only ---------- */
+.hdr-util{display:none}
+@media (min-width:1024px){
+  .hdr-util{display:block;border-top:1px solid var(--line);background:var(--card)}
+  .hdr-util nav{display:flex;justify-content:flex-end;align-items:center;gap:20px;min-height:34px}
+  .hdr-util a{font-size:var(--t-cap);color:var(--steel-text);text-decoration:none;padding-block:8px}
+  .hdr-util a:hover{color:var(--ink)}
+  section[id]{scroll-margin-top:114px}
+}
+
+/* ---------- .notice — 臨時休診 band (ships commented out in every page's shell) ---------- */
+.notice{background:var(--paper);border-block:1px solid var(--line);border-left:4px solid var(--vermilion)}
+.notice .wrap{padding-block:10px;font-size:var(--t-note);line-height:1.8;color:var(--ink)}
+.notice b{font-family:var(--font-display);font-weight:700;margin-right:8px}
+
 /* ---------- section header pattern ---------- */
 section{padding-block:64px}
 @media (min-width:768px){section{padding-block:80px}}
 .kicker{display:flex;align-items:center;gap:8px;margin-bottom:8px}
 .kicker::before{content:"";width:24px;height:4px;background:var(--vermilion)}
 .kicker span{font-size:11px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--steel-text)}
-.sec-title{font-size:clamp(24px,3vw,32px);color:var(--ink)}
+.sec-title{font-size:clamp(24px,3vw,32px);color:var(--ink);letter-spacing:.01em}
+/* JP TYPOGRAPHY — palt kerning + balanced wraps on JP display copy; pretty wraps on flowing body copy. */
+.sec-title,.pg-plate h1,.close-line,.lane-promise,.pg-lead,.doc-panel-quote,.pull-line{font-feature-settings:'palt';text-wrap:balance}
 .sec-title.wood::after{content:"";display:block;width:48px;height:2px;background:var(--wood);margin-top:8px}
 .sec-head{margin-bottom:32px}
 
@@ -154,10 +188,11 @@ section{padding-block:64px}
   .hero-cta .btn-call{width:auto}
 }
 
+/* レーザーの唯一の置き場 */
 /* ---------- 選ばれる理由 ---------- */
 .why{background:var(--card);border-block:1px solid var(--line)}
 .why-grid{display:grid;gap:24px}
-.why-tile .tick{display:block;width:40px;height:4px;background:linear-gradient(90deg,var(--vermilion) 0 50%,var(--ink) 50% 100%);transform:skewX(-12deg);margin-bottom:12px}
+.why-tile .tick{display:block;width:40px;height:3px;background:linear-gradient(90deg,var(--vermilion) 0 50%,var(--ink) 50% 100%);transform:none;margin-bottom:12px}
 .why-tile h3{font-size:20px;margin-bottom:6px}
 .why-tile p{font-size:14px;color:var(--ink);line-height:1.9}
 @media (min-width:768px){.why-grid{grid-template-columns:repeat(3,1fr);gap:32px}}
@@ -184,7 +219,6 @@ section{padding-block:64px}
 .care-card li{font-size:14px;line-height:1.9;padding-left:16px;position:relative;color:var(--ink)}
 .care-card li::before{content:"";position:absolute;left:2px;top:.85em;width:8px;height:1.5px;background:var(--ink-2)}
 .safety-line{font-size:14px;font-weight:600;color:var(--ink);margin:12px 0 14px;border-left:3px solid var(--plant);background:var(--plant-tint);padding:10px 12px;border-radius:var(--radius)}
-.online-line{margin-top:10px;text-align:center;font-size:13px;color:var(--ink-2)}
 
 /* ---------- waiting-room band ---------- */
 .band{padding:0;border-block:1px solid var(--line);position:relative}
@@ -236,15 +270,13 @@ section{padding-block:64px}
 .pull-line{font-family:var(--font-accent);font-weight:500;font-size:20px;line-height:1.8;color:var(--ink);border-left:4px solid var(--vermilion);padding-left:12px;margin:24px 0}
 .doc-body{max-width:38em}
 .doc-body p{font-size:16px;line-height:2;margin-bottom:14px;color:var(--ink)}
-.doc-sub{display:flex;align-items:baseline;gap:14px;margin-top:28px;padding-top:18px;border-top:1px solid var(--line-warm)}
+.doc-sub{display:flex;align-items:baseline;gap:14px;margin-top:28px;padding-top:18px;border-top:1px solid var(--line)}
 .doc-sub .n{font-family:var(--font-display);font-weight:700;font-size:18px}
 
 /* ---------- アクセス ---------- */
 .access-sec{background:var(--card);border-top:1px solid var(--line)}
 .access-grid{display:grid;gap:40px}
 .access-side{align-self:start}
-.ph-frame{border:1px solid var(--line-warm);border-radius:var(--radius)}
-.cap-taupe{background:rgba(168,150,132,.12);border-top:1px solid var(--line-warm);padding:8px 12px;font-size:11px;color:var(--ink-2)}
 .route{display:flex;align-items:center;gap:0;margin-top:20px}
 .route .stop{width:24px;height:24px;flex:none;border-radius:50%;border-style:solid;border-width:1px;padding:1.5px;background-clip:content-box;position:relative;display:flex;align-items:center;justify-content:center;color:#fff;font-family:var(--font-display);font-weight:700;font-size:10px}
 .route .st-eki{background-color:var(--vermilion);border-color:var(--vermilion)}
@@ -252,13 +284,14 @@ section{padding-block:64px}
 .route .leg{flex:1;max-width:64px;height:2px;background:linear-gradient(90deg,var(--vermilion) 0 50%,var(--ink) 50% 100%)}
 .route-labels{display:flex;justify-content:space-between;max-width:280px;font-size:12px;color:var(--ink-2);margin-top:6px}
 .map-btn{margin-top:20px;width:100%}
-.spec-list{border-top:1px solid var(--line-warm)}
-.spec-row{display:grid;grid-template-columns:96px 1fr;gap:12px;padding:12px 0;border-bottom:1px solid var(--line-warm);font-size:14px}
+.spec-list{border-top:1px solid var(--line)}
+.spec-row{display:grid;grid-template-columns:96px 1fr;gap:12px;padding:12px 0;border-bottom:1px solid var(--line);font-size:14px}
 .spec-row dt{font-weight:700;color:var(--ink)}
 .spec-row dd{color:var(--ink)}
 .spec-row .tel-big{font-family:var(--font-body);font-feature-settings:'tnum';font-weight:700;font-size:20px;color:var(--vermilion-text);text-decoration:none;white-space:nowrap}
 .spec-row small{display:block;font-size:12px;color:var(--ink-2)}
-@media (min-width:768px){.access-grid{grid-template-columns:5fr 7fr;gap:48px}.access-grid .access-side{order:2}.access-grid .spec-list{order:1}}
+@media (min-width:768px){.access-grid{grid-template-columns:7fr 5fr;gap:48px}}
+@media (min-width:1024px){.access-side{position:sticky;top:96px}}
 
 /* ---------- 施設基準 ---------- */
 .kijun{padding-block:32px 48px}
@@ -282,9 +315,12 @@ footer{background:var(--ink);color:var(--paper);padding:48px 0 48px}
 .foot-roundels .roundel-link{background:linear-gradient(90deg,var(--vermilion) 0 50%,var(--paper) 50% 100%)}
 .foot-tel{font-family:var(--font-body);font-feature-settings:'tnum';font-weight:700;font-size:24px;color:var(--paper);text-decoration:none;display:inline-block;margin-bottom:8px}
 .foot-meta{font-size:13px;color:rgba(250,250,248,.7);line-height:2}
-.foot-nav{display:flex;flex-wrap:wrap;gap:18px;margin:18px 0;font-size:13px}
-.foot-nav a{color:var(--paper);text-decoration:none;padding:10px 4px;margin:-10px -4px}
-.foot-nav a:hover{text-decoration:underline}
+.foot-groups{display:grid;gap:22px;margin:22px 0}
+.fg{display:grid;gap:2px}
+.fg-t{font-size:11px;font-weight:700;letter-spacing:.12em;color:var(--steel);margin-bottom:6px}
+.fg a{color:var(--paper);text-decoration:none;font-size:var(--t-note);padding:10px 4px;margin:-10px -4px}
+.fg a:hover{text-decoration:underline}
+@media (min-width:768px){.foot-groups{grid-template-columns:repeat(3,1fr);gap:32px}}
 .foot-copy{font-size:12px;color:var(--steel);border-top:1px solid rgba(250,250,248,.15);padding-top:14px}
 @media (max-width:767px){footer{padding-bottom:110px}}
 
@@ -292,7 +328,6 @@ footer{background:var(--ink);color:var(--paper);padding:48px 0 48px}
 .mbar{position:fixed;left:0;right:0;bottom:0;z-index:110;background:var(--card);border-top:1px solid var(--line);box-shadow:0 -4px 16px rgba(23,23,28,.10);padding:8px;padding-bottom:calc(8px + env(safe-area-inset-bottom));display:none;grid-template-columns:1fr 1.7fr;gap:8px;transform:translateY(110%);transition:transform .2s}
 .mbar.show{transform:translateY(0)}
 .mbar .m-map{display:flex;align-items:center;justify-content:center;border:1.5px solid var(--ink);border-radius:var(--radius-cta);text-decoration:none;color:var(--ink);min-height:48px;font-family:var(--font-display);font-weight:700;font-size:14px}
-.mbar .m-map small{font-size:11px;font-weight:400;color:var(--ink-2)}
 .mbar .m-map .mrow{display:flex;align-items:center;gap:6px}
 .mbar .m-map svg{width:16px;height:16px;stroke:currentColor}
 .mbar .m-call{display:flex;align-items:center;justify-content:center;gap:8px;background:var(--vermilion-action);border-radius:var(--radius-cta);text-decoration:none;color:#fff;min-height:48px;font-weight:700;font-size:15px}
@@ -305,7 +340,6 @@ footer{background:var(--ink);color:var(--paper);padding:48px 0 48px}
 @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{transition:none!important}::view-transition-group(*),::view-transition-old(*),::view-transition-new(*){animation:none!important}}
 
 /* ---------- review-pass additions ---------- */
-.chip-note{display:inline-block;font-size:12px;font-weight:600;letter-spacing:.04em;padding:4px 10px;border-radius:var(--radius);background:var(--paper);border:1px solid var(--line);color:var(--ink-2);white-space:nowrap}
 .hours-times{font-size:14px;font-weight:600;color:var(--ink);margin-bottom:10px}
 .hours-times .num{font-size:1.05em}
 .slot-note{display:block;font-size:11px;font-weight:400;color:var(--steel-text)}
@@ -313,11 +347,12 @@ footer{background:var(--ink);color:var(--paper);padding:48px 0 48px}
 .first-visit{margin-top:24px;background:var(--paper);border:1px solid var(--line);border-radius:var(--radius);padding:20px 24px;max-width:900px}
 .first-visit h3{font-size:15px;margin-bottom:10px}
 .first-visit ul{list-style:none;display:grid;gap:6px}
-.first-visit li{font-size:13.5px;color:var(--ink-2);padding-left:1.2em;text-indent:-1.2em}
+.first-visit li{font-size:var(--t-note);color:var(--ink-2);padding-left:1.2em;text-indent:-1.2em}
 .first-visit li::before{content:"・";color:var(--ink-2)}
-.doc-sub-line{font-size:14.5px;color:var(--ink);line-height:1.9;margin-top:10px;max-width:38em}
+.doc-sub-line{font-size:var(--t-sub);color:var(--ink);line-height:1.9;margin-top:10px;max-width:38em}
 
 /* ---------- doc panel (item 5) ---------- */
+/* レスポンシブ入替（重複ではない）。片方を消すときはもう片方の display を必ず戻す。 */
 .doc-grid{display:grid;gap:40px}
 .doc-panel{display:none}
 @media (min-width:768px){
@@ -333,10 +368,6 @@ footer{background:var(--ink);color:var(--paper);padding:48px 0 48px}
 /* ---------- conversion microcopy (item 6) ---------- */
 .cap-d{display:none}
 @media (min-width:768px){.cap-m{display:none}.cap-d{display:inline}}
-.note-call{display:block;text-decoration:none;cursor:pointer}
-.note-call .num{color:var(--vermilion-text);font-weight:700}
-.note-call:active{background:var(--tint-today)}
-.note-tel{color:var(--vermilion-text);font-weight:700;text-decoration:none}
 
 /* ---------- mobile capture repair (item 2) ---------- */
 .mnav{display:none}
@@ -348,7 +379,8 @@ footer{background:var(--ink);color:var(--paper);padding:48px 0 48px}
   .roundels{order:1}
   .hero h1{order:2}
   .hero .tagline{order:3}
-  .hero-cta{order:4;margin-top:20px}
+  .hero-cta{order:4;margin-top:20px;gap:10px}
+  .hero-cta .btn-ghost{min-height:56px;padding-inline:20px}
   .fact-strip{order:5;margin-top:24px}
   section{padding-block:48px}
   .hero{padding-top:40px;padding-bottom:48px}
@@ -357,7 +389,6 @@ footer{background:var(--ink);color:var(--paper);padding:48px 0 48px}
   section[id]{scroll-margin-top:64px}
   .hours-list .chip{font-size:13px;padding:4px 11px}
 }
-@media (max-width:480px){.chip-note{white-space:normal;line-height:1.6;text-align:left}}
 @media (max-width:400px){
   .hero h1{font-size:30px;letter-spacing:0}
   .hdr-call{padding:8px 12px}
@@ -367,6 +398,19 @@ footer{background:var(--ink);color:var(--paper);padding:48px 0 48px}
 /* ---------- closing conversion band (item 10) ---------- */
 .close-cta{background:var(--ink);padding-block:56px;text-align:center}
 .close-cta .close-line{font-family:var(--font-display);font-weight:700;font-size:clamp(20px,2.4vw,26px);line-height:1.8;color:var(--paper);margin-bottom:24px}
+.close-cta::before{content:"";display:block;width:24px;height:4px;background:var(--vermilion);margin:0 auto 20px}
+.close-next{margin-top:20px;font-size:var(--t-note);color:rgba(250,250,248,.75)}
+.close-next a{color:var(--paper);text-decoration:underline;text-underline-offset:3px}
+.hours-sec .call-card .btn-call .cap{display:none}
+
+/* ---------- .pre-call — 「お電話の前に」, inside the home .call-card only ---------- */
+.pre-call{margin-top:14px;padding-top:14px;border-top:1px solid var(--line)}
+.pre-call h3{font-size:12px;font-weight:700;color:var(--ink-2);margin-bottom:8px}
+.pre-call ul{list-style:none;display:grid;gap:4px;margin-bottom:10px}
+.pre-call li{font-size:12px;line-height:1.7;color:var(--ink-2);padding-left:1.2em;text-indent:-1.2em}
+.pre-call li::before{content:"・";color:var(--ink-2)}
+.pre-call-more{display:flex;align-items:center;min-height:44px;font-size:12px;color:var(--ink);text-decoration:none;border-bottom:1px solid var(--steel);padding-bottom:1px}
+.pre-call-more span{color:var(--vermilion-text);font-weight:700;margin-left:6px}
 
 /* ---------- 診療案内 体×心 lanes ----------
    LANE GOVERNANCE — the active lane is ONE token, --lane (vermilion|ink). It colours exactly three
@@ -378,8 +422,6 @@ footer{background:var(--ink);color:var(--paper);padding:48px 0 48px}
 #care{--lane:var(--vermilion)}
 #care[data-lane="shin"]{--lane:var(--ink)}
 #care .kicker::before{background:var(--lane);transition:background-color .16s}
-.sec-lead{margin-top:10px;font-family:var(--font-accent);font-weight:500;font-size:15px;letter-spacing:.06em;color:var(--ink)}
-.care-lanes{max-width:1040px}
 
 /* switch (enhanced only) */
 .care-switch{display:none}
@@ -422,7 +464,7 @@ html:active-view-transition .care-lane{transition:none}
 .care-sub .care-glyph::before,.care-util .care-glyph::before{inset:2px}
 
 /* utility strip — 予防接種: plant spine (green site 1), nothing pressable */
-.care-util{display:flex;align-items:flex-start;gap:12px;max-width:1040px;margin-top:16px;padding:12px 16px;background:var(--card);border:1px solid var(--line);border-left:4px solid var(--plant);border-radius:var(--radius);font-size:13px;line-height:1.8;color:var(--ink)}
+.care-util{display:flex;align-items:flex-start;gap:12px;margin-top:16px;padding:12px 16px;background:var(--card);border:1px solid var(--line);border-left:4px solid var(--plant);border-radius:var(--radius);font-size:13px;line-height:1.8;color:var(--ink)}
 .care-util b{font-family:var(--font-display);font-weight:700;margin-right:8px}
 
 /* the lone lane keys its interior off its OWN width, not the viewport */
@@ -430,12 +472,23 @@ html:active-view-transition .care-lane{transition:none}
   .lane-body{grid-template-columns:minmax(0,1fr) minmax(240px,38%);gap:28px;align-items:start}
 }
 @media (min-width:768px){
-  .care-lanes,.care-util{margin-inline:auto}
   .js .care-switch{width:min(100%,480px)}          /* folder-tab: strip fuses into the card's top-left */
   .js .care-lane{border-top-right-radius:var(--radius)}
 }
 
 /* ---------- route strip — the 診療案内 right column (Play 1) ----------
+   FROZEN GEOMETRY (both variants — do not redraw ad hoc, copy these coordinates):
+   3-BRANCH (home, both lanes) — viewBox="0 0 240 136": origin circle .rt-from cx28 cy70 r7.5;
+   origin text .rt-origin x28 y94 anchor middle; feeder M35.5 70H70; trunk M70 26V114;
+   stubs M70 26H92 + .rt-end M92 19V33, M70 70H92 + .rt-end M92 63V77; terminus M70 114H92 +
+   circle .rt-to cx99.5 cy114 r7.5; branch numbers as <text> at x=100 dy=".35em" on y=26 and
+   y=70, and x=112 dy=".35em" on y=114.
+   4-BRANCH (.pg-band--route, seikatsu) — viewBox="0 0 240 176": origin .rt-from cx28 cy88 r7.5;
+   origin text x28 y112 anchor middle; feeder M35.5 88H70; trunk M70 26V150; stubs
+   M70 26H92 + .rt-end M92 19V33, M70 62H92 + .rt-end M92 55V69, M70 98H92 + .rt-end M92 91V105;
+   terminus M70 150H92 + circle .rt-to cx99.5 cy150 r7.5; numbers at x=100 on y=26/62/98 and
+   x=112 on y=150. TEXT CONTENT: the origin label only plus ①②③(④) — NO branch names inside
+   the SVG, they live in the .route-legend beneath.
    LANE BINDING: state comes from the lane's OWN class (.c-nai/.c-shin), NOT #care[data-lane]
    and NOT --lane. With JS off data-lane is absent and --lane resolves to vermilion, so a
    token-bound strip would paint the stacked 精神科 card with the 内科 hue.
@@ -448,19 +501,20 @@ html:active-view-transition .care-lane{transition:none}
 .rt path{fill:none;stroke:currentColor;stroke-width:1.5;stroke-linecap:square;stroke-linejoin:miter;vector-effect:non-scaling-stroke}
 .rt .rt-end{stroke:var(--steel);stroke-width:1}
 .rt circle{stroke:none}
-.rt text{font-family:var(--font-body);font-weight:600;font-size:11.5px;letter-spacing:.04em;fill:var(--ink)}
+.rt text{font-family:var(--font-body);font-weight:600;font-size:var(--t-cap);letter-spacing:.04em;fill:var(--ink)}
 .rt .rt-origin{font-weight:400;font-size:11px;fill:var(--ink-2)}
 .c-nai .rt .rt-from{fill:var(--vermilion)}
 .c-nai .rt .rt-to{fill:var(--ink)}
 .c-shin .rt .rt-from{fill:var(--ink)}
 .c-shin .rt .rt-to{fill:var(--vermilion)}
 /* lane door links: an existing self-recognition item becomes the way into its channel page — text stays ink, only the arrow is orange (text role) */
-.lane-more{color:inherit;text-decoration:none;border-bottom:1px solid var(--line);transition:border-color .12s}
+.lane-more{color:inherit;text-decoration:none;border-bottom:1px solid var(--steel);padding-bottom:1px;transition:border-color .12s}
 .lane-more span{color:var(--vermilion-text);font-weight:700;margin-left:6px}
 .lane-more:hover{border-color:var(--ink)}
-/* legend = the same three branches as HTML, beneath the drawing (dash bullets inherit .care-card li) */
-.route-legend{list-style:none;font-size:13px}
-.route-legend li{font-size:13px;line-height:1.8}
+/* legend = the same branches as the SVG, beneath the drawing — the only copy of the branch names.
+   The circled number in <b> is the tie to the drawing; this list is the accessible, complete text
+   while the SVG stays aria-hidden focusable="false". */
+.route-legend{list-style:none;font-size:var(--t-note)}
+.route-legend li{font-size:var(--t-note);line-height:1.8;padding-left:16px;position:relative}
+.route-legend li::before{content:"";position:absolute;left:2px;top:.85em;width:8px;height:1.5px;background:var(--ink-2)}
 .route-legend b{font-family:var(--font-display);font-weight:700;margin-right:6px}
-/* closing note sits below the 予防接種 strip, not on it */
-.care-util + .online-line{margin-top:20px}
