@@ -25,8 +25,8 @@
   --steel:#8E939B;
   --steel-text:#6B7077;
   --wood:#A97C52;
-  /* GREEN GOVERNANCE — plant green = 予防 and reassurance surfaces ONLY. Three sanctioned
-     sites: (1) 防 badge + .care-util plant spine; (2) .safety-line callout; (3) .doc-panel background.
+  /* GREEN GOVERNANCE — plant green = 予防 and reassurance surfaces ONLY. Two sanctioned
+     sites: (1) .safety-line callout; (2) .doc-panel background. (The 防 badge / 予防接種 strip was retired 2026-09-09.)
      FORBIDDEN on: CTAs, links, phone numbers, hours chips, nav, headlines, anything
      pressable. Flat green <=5% of any viewport. Vermilion remains the sole action color. */
   --plant:#2F6B4F;
@@ -142,16 +142,16 @@ section{padding-block:64px}
 /* ---------- hero ---------- */
 .hero{padding-top:48px;padding-bottom:56px}
 .hero-grid{display:grid;gap:32px}
-/* 本町バッジ: 1. LINE HUES — 体=vermilion(内科), 心=ink(精神科), 熱=ink, 防=plant, 駅=vermilion, 院=ink;
-   no other hue enters a badge. 2. FILLED = walk-in department, OUTLINED double-ring =
-   call-first service (mirrors the ◎/● chips — never mix). 3. Vermilion in a circle = line
+/* 本町バッジ: 1. LINE HUES — 体=vermilion(内科), 心=ink(精神科), 熱=ink (filled — walk-in triage lane), 駅=vermilion, 院=ink;
+   no other hue enters a badge. 2. FILLED = walk-in (departments and the 発熱 lane). The outlined
+   double-ring (call-first) grammar was retired with 予防接種 on 2026-09-09. 3. Vermilion in a circle = line
    color, vermilion in a rounded rect = action; circles are never clickable, buttons are
    never circular. 4. One notch max: solo 12 o'clock, pairs face each other; none under
    32px except the footer pair. 5. Ring is always the disc's own hue; gap always
    transparent; no shadows; no gradients except 50/50 hard-split connectors.
    6. LANE SWITCH (診療案内 only): tabs are text-only rectangles; the 体/心 roundel in the lane head is
       never the hit target. 体 and 心 are both walk-in departments = both stay FILLED in every state.
-      Double-ring stays reserved for call-first (熱/防).
+      (Double-ring grammar retired 2026-09-09.)
    7. LANE HUE: --lane (vermilion|ink) colours exactly three surfaces — tab rail, #care kicker bar,
       card spine (route-strip discs are coloured by the card's own .c-nai/.c-shin, never by --lane). REJECTED for 診療案内: 3D/room tours, parallax, scroll-driven reveals, auto-cycling
       tabs, hover-only content, symptom checkers/chat, animated illustrations, blue/dark 心 mode, sound. */
@@ -207,13 +207,10 @@ section{padding-block:64px}
 .care-glyph::after{content:"";position:absolute;top:-1.5px;left:50%;transform:translateX(-50%);width:2px;height:4px}
 .c-nai .care-glyph{background-color:var(--vermilion);border-color:var(--vermilion)}
 .c-shin .care-glyph{background-color:var(--ink);border-color:var(--ink)}
-.c-netsu .care-glyph{background:transparent;border-color:var(--ink);color:var(--ink)}
-.c-bou .care-glyph{background:transparent;border-color:var(--plant);color:var(--plant)}
-.c-netsu .care-glyph::before,.c-bou .care-glyph::before{content:"";position:absolute;inset:2.5px;border:1.5px solid currentColor;border-radius:50%}
+.c-netsu .care-glyph{background-color:var(--ink);border-color:var(--ink)}
 .c-nai .care-glyph::after{background:var(--vermilion)}
 .c-shin .care-glyph::after{background:var(--ink)}
 .c-netsu .care-glyph::after{background:var(--ink)}
-.c-bou .care-glyph::after{background:var(--plant)}
 .care-card h3{font-size:20px}
 .care-card ul{list-style:none;margin-bottom:14px}
 .care-card li{font-size:14px;line-height:1.9;padding-left:16px;position:relative;color:var(--ink)}
@@ -436,6 +433,12 @@ footer{background:var(--ink);color:var(--paper);padding:48px 0 48px}
 .care-switch [aria-selected="true"]{color:var(--ink);background:var(--card);cursor:default}
 .care-switch [aria-selected="true"]::before{background:var(--lane);view-transition-name:lane-rail}
 .care-switch [aria-selected="true"]::after{content:"";position:absolute;left:0;right:0;bottom:-1px;height:1px;background:var(--card)}   /* fuses tab into the card */
+/* 「心療内科・精神科」(8字) must stay on one line inside a half-width tab at 320–400px.
+   Must sit AFTER the base tab rules above (same specificity — source order decides). */
+@media (max-width:400px){
+  .care-switch [role="tab"]{padding:8px 6px}
+  .care-switch [role="tab"] b{font-size:15px;letter-spacing:0;white-space:nowrap}
+}
 
 /* stage: both lanes stacked in ONE grid cell → stage height never changes on switch */
 .care-stage{display:grid;gap:16px;container:care-stage / inline-size}
@@ -460,12 +463,11 @@ html:active-view-transition .care-lane{transition:none}
 .care-sub{display:flex;gap:12px;align-items:flex-start;margin-top:18px;padding-top:14px;border-top:1px solid var(--line)}
 .care-sub h4{font-size:15px;line-height:1.5}
 .care-sub p{font-size:13px;line-height:1.8;color:var(--ink)}
-.care-sub .care-glyph,.care-util .care-glyph{width:32px;height:32px;font-size:14px;padding:2px;margin-top:2px}
-.care-sub .care-glyph::before,.care-util .care-glyph::before{inset:2px}
+.care-sub .care-glyph{width:32px;height:32px;font-size:14px;padding:2px;margin-top:2px}
 
-/* utility strip — 予防接種: plant spine (green site 1), nothing pressable */
-.care-util{display:flex;align-items:flex-start;gap:12px;margin-top:16px;padding:12px 16px;background:var(--card);border:1px solid var(--line);border-left:4px solid var(--plant);border-radius:var(--radius);font-size:13px;line-height:1.8;color:var(--ink)}
-.care-util b{font-family:var(--font-display);font-weight:700;margin-right:8px}
+/* オンライン診療 note — one small, clear line under the lanes (ink spine: information, not action) */
+.care-note{margin-top:16px;padding:12px 16px;background:var(--card);border:1px solid var(--line);border-left:4px solid var(--ink);border-radius:var(--radius);font-size:13px;line-height:1.8;color:var(--ink)}
+.care-note b{font-family:var(--font-display);font-weight:700;margin-right:6px}
 
 /* the lone lane keys its interior off its OWN width, not the viewport */
 @container care-stage (min-width:600px){
