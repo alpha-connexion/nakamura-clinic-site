@@ -1,7 +1,6 @@
 # なかむらクリニック — static site config
-
-[build.processing.html]
-  pretty_urls = true
+# pretty_urls is deliberately OFF: every canonical, sitemap entry and internal link uses the
+# .html form, and Netlify's pretty-URL rewrite would 301 each of them to an extensionless URL.
 
 [[headers]]
   for = "/*"
