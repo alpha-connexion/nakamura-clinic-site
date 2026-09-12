@@ -69,7 +69,7 @@ svg{display:block}
 main:focus{outline:none}
 .num{font-family:var(--font-body);font-feature-settings:'tnum';font-weight:700}
 .vh{position:absolute;width:1px;height:1px;clip-path:inset(50%);overflow:hidden;white-space:nowrap}
-section[id]{scroll-margin-top:80px}
+section[id],#hatsunetsu{scroll-margin-top:80px}
 .wrap{max-width:1200px;margin-inline:auto;padding-inline:24px}
 :focus-visible{outline:2px solid var(--vermilion);outline-offset:2px}
 @media (min-width:768px){.wrap{padding-inline:48px}}
@@ -94,7 +94,7 @@ section[id]{scroll-margin-top:80px}
 /* ---------- header ---------- */
 header{position:sticky;top:0;z-index:100;background:var(--card);border-bottom:1px solid var(--line)}
 .bar{display:flex;align-items:center;justify-content:space-between;gap:16px;min-height:56px;padding-block:6px}
-.brand{text-decoration:none;line-height:1.25}
+.brand{text-decoration:none;line-height:1.25;display:flex;flex-direction:column;justify-content:center;min-height:44px}
 .brand .name{font-family:var(--font-display);font-weight:700;font-size:18px;letter-spacing:.02em;color:var(--vermilion);display:block}
 .brand .sub{display:none;font-size:10px;color:var(--steel-text);letter-spacing:.06em}
 nav.main{display:none;align-items:center;gap:22px}
@@ -119,7 +119,7 @@ nav.main a[aria-current="page"]{border-color:var(--vermilion)}
   .hdr-util nav{display:flex;justify-content:flex-end;align-items:center;gap:20px;min-height:34px}
   .hdr-util a{font-size:var(--t-cap);color:var(--steel-text);text-decoration:none;padding-block:8px}
   .hdr-util a:hover{color:var(--ink)}
-  section[id]{scroll-margin-top:114px}
+  section[id],#hatsunetsu{scroll-margin-top:114px}
 }
 
 /* ---------- .notice — 臨時休診 band (ships commented out in every page's shell) ---------- */
@@ -244,7 +244,7 @@ section{padding-block:64px}
 .day-glyph{width:28px;height:28px;flex:none;border-radius:50%;border:1.5px solid var(--ink);display:flex;align-items:center;justify-content:center;font-family:var(--font-display);font-weight:700;font-size:14px}
 .day-row.is-today{border-left:3px solid var(--vermilion);background:var(--tint-today)}
 .day-row.is-today .day-glyph{border-color:var(--vermilion);color:var(--vermilion)}
-.day-row .today-tag{font-size:11px;font-weight:700;color:var(--vermilion-text)}
+.day-row .today-tag{font-size:var(--t-cap);font-weight:700;color:var(--vermilion-text)}
 .day-row .states{display:flex;flex-wrap:wrap;gap:6px;align-items:center;font-size:13px}
 .day-row .sub{font-size:12px;color:var(--steel-text);width:100%}
 .hours-notes{margin-top:16px;display:grid;gap:6px}
@@ -257,11 +257,16 @@ section{padding-block:64px}
 @media (min-width:768px){
   .hours-table{display:block}
   .hours-list{display:none}
-  .hours-flex{grid-template-columns:1fr 280px;gap:48px}
+}
+/* the table's min-content (~495px) + 280px card + 48px gap only fits from 1024px;
+   768–1023 stacks the card under the table instead of overflowing the viewport */
+@media (min-width:1024px){
+  .hours-flex{grid-template-columns:minmax(0,1fr) 280px;gap:48px}
 }
 
 /* ---------- 医師紹介 ---------- */
 .doc-name{font-family:var(--font-display);font-weight:700;font-size:28px}
+.doc-name-h{margin:0 0 14px;font-weight:inherit;line-height:2}
 .doc-ruby{font-size:12px;color:var(--ink-2);letter-spacing:.1em;margin-bottom:2px}
 .doc-chip{display:inline-block;background:var(--card);border:1.5px solid var(--ink);border-radius:var(--radius);font-size:12px;font-weight:700;padding:3px 10px;margin-left:12px;vertical-align:middle}
 .pull-line{font-family:var(--font-accent);font-weight:500;font-size:20px;line-height:1.8;color:var(--ink);border-left:4px solid var(--vermilion);padding-left:12px;margin:24px 0}
@@ -285,7 +290,7 @@ section{padding-block:64px}
 .spec-row{display:grid;grid-template-columns:96px 1fr;gap:12px;padding:12px 0;border-bottom:1px solid var(--line);font-size:14px}
 .spec-row dt{font-weight:700;color:var(--ink)}
 .spec-row dd{color:var(--ink)}
-.spec-row .tel-big{font-family:var(--font-body);font-feature-settings:'tnum';font-weight:700;font-size:20px;color:var(--vermilion-text);text-decoration:none;white-space:nowrap}
+.spec-row .tel-big{font-family:var(--font-body);font-feature-settings:'tnum';font-weight:700;font-size:20px;color:var(--vermilion-text);text-decoration:none;white-space:nowrap;display:inline-flex;align-items:center;min-height:44px}
 .spec-row small{display:block;font-size:12px;color:var(--ink-2)}
 @media (min-width:768px){.access-grid{grid-template-columns:7fr 5fr;gap:48px}}
 @media (min-width:1024px){.access-side{position:sticky;top:96px}}
@@ -334,13 +339,35 @@ footer{background:var(--ink);color:var(--paper);padding:48px 0 48px}
 @media (max-width:767px){.mbar{display:grid}}
 @media (max-width:360px){.mbar .m-call{flex-direction:column;gap:0}.mbar .m-call .tel{font-size:13px}}
 
+/* ---------- MOTION — what may move, and what must never ----------
+   TABOO, do not animate:
+   1. svg.rt — no draw-on, no scroll-tracing, no disc pulse. A 路線図 is a factual diagram;
+      animating it turns it into an infographic. The geometry is frozen.
+   2. .roundel / .care-glyph / .foot-roundels / .nk-mark / .why-tile .tick — the mark family.
+      No pulse, spin, hover-grow, staggered entrance. These are a logo; logos do not move.
+   3. .hero-photo .ph and .band img — no Ken Burns, no parallax, no zoom-on-hover.
+   4. .close-cta .btn-call and .mbar .m-call — no attention pulse, shimmer or arrow nudge.
+   5. No scroll-reveal anywhere (opacity:0 + IntersectionObserver on section, .why-tile,
+      .pg-sec, .pg-steps li). A failed observer leaves a blank page, which breaks the rule
+      that every page must be fully readable with JS off.
+   6. CAVEAT: the guard below is *{transition:none!important}, and * does NOT match
+      pseudo-elements. Any transition on ::before / ::after / ::details-content must carry its
+      own @media (prefers-reduced-motion:no-preference) wrapper or an explicit reduce override.
+   PERMITTED, in full: .btn-call / .btn-ghost / .hdr-call background .12s; .care-switch
+   [role=tab] colour+background .12s; #care .kicker::before background-color .16s; .care-lane
+   opacity .25s plus the lane View Transitions; .lane-more text-decoration-color .12s; .nk-text
+   border-color .12s; .mbar transform .2s — already correct, do not lengthen, do not bounce.
+   Nothing else. A <details> open animation was considered and rejected: it needs JS or
+   interpolate-size/::details-content, which iOS Safari does not support, so it would ease on
+   some phones and snap on others — and the +/− swap already reports the state. */
 @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{transition:none!important}::view-transition-group(*),::view-transition-old(*),::view-transition-new(*){animation:none!important}}
 
 /* ---------- review-pass additions ---------- */
+.pg-updated{padding-block:16px 32px;text-align:center;font-size:var(--t-cap);color:var(--ink-2)}
 .hours-times{font-size:14px;font-weight:600;color:var(--ink);margin-bottom:10px}
 .hours-times .num{font-size:1.05em}
 .slot-note{display:block;font-size:11px;font-weight:400;color:var(--steel-text)}
-.th-tag{display:block;font-size:10px;color:var(--vermilion-text);font-weight:700;letter-spacing:.04em}
+.th-tag{display:block;font-size:var(--t-cap);color:var(--vermilion-text);font-weight:700;letter-spacing:.04em}
 .first-visit{margin-top:24px;background:var(--paper);border:1px solid var(--line);border-radius:var(--radius);padding:20px 24px;max-width:900px}
 .first-visit h3{font-size:15px;margin-bottom:10px}
 .first-visit ul{list-style:none;display:grid;gap:6px}
@@ -370,7 +397,7 @@ footer{background:var(--ink);color:var(--paper);padding:48px 0 48px}
 .mnav{display:none}
 @media (max-width:767px){
   .mnav{display:flex;background:var(--card);border-bottom:1px solid var(--line)}
-  .mnav a{flex:1;display:flex;align-items:center;justify-content:center;min-height:44px;padding:10px 2px;font-size:13px;font-weight:600;letter-spacing:.02em;color:var(--ink);text-decoration:none;border-right:1px solid var(--line)}
+  .mnav a{flex:1;display:flex;align-items:center;justify-content:center;min-height:44px;padding:10px 2px;font-size:var(--t-cap);font-weight:600;letter-spacing:0;line-height:1.35;text-align:center;color:var(--ink);text-decoration:none;border-right:1px solid var(--line)}
   .mnav a:last-child{border-right:none}
   .hero-grid > div:first-child{display:flex;flex-direction:column}
   .roundels{order:1}
@@ -383,12 +410,12 @@ footer{background:var(--ink);color:var(--paper);padding:48px 0 48px}
   .hero{padding-top:40px;padding-bottom:48px}
   .care-card{padding:20px 20px 20px 24px}
   .sec-head{margin-bottom:24px}
-  section[id]{scroll-margin-top:64px}
+  section[id],#hatsunetsu{scroll-margin-top:64px}
   .hours-list .chip{font-size:13px;padding:4px 11px}
 }
 @media (max-width:400px){
   .hero h1{font-size:30px;letter-spacing:0}
-  .hdr-call{padding:8px 12px}
+  .hdr-call{padding:8px 13px}
   .hdr-call .lbl{display:none}
 }
 
@@ -509,10 +536,12 @@ html:active-view-transition .care-lane{transition:none}
 .c-nai .rt .rt-to{fill:var(--ink)}
 .c-shin .rt .rt-from{fill:var(--ink)}
 .c-shin .rt .rt-to{fill:var(--vermilion)}
-/* lane door links: an existing self-recognition item becomes the way into its channel page — text stays ink, only the arrow is orange (text role) */
-.lane-more{color:inherit;text-decoration:none;border-bottom:1px solid var(--steel);padding-bottom:1px;transition:border-color .12s}
+/* lane door links: an existing self-recognition item becomes the way into its channel page — text stays ink, only the arrow is orange (text role).
+   text-decoration, NOT border-bottom: this link wraps to 3 line boxes at 375px and a border paints a full grey rule under each, reading as three table rules.
+   The --steel hue is preserved via text-decoration-color. The block/flex link rows (.nk-text, .hm-links a, .pg-acts li) keep border-bottom — they never wrap. */
+.lane-more{color:inherit;text-decoration:underline;text-decoration-color:var(--steel);text-decoration-thickness:1px;text-underline-offset:4px;transition:text-decoration-color .12s}
 .lane-more span{color:var(--vermilion-text);font-weight:700;margin-left:6px}
-.lane-more:hover{border-color:var(--ink)}
+.lane-more:hover{text-decoration-color:var(--ink)}
 /* legend = the same branches as the SVG, beneath the drawing — the only copy of the branch names.
    The circled number in <b> is the tie to the drawing; this list is the accessible, complete text
    while the SVG stays aria-hidden focusable="false". */
@@ -520,3 +549,219 @@ html:active-view-transition .care-lane{transition:none}
 .route-legend li{font-size:var(--t-note);line-height:1.8;padding-left:16px;position:relative}
 .route-legend li::before{content:"";position:absolute;left:2px;top:.85em;width:8px;height:1.5px;background:var(--ink-2)}
 .route-legend b{font-family:var(--font-display);font-weight:700;margin-right:6px}
+@media (max-width:639px){
+  .route-legend li{line-height:1.75;margin-bottom:12px}
+  .route-legend li:last-child{margin-bottom:0}
+  .route-legend b{display:block;margin-right:0;margin-bottom:2px}
+}
+
+/* =========================================================================
+   MOTION — 「落ち着く」/ SETTLE.  APPEND TO styles.css AS THE LAST BLOCK.
+   The page is a printed spread that happens to scroll: it is already set when
+   you arrive, and motion only lets a block come to rest and lets a mark draw
+   itself. Three primitives, one easing, one distance.
+     SETTLE  fade + 8px rise (6px on phones)      420ms
+     RULE    a mark draws itself, scaleX(0→1)     520ms, +80ms after its block
+     FEEDBACK hover / focus-visible               200ms
+   WHAT MOVES IS AN ATTRIBUTE, NOT A SELECTOR LIST. Only [data-reveal] and
+   [data-reveal-mark], authored in the HTML, are ever hidden — one list, in one
+   place, so the CSS and the JS can never drift apart (they did in the review
+   drafts). The attributes exist at parse time, so nothing is ever visible-then-
+   hidden; and nothing inside #care, no .rt route strip, no .hero/.pg-plate, no
+   .hours-table/.hours-list/.spec-list/.hours-mini, no .btn-call and no element
+   containing a tel: link ever carries one. INVARIANT, greppable: a reveal
+   target never contains a phone number and never sits inside 診療案内
+   (styles.css:156 lists scroll-driven reveals among the things REJECTED there).
+   FOUR FAILURE MODES, ONE OUTCOME — the finished page:
+     JS off        → html.js never set, every rule below is inert.
+     site.js dead  → --rv-fail keyframes reveal everything at 2.4s; site.js
+                     cancels them by setting html.rv-go once it is wired.
+     reduced motion→ the three --rv-* start values ARE the end values, so the
+                     existing *{transition:none!important} cannot strand a
+                     block at opacity:0; plus a hard animation/transition kill
+                     that also reaches ::before (styles.css:337 uses bare `*`,
+                     which does not match pseudo-elements — pre-existing hole).
+     no custom props → var() invalidates the declaration, element renders as-is.
+   NOT TOUCHED, DELIBERATELY: the .care-lane crossfade and its View Transitions
+   (styles.css:446-452), the .mbar slide (styles.css:325), every :focus-visible
+   ring and every .btn-call/.hdr-call press timing. Re-timing a shipped, tested
+   interaction buys the reader nothing.
+   NOTE for a future editor — #care .kicker::before (styles.css:421) is ID-
+   weighted (1,1,0) and would silently drop a class-level transform transition.
+   #care carries no reveal today; if that ever changes, restate the shorthand at
+   `.js #care .kicker::before` with BOTH transform and background-color in it.
+   NOTE — .access-side is position:sticky ≥1024px (styles.css:291). A transform
+   on the sticky element itself does NOT break stickiness (only an ancestor
+   transform would), but it does change the containing block for any absolutely
+   positioned descendant. We reveal the .leg inside it, never .access-side.
+   ========================================================================= */
+:root{
+  --rv-o:0;                          /* start opacity */
+  --rv-y:8px;                        /* settle distance */
+  --rv-s:0;                          /* start scale of a drawn mark */
+  --rv-e:cubic-bezier(.2,.6,.2,1);   /* decelerating, no overshoot, no bounce */
+  --rv-t:.42s;                       /* SETTLE */
+  --rv-r:.52s;                       /* RULE */
+}
+@media (max-width:767px){:root{--rv-y:6px}}
+html.js{--rv-fail:rv-show;--rv-fail-m:rv-draw}      /* armed while /site.js is unproven */
+html.js.rv-go{--rv-fail:none;--rv-fail-m:none}      /* site.js is alive → disarm */
+@keyframes rv-show{to{opacity:1;transform:none}}
+@keyframes rv-draw{to{transform:scaleX(1)}}
+
+/* ---------- SETTLE — a block comes to rest ---------- */
+.js [data-reveal]{opacity:var(--rv-o);transform:translateY(var(--rv-y));transition:opacity var(--rv-t) var(--rv-e),transform var(--rv-t) var(--rv-e);animation:var(--rv-fail) 1ms linear 2.4s forwards}
+.js [data-reveal].rv-in{opacity:1;transform:none}
+
+/* ---------- RULE — the mark family draws itself, left to right ----------
+   Only marks: the 24×4 .kicker::before, the 40×3 .why-tile .tick, the 24×2
+   .nk-mark, the 64×2 駅→院 .leg, and the closing band's centred ::before.
+   Nothing round ever moves (.roundel / .care-glyph / .stop / .rt discs). */
+.js [data-reveal] .tick,.js [data-reveal] .nk-mark,.js [data-reveal] .kicker::before,.js .kicker[data-reveal]::before,.js [data-reveal-mark] .leg{transform:scaleX(var(--rv-s));transform-origin:left center;transition:transform var(--rv-r) var(--rv-e) 80ms;animation:var(--rv-fail-m) 1ms linear 2.4s forwards}
+.js [data-reveal-mark]::before{transform:scaleX(var(--rv-s));transition:transform var(--rv-r) var(--rv-e) 80ms;animation:var(--rv-fail-m) 1ms linear 2.4s forwards}   /* .close-cta::before is margin:0 auto → draws from its centre */
+.js [data-reveal].rv-in .tick,.js [data-reveal].rv-in .nk-mark,.js [data-reveal].rv-in .kicker::before,.js .kicker[data-reveal].rv-in::before,.js [data-reveal-mark].rv-in .leg,.js [data-reveal-mark].rv-in::before{transform:scaleX(1)}
+
+/* ---------- NO FADE ON LOAD (QA「no fade on load」) ----------
+   site.js marks whatever is already on screen at first measurement .rv-now, so
+   that first batch lands with its transition suppressed. Scoped to the reveal
+   targets and their own marks — never a global *{transition:none}, which would
+   reach the .mbar and the lane tabs and (using bare `*`) would miss ::before. */
+.js .rv-now,.js .rv-now .tick,.js .rv-now .nk-mark,.js .rv-now .kicker::before,.js .kicker.rv-now::before,.js .rv-now .leg,.js .rv-now::before{transition:none!important}
+
+/* ---------- STAGGER — group-scoped, ≥768px only, two steps, 210ms ceiling ----------
+   Stacked on a phone every block already has its own trigger, so no delay is
+   added there. The group attribute keeps a delay from leaking to an unrelated
+   sibling — the reason the adjacent-sibling chains were rejected. */
+@media (min-width:768px){
+  .js [data-reveal-group]>[data-reveal]:nth-child(2){transition-delay:70ms}
+  .js [data-reveal-group]>[data-reveal]:nth-child(3){transition-delay:140ms}
+}
+
+/* ---------- FAQ — the answer that just opened says so ----------
+   <details> owns the height change, exactly as today; we fade only the <p>, so
+   no layout shift is added. summary+p: the answer is always summary's direct
+   next sibling, and the tighter selector cannot catch a future 2nd paragraph. */
+.js .pg-faq[open] summary+p{animation:rv-open .3s var(--rv-e)}
+@keyframes rv-open{from{opacity:0;transform:translateY(4px)}}
+
+/* ---------- FEEDBACK — the page answers the hand; it never performs ----------
+   One gesture: the orange → leans 2px in the direction of travel, on hover AND
+   on :focus-visible so the keyboard gets the identical state. Limited to the
+   three arrows that are flex items (.nk-row, .hm-links a and .pre-call-more are
+   all display:flex), so no display:inline-block is added anywhere and no
+   baseline moves on any device. Every existing hover/press timing on the
+   buttons, tabs and hairlines is left exactly as shipped — and every property
+   this system animates, here and above, is opacity or transform. */
+.nk-arrow,.hm-links a span,.pre-call-more span{transition:transform .2s var(--rv-e)}
+.nk-row:hover .nk-arrow,.nk-row:focus-visible .nk-arrow,.hm-links a:hover span,.hm-links a:focus-visible span,.pre-call-more:hover span,.pre-call-more:focus-visible span{transform:translateX(2px)}
+
+/* ---------- PRINT — never print an un-arrived page ----------
+   Without this, printing /hataraku.html from the top omits the steps, the
+   tables, the FAQ block and the のりかえ card. */
+@media print{
+  .js [data-reveal],.js [data-reveal-mark]{opacity:1!important;transform:none!important}
+  .js [data-reveal] .tick,.js [data-reveal] .nk-mark,.js [data-reveal] .kicker::before,.js .kicker[data-reveal]::before,.js [data-reveal-mark] .leg,.js [data-reveal-mark]::before{transform:none!important}
+}
+
+/* ---------- REDUCED MOTION — everything visible, nothing moving ----------
+   (1) start state === end state, so no transition is needed to reveal;
+   (2) a total animation/transition kill that, unlike styles.css:337, also
+       matches ::before/::after — that is where the kicker and closing marks
+       live, and the FAQ fade is a keyframe. Fixes a hole that exists today,
+       independent of this system.
+   site.js belts it a third time: it reveals everything and never observes. */
+@media (prefers-reduced-motion:reduce){
+  :root{--rv-o:1;--rv-y:0px;--rv-s:1}
+  *,*::before,*::after{animation:none!important;transition:none!important}
+}
+
+/* ================= 本町サイン｜乗換標識 — APPEND-ONLY, end of styles.css =================
+   index.html loads ONLY styles.css, so every home rule lives here. ONE geometry, FOUR steps:
+   LINE 2–4px split hairline (.roundel-link .nk-mark .why-tile .tick .close-cta::before .rl-norikae::before)
+   MARK 20–24px solid disc, no character / ring-gap / notch (.mk-dot, favicon.svg, the OG emblem)
+   SINGLE 32px one ring + 19px character (.pg-mini-glyph .foot-roundels .roundel .route .stop)
+   EMBLEM 44/56/96px the pair (.roundels .doc-panel .roundel). CHARACTER FLOOR: 体心熱駅院 never below 19px
+   (white on #F0533A = 3.50:1, large-text AA only) → any mark under 32px goes solid. REFERENCE CUT = 56px:
+   ring .0357 · gap .0625 · disc Ø.804 · character .4286 governs the 32 and 96 cuts; the shipped 44px mobile cut stays. */
+
+/* 1. GLYPH PIN — the typeset 体/心 renders in a system fallback on every cold load. The box is fixed and flex-centred,
+   so nothing moves; this pins the em box to ZKGN's metrics (880/120 — verify with fontTools before commit) and picks
+   the nearest local Bold, so the swap is a shape flicker only, never a position shift. Marks only, never headings. */
+@font-face{font-family:"NK Mark Fallback";font-weight:700;src:local("Hiragino Sans W7"),local("HiraginoSans-W7"),local("Hiragino Sans W6"),local("HiraginoSans-W6"),local("Yu Gothic Bold"),local("YuGothic-Bold"),local("Meiryo Bold");ascent-override:88%;descent-override:12%;line-gap-override:0%}
+.roundel,.care-glyph,.route .stop{font-family:'Zen Kaku Gothic New',"NK Mark Fallback",var(--font-display);line-height:1;font-synthesis:none}
+
+/* 2. CHARACTER FLOOR REPAIR — footer 体 was 13px and the access 駅 10px, white on #F0533A inside aria-hidden wrappers
+   (axe-blind). 32/19 = the .pg-mini-glyph cut already signed off. CSS only: the shared shell stays byte-identical. */
+.foot-roundels .roundel{font-size:19px}
+.route .stop{width:32px;height:32px;border-width:1.5px;padding:2px;font-size:19px}
+.route{max-width:280px}.route .leg{max-width:none}   /* 32 + 216 + 32 = 280 = .route-labels */
+
+/* 3. EMBLEM SCALE — the 96px pair was drawn with 56px hairlines (2.5/96=.026 vs 2/56=.036). Ratios applied.
+   Same specificity as styles.css:360-361; appending at the end of the file wins by source order. */
+@media (min-width:768px){
+  .doc-panel .roundel{border-width:3.5px;padding:6px;font-size:41px}
+  .doc-panel .roundel.r-nai::after{right:-3.5px;width:9.5px;height:5px}
+  .doc-panel .roundel.r-shin::after{left:-3.5px;width:9.5px;height:5px}
+  .doc-panel .roundel-link{width:48px;height:3px;margin-inline:10px}
+}
+
+/* 4. THE TRANSFER BRANCH (flagship) — exactly one legend row per lane changes lines (内科③ / 精神科③). Its bullet is
+   the split bar, read left→right: the hue you leave, then the hue you arrive on. Bound to the card's OWN
+   .c-nai/.c-shin (JS-off safe), never --lane. (0,2,1) beats the base li::before (0,1,2). Route-strip SVG untouched. */
+.route-legend .rl-norikae{padding-left:24px}
+.route-legend .rl-norikae::before{left:2px;top:.81em;width:16px;height:2.5px;background:linear-gradient(90deg,var(--vermilion) 0 50%,var(--ink) 50% 100%)}
+.c-shin .route-legend .rl-norikae::before{background:linear-gradient(90deg,var(--ink) 0 50%,var(--vermilion) 50% 100%)}
+
+/* 6. .nk-line — MOVED from pages.css (deleted there in the same commit). BUG: used only on index.html, which
+   never loads pages.css → both home lane doors rendered with no underline and a black arrow. .mk-dot is a SINGLE
+   line mark (the reader continues to the line's terminus, not a transfer); inline-block keeps the <a> inline so its
+   underline stays per-line. Hue binds to the card's own .c-nai/.c-shin like the route discs; ink is the default.
+   .nk-line a keeps the text-decoration underline already shipped here (LINK AFFORDANCE, global.md) rather than
+   the border-bottom this block used before that fix — carried forward unchanged, not reverted. */
+.nk-line{margin-top:10px;font-size:var(--t-note)}
+.nk-line a{color:var(--ink);text-decoration:underline;text-decoration-color:var(--steel);text-decoration-thickness:1px;text-underline-offset:4px}
+.nk-line a span{color:var(--vermilion-text);font-weight:700;margin-left:6px}
+.mk-dot{display:inline-block;width:20px;height:12px;vertical-align:-1px;margin-right:8px;color:var(--ink)}
+.c-nai .mk-dot{color:var(--vermilion)}
+
+/* 8. 404 = 乗換案内板 — the intact pair under the ink hairline, then rows marked by line (体/心) or by the pair
+   (.nk-mark = whole clinic). .nk-mark keeps its true 24px 50/50 bar inside a 32px footprint via MARGIN (padding
+   would repaint the gradient across 32px) so every row's text starts on one line — also fixes the 32/24
+   misalignment already shipped on hataraku and seikatsu. */
+.pg-404 .pg-doc-head .roundels{margin-bottom:16px}
+.norikae .nk-mark{margin-inline:4px}
+
+/* 9. MOTION — one gesture, at the transfer points only: the line extends toward its destination, the arrow advances.
+   transition (never animation): the global guard at styles.css:337 kills the easing, and the end-state is cancelled
+   below so it never lands as an instant jump. hover:hover keeps it off touch. scaleX(1.15) on 24px = +3.6px into the
+   4px margin — it cannot reach the label. Emblem, footer pair, favicon, route strip, OG: no motion, ever. */
+@media (hover:hover){
+  .nk-mark,.nk-arrow{transition:transform .22s cubic-bezier(.2,0,0,1)}
+  .nk-row:hover .nk-mark,.nk-row:focus-visible .nk-mark{transform:scaleX(1.15);transform-origin:left center}
+  .nk-row:hover .nk-arrow,.nk-row:focus-visible .nk-arrow{transform:translateX(3px)}
+}
+@media (prefers-reduced-motion:reduce){.nk-row:hover .nk-mark,.nk-row:focus-visible .nk-mark,.nk-row:hover .nk-arrow,.nk-row:focus-visible .nk-arrow{transform:none}}
+
+/* 10. PRINT — the letterhead sheet: footer hoisted to the top (mark, name, address, 06-6245-0378 first), one ink,
+   体 solid / 心 hollow = the die-line for 診察券・封筒・名刺 (photos/brand/mark-pair-mono.svg). Hours table forced,
+   both 診療案内 lanes unstacked, chrome dropped. Closed <details> print collapsed — no author CSS can open them. */
+@media print{
+  @page{margin:14mm}
+  body{display:flex;flex-direction:column;background:#fff;color:#000}
+  footer{order:-1;background:#fff;color:#000;border-bottom:1px solid #000;padding:12px 0 16px}
+  header,.hdr-util,.mnav,.notice,.mbar,.close-cta,.skip,.foot-groups,.foot-copy,.pg-acts,.care-switch,.map-btn,.hm-links,.care-note{display:none!important}
+  .wrap{max-width:none;padding-inline:0}
+  section,.pg-sec{padding-block:14px}
+  a{color:#000;text-decoration:none}
+  .js .care-stage{gap:16px!important}
+  .js .care-lane{grid-area:auto!important;visibility:visible!important;opacity:1!important}
+  .hours-table{display:block!important}.hours-list{display:none!important}
+  .band,.hero-photo,.doc-panel,.care-card,.pg-doc-table-wrap,.hours-table{break-inside:avoid}
+  .roundel,.care-glyph,.roundel-link,.nk-mark,.kicker::before,.why-tile .tick,.rl-norikae::before{print-color-adjust:exact;-webkit-print-color-adjust:exact}
+  .foot-name,.foot-corp,.foot-tel,.foot-meta{color:#000}
+  .foot-roundels .roundel{border-color:#000!important}
+  .foot-roundels .r-nai{background:#000!important;color:#fff!important}
+  .foot-roundels .r-shin{background:#fff!important;color:#000!important}
+  .foot-roundels .r-shin::before{border-color:#000!important}
+  .foot-roundels .r-nai::after,.foot-roundels .r-shin::after,.foot-roundels .roundel-link{background:#000!important}
+}

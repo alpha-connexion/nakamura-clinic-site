@@ -74,3 +74,46 @@
   var t0=tabFor(location.hash);
   if(t0){apply(t0);sec.scrollIntoView({behavior:'instant',block:'start'});}
 })();
+
+// 4. SETTLE REVEALS — a block comes to rest, once, then the node is forgotten.
+//    APPEND to site.js after IIFE 3 (LANE SWITCH). Self-guarded, no globals.
+//    The hidden start state lives in styles.css under html.js (set inline in
+//    <head>), and applies only to [data-reveal] / [data-reveal-mark] authored in
+//    the HTML — so with JS off nothing is ever hidden, and no element is ever
+//    visible-then-hidden. If this file never arrives, the --rv-fail keyframes
+//    reveal everything at 2.4s; html.rv-go below is what disarms them, and it is
+//    set LAST, only once the observer is wired.
+(function(){
+  var root = document.documentElement,
+      nodes = [].slice.call(document.querySelectorAll('[data-reveal],[data-reveal-mark]')),
+      still = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)'),
+      tops = [], fold, io, i;
+  function showAll(){ for(var j=0;j<nodes.length;j++) nodes[j].classList.add('rv-in'); }
+  function done(){ root.classList.add('rv-go'); }          // cancel the 2.4s CSS failsafe
+  if(!nodes.length){ done(); return; }
+  // Reduced motion, or a browser without IntersectionObserver: everything visible,
+  // nothing observed. Same shape as the sticky-bar guard in IIFE 2.
+  if(!('IntersectionObserver' in window) || (still && still.matches)){ showAll(); done(); return; }
+  try{
+    io = new IntersectionObserver(function(es){
+      for(var k=0;k<es.length;k++){
+        // Reveal on enter, and ALSO reveal anything already above the viewport:
+        // browser scroll restoration and #deep links can land past a block, and
+        // such a block would otherwise never intersect and stay at opacity:0.
+        if(!es[k].isIntersecting && es[k].boundingClientRect.top > 0) continue;
+        es[k].target.classList.add('rv-in');
+        io.unobserve(es[k].target);                        // one arrival per element, ever
+      }
+    }, { rootMargin: (innerWidth < 768 ? '0px 0px 12% 0px' : '0px 0px -8% 0px'), threshold: 0 });
+    // A POSITIVE bottom margin fires EARLIER (it grows the root); a negative one
+    // fires later. Phones get +12% so a block is at rest before it is read;
+    // desktop gets -8% so a block settles just as it composes into view.
+  }catch(e){ showAll(); done(); return; }
+  fold = innerHeight * (innerWidth < 768 ? 1.12 : 0.92);   // same line the observer uses
+  for(i=0;i<nodes.length;i++) tops[i] = nodes[i].getBoundingClientRect().top;   // read…
+  for(i=0;i<nodes.length;i++){                                                  // …then write
+    if(tops[i] < fold) nodes[i].classList.add('rv-now');   // on screen at load → no fade
+    io.observe(nodes[i]);
+  }
+  done();
+})();

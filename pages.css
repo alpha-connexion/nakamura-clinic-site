@@ -15,7 +15,7 @@
    pages keep benefiting from one source of truth.
    --------------------------------------------------------- */
 .pg-crumb{padding-top:16px;font-size:12px;color:var(--ink-2)}
-.pg-crumb a{color:var(--ink-2);text-decoration:underline}
+.pg-crumb a{color:var(--ink-2);text-decoration:underline;display:inline-block;padding-block:12px;margin-block:-12px}
 
 /* ---------------------------------------------------------
    BLOCK: .pg-plate — the channel-page sign that replaces the hero.
@@ -48,12 +48,15 @@
    three .pg-body paragraphs.
    --------------------------------------------------------- */
 .pg-band{padding:0;background:var(--card);border-block:1px solid var(--line);position:relative}
+.pg-sec-alt + .pg-band,
+.pg-band + .pg-sec-alt{border-top:0}
 .pg-band::before{content:"";position:absolute;top:-12px;left:24px;width:60px;height:60px;border-top:2px solid var(--vermilion);border-left:2px solid var(--vermilion);z-index:1;pointer-events:none}
 .pg-band .wrap{padding-block:40px}
 @media (min-width:768px){.pg-band .wrap{display:grid;gap:48px;align-items:center;padding-block:56px}
   .pg-band--route .wrap{grid-template-columns:minmax(0,420px) minmax(0,1fr)}
   .pg-band--hinge .wrap{grid-template-columns:minmax(0,180px) minmax(0,1fr)}}
 .pg-band .rt{max-width:420px;margin:0}
+@media (max-width:767px){.pg-band .rt{margin-bottom:20px}}
 .hinge-mark{display:flex;align-items:center;gap:0}
 .hinge-mark .care-glyph{width:40px;height:40px;font-size:19px}
 
@@ -67,13 +70,11 @@
 .norikae{max-width:760px;margin:0 auto 28px;background:var(--card);border:1px solid var(--line);border-radius:var(--radius);display:grid}
 .nk-row{display:flex;align-items:center;gap:14px;min-height:64px;padding:14px 18px;text-decoration:none;color:var(--ink);border-bottom:1px solid var(--line)}
 .norikae .nk-row:last-child{border-bottom:0}
-.nk-mark{width:24px;height:2px;flex:none;background:linear-gradient(90deg,var(--vermilion) 0 50%,var(--ink) 50% 100%)}
-.nk-text{flex:1;font-size:var(--t-sub);line-height:1.7;border-bottom:1px solid var(--line);padding-bottom:1px}
+.nk-mark{width:24px;height:2px;flex:none;margin-inline:4px;background:linear-gradient(90deg,var(--vermilion) 0 50%,var(--ink) 50% 100%)}
+.nk-text{flex:1;font-size:var(--t-sub);line-height:1.7;border-bottom:1px solid var(--line);padding-bottom:1px;transition:border-color .12s}
 .nk-row:hover .nk-text{border-color:var(--ink)}
 .nk-arrow{color:var(--vermilion-text);font-weight:700;flex:none}
-.nk-line{margin-top:10px;font-size:var(--t-note)}
-.nk-line a{color:var(--ink);text-decoration:none;border-bottom:1px solid var(--steel);padding-bottom:1px}
-.nk-line a span{color:var(--vermilion-text);font-weight:700;margin-left:6px}
+/* .nk-line lives in styles.css — it is used only on index.html, which does not load this file. */
 
 /* ---------------------------------------------------------
    BLOCK: .hours-mini — the hours summary of record on every non-home
@@ -88,7 +89,7 @@
 .hm-times{font-weight:600}
 .hm-rule,.hm-off{color:var(--ink-2)}
 .hm-call{margin-top:8px}
-.hm-call .tel-big{font-family:var(--font-body);font-feature-settings:'tnum';font-weight:700;font-size:20px;color:var(--vermilion-text);text-decoration:none;white-space:nowrap}
+.hm-call .tel-big{font-family:var(--font-body);font-feature-settings:'tnum';font-weight:700;font-size:20px;color:var(--vermilion-text);text-decoration:none;white-space:nowrap;display:inline-flex;align-items:center;min-height:44px}
 .hm-links{margin-top:10px;display:grid;gap:8px;font-size:var(--t-note)}
 .hm-links a{color:var(--ink);text-decoration:none;border-bottom:1px solid var(--steel);padding-bottom:1px;min-height:44px;display:flex;align-items:center}
 .hm-links a span{color:var(--vermilion-text);font-weight:700;margin-left:6px}
@@ -106,6 +107,9 @@
 .pg-sec{padding-block:var(--band)}
 .pg-sub{margin-top:var(--sec)}
 .pg-sec-alt{background:var(--card);border-block:1px solid var(--line)}
+.pg-sec > .wrap > .sec-head:only-child{margin-bottom:0}
+.pg-sec:has(> .wrap > .sec-head:only-child){padding-bottom:var(--head)}
+.pg-sec + .norikae{margin-top:var(--band)}
 /* note panels inside a channel-page chapter get more room than the 診療案内 lane cards; the 4px spine + 40px 体/心 head stay reserved for those two lanes. */
 .pg-sec .care-card,.pg-sub .care-card{max-width:var(--measure-wide);padding:22px 24px 22px 26px}
 .pg-sec .care-card::before{width:3px}
@@ -142,6 +146,7 @@
 /* MOBILE TABLES — stacked rows below 640px, no sideways drag. data-l attributes on every
    body cell of every .pg-doc-table carry the column label into the ::before content. */
 @media (max-width:639px){
+  .pg-doc-table td:first-child{white-space:normal;display:block}
   .pg-doc-table{min-width:0}
   .pg-doc-table thead{position:absolute;width:1px;height:1px;clip-path:inset(50%);overflow:hidden}
   .pg-doc-table tr{display:block;border-bottom:1px solid var(--line);padding:14px 16px}
@@ -156,12 +161,12 @@
 .pg-scope-list li::before{content:"";position:absolute;left:2px;top:.85em;width:8px;height:1.5px;background:var(--ink-2)}
 
 .pg-faq-list{display:grid;gap:1px;background:var(--line);border:1px solid var(--line);border-radius:var(--radius);overflow:hidden;max-width:760px}
-.pg-faq{background:var(--card);padding:16px 18px}
-.pg-faq summary{cursor:pointer;font-weight:600;font-size:var(--t-sub);color:var(--ink);list-style:none;display:flex;justify-content:space-between;align-items:center;gap:12px}
+.pg-faq{background:var(--card);padding:0}
+.pg-faq summary{cursor:pointer;font-weight:600;font-size:var(--t-sub);color:var(--ink);list-style:none;display:flex;justify-content:space-between;align-items:center;gap:12px;padding:16px 18px;min-height:56px}
 .pg-faq summary::-webkit-details-marker{display:none}
 .pg-faq summary::after{content:"+";flex:none;font-size:18px;color:var(--ink-2);font-weight:400}
 .pg-faq[open] summary::after{content:"−"}
-.pg-faq p{font-size:14px;line-height:1.85;color:var(--ink-2);margin-top:10px}
+.pg-faq p{font-size:14px;line-height:1.85;color:var(--ink-2);margin-top:0;padding:0 18px 16px}
 .pg-faq p a{color:var(--vermilion-text);text-decoration:underline}
 
 .pg-updated{padding-block:16px 32px;text-align:center;font-size:12px;color:var(--ink-2)}
