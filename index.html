@@ -134,7 +134,7 @@
        満たせず、「費用はお電話で」では代えられない（問い合わせ先の記載は別要件）。
        /shisetsu-kijun.html#hoken-gai に金額と主な副反応を掲載できたときに限り、
        診療名を出した文言に戻してよい。「在庫」など小売の語は使わない。 -->
-  <div class="notice"><div class="wrap"><b>お知らせ</b>インフルエンザワクチンのご案内は、お電話でご確認ください。</div></div>
+  <div class="notice"><div class="wrap">インフルエンザワクチンのご案内は、お電話でご確認ください。</div></div>
 
   <!-- 1. HERO — station board -->
   <section class="hero">
@@ -356,7 +356,6 @@
             <div class="day-row" data-day="0"><span class="day-glyph">日</span><span class="states"><span class="off-dash">−<span class="vh">休診</span></span> 休診（祝日も休診）</span></div>
           </div>
           <ul class="hours-notes">
-            <li>受付は17:45まで、診察は18:00までです</li>
             <li>精神科は担当医の診療日にご案内します。日程はお電話でご確認ください</li>
           </ul>
         </div>
@@ -402,7 +401,7 @@
         <p class="doc-sub-line">精神科の診療は、担当医がお話をうかがうところから始めます。話す順番も、うまくまとまっているかも、気にしなくて大丈夫です。</p>
       </div>
       <aside class="doc-panel" aria-hidden="true">
-        <!-- 院長ポートレートのスロット。写真が届いたら <picture> をここに置き、.doc-panel-quote を 『院長　石川 賀弘』 のキャプションに差し替え、styles.css:325 の .doc-body .pull-line{display:none} を削除すること。 -->
+        <!-- 院長ポートレートのスロット。写真が届いたら <picture> をここに置き、.doc-panel-quote を 『院長　石川 賀弘』 のキャプションに差し替え、styles.css:384 の .doc-body .pull-line{display:none} を削除すること。 -->
         <div class="roundels"><span class="roundel r-nai">体</span><span class="roundel-link"></span><span class="roundel r-shin">心</span></div>
         <p class="doc-panel-quote">からだとこころ、<br>分けずに話せる診察室です。</p>
       </aside>
@@ -424,15 +423,43 @@
           <div class="spec-row"><dt>診療科目</dt><dd>内科・心療内科・精神科</dd></div>
           <div class="spec-row"><dt>所在地</dt><dd>〒541-0054　大阪府大阪市中央区南本町3丁目1-12<br>カネセ中央ビル1階</dd></div>
           <div class="spec-row"><dt>電話</dt><dd><a class="tel-big" href="tel:0662450378">06-6245-0378</a>（外来直通）</dd></div>
-          <div class="spec-row"><dt>最寄駅</dt><dd>Osaka Metro 御堂筋線「本町駅」徒歩3分<small>※ 専用駐車場はありません。お車の際は近隣のコインパーキングをご利用ください</small></dd></div>
+          <!-- 徒歩分数はこの行とアクセス図の2か所にある。変えるときは同じコミットで両方。路線名は「その駅で使う線」だけ（全線の一覧は C13-b の返答後）。出口番号は C13-c の返答まで書かない。 -->
+          <div class="spec-row"><dt>最寄駅</dt><dd>Osaka Metro 御堂筋線「本町駅」徒歩3分／堺筋線「堺筋本町駅」徒歩6分<small>※ 専用駐車場はありません。お車の際は近隣のコインパーキングをご利用ください</small></dd></div>
           <div class="spec-row"><dt>休診日</dt><dd>木曜・日曜・祝日</dd></div>
           <div class="spec-row"><dt>処方</dt><dd>院外処方</dd></div>
         </dl>
         <div class="access-side">
-          <div class="route" aria-hidden="true" data-reveal-mark>
-            <span class="stop st-eki">駅</span><span class="leg"></span><span class="stop st-in">院</span>
-          </div>
-          <div class="route-labels"><span>本町駅</span><span class="num">徒歩3分</span><span>カネセ中央ビル1階</span></div>
+          <!-- アクセス図（.access-map）＝ 2つの駅から1つの院へ。地図ではなく関係の図。
+               描かない：道路・方角・出口番号（未確認）・路線名（本町駅には四つ橋線もあり、不完全な一覧は誤りとして読まれる。
+               路線名は医院概要の最寄駅行が持つ）。幾何は凍結：viewBox 0 0 272 150／駅 cx16 cy40・cy112／院 cx208 cy76／
+               幹 x150-152（y39-113）／院への脚 y75-77。線は rect で描く（transform-box:fill-box の原点が確定するため）。
+               272 は 320px 端末の本文幅（.wrap の padding 24px×2）と同値＝1ユーザー単位が1CSSpx、駅・院 の 19px が
+               CHARACTER FLOOR を割らない。.wrap の padding を変えたら検算し直すこと。
+               徒歩分数は「この図」と「医院概要の最寄駅行」の2か所にある。変えるときは同じコミットで両方。
+               堺筋本町駅 徒歩6分 は第三者掲載値 — [CONFIRM] C13（事務面談 9/24）。これは .rt ではない（index の .rt は 0件のまま）。 -->
+          <svg class="access-map" viewBox="0 0 272 150" role="img" data-reveal-mark aria-label="本町駅から徒歩3分、堺筋本町駅から徒歩6分。どちらの駅からも、カネセ中央ビル1階の当院まで歩いてお越しいただけます。">
+            <g class="leg am-leg"><rect x="32" y="39" width="60" height="2" fill="#F0533A"/><rect x="92" y="39" width="60" height="2" fill="#17171C"/></g>
+            <g class="leg am-leg"><rect x="32" y="111" width="60" height="2" fill="#F0533A"/><rect x="92" y="111" width="60" height="2" fill="#17171C"/></g>
+            <rect class="leg am-sp am-sp-a" x="150" y="39" width="2" height="37" fill="#17171C"/>
+            <rect class="leg am-sp am-sp-b" x="150" y="76" width="2" height="37" fill="#17171C"/>
+            <rect class="leg am-spur" x="152" y="75" width="41" height="2" fill="#17171C"/>
+            <g class="am-stop">
+              <circle cx="16" cy="40" r="15.25" fill="none" stroke="#F0533A" stroke-width="1.5"/>
+              <circle cx="16" cy="40" r="12.5" fill="#F0533A"/>
+              <text x="16" y="40" dy=".35em" text-anchor="middle" fill="#FFFFFF">駅</text>
+              <circle cx="16" cy="112" r="15.25" fill="none" stroke="#F0533A" stroke-width="1.5"/>
+              <circle cx="16" cy="112" r="12.5" fill="#F0533A"/>
+              <text x="16" y="112" dy=".35em" text-anchor="middle" fill="#FFFFFF">駅</text>
+              <circle cx="208" cy="76" r="15.25" fill="none" stroke="#17171C" stroke-width="1.5"/>
+              <circle cx="208" cy="76" r="12.5" fill="#17171C"/>
+              <text x="208" y="76" dy=".35em" text-anchor="middle" fill="#FFFFFF">院</text>
+            </g>
+            <text class="am-name" x="40" y="26" fill="#17171C">本町駅</text>
+            <text class="am-min" x="40" y="68" fill="#17171C">徒歩3分</text>
+            <text class="am-name" x="40" y="98" fill="#17171C">堺筋本町駅</text>
+            <text class="am-min" x="40" y="140" fill="#17171C">徒歩6分</text>
+          </svg>
+          <p class="access-note">院＝当院（カネセ中央ビル1階）</p>
           <a class="btn-ghost map-btn" href="https://www.google.com/maps/search/?api=1&query=%E5%A4%A7%E9%98%AA%E5%BA%9C%E5%A4%A7%E9%98%AA%E5%B8%82%E4%B8%AD%E5%A4%AE%E5%8C%BA%E5%8D%97%E6%9C%AC%E7%94%BA3%E4%B8%81%E7%9B%AE1-12%20%E3%82%AB%E3%83%8D%E3%82%BB%E4%B8%AD%E5%A4%AE%E3%83%93%E3%83%AB" target="_blank" rel="noopener">
         Googleマップで開く
         <svg viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke-linecap="square" stroke-linejoin="miter" aria-hidden="true"><path d="M14 4h6v6M20 4l-9 9M18 13v7H4V6h7"/></svg>

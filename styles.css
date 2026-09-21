@@ -279,12 +279,26 @@ section{padding-block:64px}
 .access-sec{background:var(--card);border-top:1px solid var(--line)}
 .access-grid{display:grid;gap:40px}
 .access-side{align-self:start}
-.route{display:flex;align-items:center;gap:0;margin-top:20px}
-.route .stop{width:24px;height:24px;flex:none;border-radius:50%;border-style:solid;border-width:1px;padding:1.5px;background-clip:content-box;position:relative;display:flex;align-items:center;justify-content:center;color:#fff;font-family:var(--font-display);font-weight:700;font-size:10px}
-.route .st-eki{background-color:var(--vermilion);border-color:var(--vermilion)}
-.route .st-in{background-color:var(--ink);border-color:var(--ink)}
-.route .leg{flex:1;max-width:64px;height:2px;background:linear-gradient(90deg,var(--vermilion) 0 50%,var(--ink) 50% 100%)}
-.route-labels{display:flex;justify-content:space-between;max-width:280px;font-size:12px;color:var(--ink-2);margin-top:6px}
+/* ---------- アクセス｜2駅の案内図 (.access-map) ----------
+   これは .rt ではない。路線図＝1起点から分岐、の文法に対し、これは2起点が1つの行き先に合流する「案内板」。
+   index.html の .rt は 0件のままであること（QA）。幾何は凍結（座標は index.html のコメント参照）。
+   viewBox の幅 272 ＝ 320px 端末の本文幅（.wrap padding 24px×2）。1ユーザー単位 ≤ 1CSSpx となり、
+   駅・院 の 19px が下限を割らない。.wrap の max-width か padding を変えたら、この数字を検算し直すこと。 */
+.access-map{display:block;width:100%;max-width:320px;height:auto;aspect-ratio:272/150;margin-top:20px}
+.access-map .am-stop text{font-weight:700;font-size:19px;letter-spacing:0}   /* CHARACTER FLOOR; the face comes from the GLYPH PIN below */
+.access-map .am-name{font-family:var(--font-display);font-weight:700;font-size:var(--t-h4);letter-spacing:.02em}
+.access-map .am-min{font-family:var(--font-body);font-weight:700;font-size:var(--t-h3);font-feature-settings:'tnum';letter-spacing:.02em}
+.access-note{max-width:320px;margin-top:10px;font-size:var(--t-cap);line-height:1.8;color:var(--ink-2)}
+/* 描き込み — 順序＝到着の向き：①2本の脚が駅から合流点へ → ②幹が上下から分岐点へ（上半分は下向き・下半分は上向き）
+   → ③最後の脚が院へ入る。丸いものは何も動かない。site.js は無変更（IIFE 4 が [data-reveal-mark] を総称で観測）。
+   6本の線すべてが class="leg" を持つので、描き込み・.rv-now・print の既存規則をそのまま受け取る。 */
+.access-map .leg{transform-box:fill-box}
+.js .access-map[data-reveal-mark] .am-leg{transition-duration:.26s}
+.js .access-map[data-reveal-mark] .am-sp{transform:scaleY(var(--rv-s));transform-origin:center top;transition:transform .12s var(--rv-e) 320ms;animation:var(--rv-fail-m) 1ms linear 2.4s forwards}
+.js .access-map[data-reveal-mark] .am-sp-b{transform-origin:center bottom}
+.js .access-map[data-reveal-mark].rv-in .am-sp{transform:scaleY(1)}
+.js .access-map[data-reveal-mark] .am-spur{transition-duration:.14s;transition-delay:420ms}
+.js .rv-now.access-map .am-sp{transition:none!important}
 .map-btn{margin-top:20px;width:100%}
 .spec-list{border-top:1px solid var(--line)}
 .spec-row{display:grid;grid-template-columns:96px 1fr;gap:12px;padding:12px 0;border-bottom:1px solid var(--line);font-size:14px}
@@ -653,7 +667,7 @@ html.js.rv-go{--rv-fail:none;--rv-fail-m:none}      /* site.js is alive → disa
 
 /* ---------- RULE — the mark family draws itself, left to right ----------
    Only marks: the 24×4 .kicker::before, the 40×3 .why-tile .tick, the 24×2
-   .nk-mark, the 64×2 駅→院 .leg, and the closing band's centred ::before.
+   .nk-mark, the access diagram's legs, trunk and spur (all class="leg"), and the closing band's centred ::before.
    Nothing round ever moves (.roundel / .care-glyph / .stop / .rt discs). */
 .js [data-reveal] .tick,.js [data-reveal] .nk-mark,.js [data-reveal] .kicker::before,.js .kicker[data-reveal]::before,.js [data-reveal-mark] .leg{transform:scaleX(var(--rv-s));transform-origin:left center;transition:transform var(--rv-r) var(--rv-e) 80ms;animation:var(--rv-fail-m) 1ms linear 2.4s forwards}
 .js [data-reveal-mark]::before{transform:scaleX(var(--rv-s));transition:transform var(--rv-r) var(--rv-e) 80ms;animation:var(--rv-fail-m) 1ms linear 2.4s forwards}   /* .close-cta::before is margin:0 auto → draws from its centre */
@@ -717,7 +731,7 @@ html.js.rv-go{--rv-fail:none;--rv-fail-m:none}      /* site.js is alive → disa
    index.html loads ONLY styles.css, so every home rule lives here. ONE geometry, FOUR steps:
    LINE 2–4px split hairline (.roundel-link .nk-mark .why-tile .tick .close-cta::before .dest-mark--norikae)
    MARK 20–24px solid disc, no character / ring-gap / notch (.mk-dot, favicon.svg, the OG emblem)
-   SINGLE 32px one ring + 19px character (.pg-mini-glyph .foot-roundels .roundel .route .stop)
+   SINGLE 32px one ring + 19px character (.pg-mini-glyph .foot-roundels .roundel .access-map .am-stop text)
    EMBLEM 44/56/96px the pair (.roundels .doc-panel .roundel). CHARACTER FLOOR: 体心熱駅院 never below 19px
    (white on #F0533A = 3.50:1, large-text AA only) → any mark under 32px goes solid. REFERENCE CUT = 56px:
    ring .0357 · gap .0625 · disc Ø.804 · character .4286 governs the 32 and 96 cuts; the shipped 44px mobile cut stays. */
@@ -726,13 +740,11 @@ html.js.rv-go{--rv-fail:none;--rv-fail-m:none}      /* site.js is alive → disa
    so nothing moves; this pins the em box to ZKGN's metrics (880/120 — verify with fontTools before commit) and picks
    the nearest local Bold, so the swap is a shape flicker only, never a position shift. Marks only, never headings. */
 @font-face{font-family:"NK Mark Fallback";font-weight:700;src:local("Hiragino Sans W7"),local("HiraginoSans-W7"),local("Hiragino Sans W6"),local("HiraginoSans-W6"),local("Yu Gothic Bold"),local("YuGothic-Bold"),local("Meiryo Bold");ascent-override:88%;descent-override:12%;line-gap-override:0%}
-.roundel,.care-glyph,.route .stop{font-family:'Zen Kaku Gothic New',"NK Mark Fallback",var(--font-display);line-height:1;font-synthesis:none}
+.roundel,.care-glyph,.access-map .am-stop text{font-family:'Zen Kaku Gothic New',"NK Mark Fallback",var(--font-display);line-height:1;font-synthesis:none}
 
 /* 2. CHARACTER FLOOR REPAIR — footer 体 was 13px and the access 駅 10px, white on #F0533A inside aria-hidden wrappers
    (axe-blind). 32/19 = the .pg-mini-glyph cut already signed off. CSS only: the shared shell stays byte-identical. */
 .foot-roundels .roundel{font-size:19px}
-.route .stop{width:32px;height:32px;border-width:1.5px;padding:2px;font-size:19px}
-.route{max-width:280px}.route .leg{max-width:none}   /* 32 + 216 + 32 = 280 = .route-labels */
 
 /* 3. EMBLEM SCALE — the 96px pair was drawn with 56px hairlines (2.5/96=.026 vs 2/56=.036). Ratios applied.
    Same specificity as styles.css:360-361; appending at the end of the file wins by source order. */
@@ -792,7 +804,7 @@ html.js.rv-go{--rv-fail:none;--rv-fail-m:none}      /* site.js is alive → disa
   .js .care-lane{grid-area:auto!important;visibility:visible!important;opacity:1!important}
   .hours-table{display:block!important}.hours-list{display:none!important}
   .band,.hero-photo,.doc-panel,.care-card,.pg-doc-table-wrap,.hours-table{break-inside:avoid}
-  .roundel,.care-glyph,.roundel-link,.nk-mark,.kicker::before,.why-tile .tick,.dest-mark{print-color-adjust:exact;-webkit-print-color-adjust:exact}
+  .roundel,.care-glyph,.roundel-link,.nk-mark,.kicker::before,.why-tile .tick,.dest-mark,.access-map{print-color-adjust:exact;-webkit-print-color-adjust:exact}
   .foot-name,.foot-corp,.foot-tel,.foot-meta{color:#000}
   .foot-roundels .roundel{border-color:#000!important}
   .foot-roundels .r-nai{background:#000!important;color:#fff!important}

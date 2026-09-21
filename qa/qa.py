@@ -775,6 +775,33 @@ def rule_404_noindex(pages):
 # RULE: ROUTE STRIPS
 # ---------------------------------------------------------------------------
 
+def rule_imagery_v1(pages):
+    """2026-09-21 imagery program: one .access-map on index (not a .rt), old .route retired,
+    the .notice band carries no label word, the fee pointer is one fixed string on 3 pages."""
+    FEE = '文書の費用は院内に掲示しています（<a href="/shisetsu-kijun.html#hiyou">費用に関する掲示</a>）。'
+    for name, text in pages.items():
+        for cls in ("route", "route-labels", "st-eki", "st-in"):
+            n = sum(1 for attr in re.findall(r'class="([^"]*)"', text) if cls in attr.split())
+            report("PASS" if n == 0 else "FAIL", f"RETIRED .{cls} [{name}]", f"count={n}")
+        n = text.count('class="access-map"')
+        want = 1 if name == "index.html" else 0
+        report("PASS" if n == want else "FAIL", f"ACCESS MAP count [{name}]", f"count={n}, expected {want}")
+        n = len(re.findall(r'<div class="notice">.*?<b>お知らせ</b>', text, re.S))
+        report("PASS" if n == 0 else "FAIL", f"NOTICE no label word [{name}]", f"count={n}")
+        n = text.count(FEE)
+        want = 1 if name in ("hajimete.html", "hataraku.html", "seikatsushukanbyo.html") else 0
+        report("PASS" if n == want else "FAIL", f"FEE POINTER fixed string [{name}]", f"count={n}, expected {want}")
+        if name == "index.html":
+            report("PASS" if "受付は17:45まで" not in text else "FAIL", f"HOURS NOTE dedup [{name}]")
+            m = re.search(r'<svg class="access-map" viewBox="0 0 272 150" role="img" data-reveal-mark aria-label="[^"]+"', text)
+            report("PASS" if m else "FAIL", f"ACCESS MAP viewBox/role/aria [{name}]")
+            svg = text[text.find('<svg class="access-map"'):text.find('</svg>', text.find('<svg class="access-map"'))]
+            fig = re.findall(r'<text class="am-min"[^>]*>徒歩(\d)分</text>', svg)
+            row = re.search(r'<dt>最寄駅</dt><dd>([^<]*)<', text)
+            rowmins = re.findall(r'徒歩(\d)分', row.group(1)) if row else []
+            report("PASS" if fig == rowmins and fig else "FAIL", f"ACCESS MAP minutes == 最寄駅 row [{name}]", f"figure={fig}, row={rowmins}")
+
+
 def rule_route_strips(pages):
     viewboxes = {}
     for name, text in pages.items():
@@ -805,7 +832,7 @@ def rule_route_strips(pages):
             report("PASS" if not viewboxes.get(name) else "FAIL",
                    f"HOME HAS NO ROUTE STRIP [{name}]", f"viewboxes found: {viewboxes.get(name)}")
             for cls, want in (("route-legend", 0), ("rl-norikae", 0), ("lane-aside", 0), ("care-dest", 1), ("nk-mark", 0)):
-                n = len(re.findall(r'class="[^"]*\b' + cls + r'\b', text))
+                n = sum(1 for attr in re.findall(r'class="([^"]*)"', text) if cls in attr.split())
                 report("PASS" if n == want else "FAIL", f"CARE V2 {cls} count [{name}]", f"count={n}, expected {want}")
         if name == "seikatsushukanbyo.html":
             report("PASS" if len(viewboxes.get(name, [])) == 1 else "FAIL",
@@ -906,6 +933,7 @@ def main():
     rule_sitemap()
     rule_404_noindex(pages)
     rule_route_strips(pages)
+    rule_imagery_v1(pages)
     rule_green_audit(pages)
     rule_template_conformance(pages)
     rule_manual_declarations()
