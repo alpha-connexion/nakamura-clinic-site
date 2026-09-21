@@ -422,7 +422,7 @@ footer{background:var(--ink);color:var(--paper);padding:48px 0 48px}
 /* ---------- closing conversion band (item 10) ---------- */
 .close-cta{background:var(--ink);padding-block:56px;text-align:center}
 .close-cta .close-line{font-family:var(--font-display);font-weight:700;font-size:clamp(20px,2.4vw,26px);line-height:1.8;color:var(--paper);margin-bottom:24px}
-.close-cta::before{content:"";display:block;width:24px;height:4px;background:var(--vermilion);margin:0 auto 20px}
+.close-cta::before{content:"";display:block;width:32px;height:4px;background:linear-gradient(90deg,var(--vermilion) 0 50%,var(--paper) 50% 100%);margin:0 auto 20px}   /* the PAIR on ink (decision D, 2026-09-21) */
 .close-next{margin-top:20px;font-size:var(--t-note);color:rgba(250,250,248,.75)}
 .close-next a{color:var(--paper);text-decoration:underline;text-underline-offset:3px}
 .hours-sec .call-card .btn-call .cap{display:none}
