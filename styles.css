@@ -486,7 +486,6 @@ html:active-view-transition .care-lane{transition:none}
 .lane-h{font-size:12px;font-weight:700;letter-spacing:.12em;color:var(--steel-text);margin-bottom:6px}
 .lane-book{font-size:13px;color:var(--ink);margin-top:12px}
 .lane-book a{text-decoration:underline;text-underline-offset:3px}
-.lane-aside .safety-line{margin:0 0 14px}
 .care-sub{display:flex;gap:12px;align-items:flex-start;margin-top:18px;padding-top:14px;border-top:1px solid var(--line)}
 .care-sub h4{font-size:15px;line-height:1.5}
 .care-sub p{font-size:13px;line-height:1.8;color:var(--ink)}
@@ -496,9 +495,48 @@ html:active-view-transition .care-lane{transition:none}
 .care-note{margin-top:16px;padding:12px 16px;background:var(--card);border:1px solid var(--line);border-left:4px solid var(--ink);border-radius:var(--radius);font-size:13px;line-height:1.8;color:var(--ink)}
 .care-note b{font-family:var(--font-display);font-weight:700;margin-right:6px}
 
-/* the lone lane keys its interior off its OWN width, not the viewport */
-@container care-stage (min-width:600px){
-  .lane-body{grid-template-columns:minmax(0,1fr) minmax(240px,38%);gap:28px;align-items:start}
+/* ---------- 診療案内 v2 — レーン＝私のこと、サイン＝私たちのこと (spec: docs-internal/care-review/spec.md) ----------
+   左列は読者自身の言葉（--measure で右端を定義）。右列は枠のある「行動」パネル：短いのは意図であって欠落ではない——
+   枠のある物の余りは余白に読め、枠のない短い列は穴に読める。全幅を使うのは .care-dest だけ（いちばん広い物＝いちばん重要な主張）。 */
+.lane-main{max-width:var(--measure)}
+.lane-main .lane-promise{margin-bottom:14px}
+.lane-main .safety-line{margin:0 0 16px}
+.lane-main>ul>li+li{margin-top:6px}
+.lane-act{background:var(--paper);border:1px solid var(--line);border-radius:var(--radius);padding:16px 18px;align-self:start}
+.lane-act .lane-book{margin:0;font-size:var(--t-note);line-height:1.9}
+.lane-act .lane-book a{min-height:44px;display:inline-flex;align-items:center}
+.lane-act .care-sub{margin-top:14px;padding-top:14px}
+/* 720px: at a 768px viewport the container is ~672px; two columns would give the body ~352px (25 chars). One column until it is worth splitting. */
+@container care-stage (min-width:720px){
+  .lane-body{grid-template-columns:minmax(0,1fr) minmax(280px,320px);gap:32px;align-items:start}
+}
+@media (max-width:519px){
+  .care-lane{padding:22px 20px 22px 24px}   /* card interior 267 → 307px on 375; lanes only (channel note panels share .care-card) */
+}
+
+/* ---------- ZONE B — 行き先サイン (.care-dest) ----------
+   Replaces the two home .rt strips + two .route-legend blocks (retired 2026-09-21: patients read ①②③ as steps).
+   Outside both tabpanels, paper ground, unchanged by the tab switch. No numerals (alternatives, not steps).
+   Marks: neutral hairline 8×1.5 (cards 1–2); the のりかえ split bar 16×2.5 on card 3 only — the sign belongs to the whole
+   clinic, so it takes the PAIR direction (vermilion→ink, like .nk-mark) and is never bound to .c-nai/.c-shin.
+   Zero new badges/glyphs/colours. No reveal, no motion (the existing lane crossfade now carries the message: the sign does not move). */
+.care-dest{margin-top:var(--sec);padding-top:var(--sec);border-top:1px solid var(--line)}
+.dest-title{font-family:var(--font-display);font-weight:700;font-size:var(--t-h3);line-height:1.5;color:var(--ink);margin-bottom:4px;font-feature-settings:'palt'}
+.dest-lead{font-size:var(--t-sub);line-height:1.9;color:var(--ink-2);margin-bottom:20px;text-wrap:balance}
+.dest-grid{list-style:none;display:grid;gap:20px}
+.dest{position:relative}
+.dest+.dest{border-top:1px solid var(--line);padding-top:20px}
+.dest-mark{display:block;width:8px;height:1.5px;background:var(--ink-2);margin-bottom:10px}
+.dest-mark--norikae{width:16px;height:2.5px;background:linear-gradient(90deg,var(--vermilion) 0 50%,var(--ink) 50% 100%)}
+.dest h4{font-family:var(--font-display);font-weight:700;font-size:var(--t-h4);line-height:1.6;color:var(--ink);margin:0 0 4px;font-feature-settings:'palt'}
+.dest p{font-size:var(--t-note);line-height:1.9;color:var(--ink);text-wrap:pretty}
+@media (min-width:768px){
+  .dest-grid{grid-template-columns:repeat(3,1fr);gap:32px}
+  .dest+.dest{border-top:0;padding-top:0}
+  .dest-mark{margin-bottom:12px}
+}
+@media (min-width:1024px){
+  .dest-grid{gap:40px}
 }
 @media (min-width:768px){
   .js .care-switch{width:min(100%,480px)}          /* folder-tab: strip fuses into the card's top-left */
@@ -507,7 +545,7 @@ html:active-view-transition .care-lane{transition:none}
 
 /* ---------- route strip — the 診療案内 right column (Play 1) ----------
    FROZEN GEOMETRY (both variants — do not redraw ad hoc, copy these coordinates):
-   3-BRANCH (home, both lanes) — viewBox="0 0 240 136": origin circle .rt-from cx28 cy70 r7.5;
+   3-BRANCH (RETIRED from home 2026-09-21 — legend-binding failed the patient test; coordinates kept as history, no live user) — viewBox="0 0 240 136": origin circle .rt-from cx28 cy70 r7.5;
    origin text .rt-origin x28 y94 anchor middle; feeder M35.5 70H70; trunk M70 26V114;
    stubs M70 26H92 + .rt-end M92 19V33, M70 70H92 + .rt-end M92 63V77; terminus M70 114H92 +
    circle .rt-to cx99.5 cy114 r7.5; branch numbers as <text> at x=100 dy=".35em" on y=26 and
@@ -677,7 +715,7 @@ html.js.rv-go{--rv-fail:none;--rv-fail-m:none}      /* site.js is alive → disa
 
 /* ================= 本町サイン｜乗換標識 — APPEND-ONLY, end of styles.css =================
    index.html loads ONLY styles.css, so every home rule lives here. ONE geometry, FOUR steps:
-   LINE 2–4px split hairline (.roundel-link .nk-mark .why-tile .tick .close-cta::before .rl-norikae::before)
+   LINE 2–4px split hairline (.roundel-link .nk-mark .why-tile .tick .close-cta::before .dest-mark--norikae)
    MARK 20–24px solid disc, no character / ring-gap / notch (.mk-dot, favicon.svg, the OG emblem)
    SINGLE 32px one ring + 19px character (.pg-mini-glyph .foot-roundels .roundel .route .stop)
    EMBLEM 44/56/96px the pair (.roundels .doc-panel .roundel). CHARACTER FLOOR: 体心熱駅院 never below 19px
@@ -705,12 +743,9 @@ html.js.rv-go{--rv-fail:none;--rv-fail-m:none}      /* site.js is alive → disa
   .doc-panel .roundel-link{width:48px;height:3px;margin-inline:10px}
 }
 
-/* 4. THE TRANSFER BRANCH (flagship) — exactly one legend row per lane changes lines (内科③ / 精神科③). Its bullet is
-   the split bar, read left→right: the hue you leave, then the hue you arrive on. Bound to the card's OWN
-   .c-nai/.c-shin (JS-off safe), never --lane. (0,2,1) beats the base li::before (0,1,2). Route-strip SVG untouched. */
-.route-legend .rl-norikae{padding-left:24px}
-.route-legend .rl-norikae::before{left:2px;top:.81em;width:16px;height:2.5px;background:linear-gradient(90deg,var(--vermilion) 0 50%,var(--ink) 50% 100%)}
-.c-shin .route-legend .rl-norikae::before{background:linear-gradient(90deg,var(--ink) 0 50%,var(--vermilion) 50% 100%)}
+/* 4. THE TRANSFER BRANCH — retired from the home legends 2026-09-21 together with the two home route strips
+   (the legend-binding failed the patient comprehension test). The のりかえ split bar now lives ONCE per page as
+   .dest-mark--norikae on the third card of .care-dest. */
 
 /* 6. .nk-line — MOVED from pages.css (deleted there in the same commit). BUG: used only on index.html, which
    never loads pages.css → both home lane doors rendered with no underline and a black arrow. .mk-dot is a SINGLE
@@ -757,7 +792,7 @@ html.js.rv-go{--rv-fail:none;--rv-fail-m:none}      /* site.js is alive → disa
   .js .care-lane{grid-area:auto!important;visibility:visible!important;opacity:1!important}
   .hours-table{display:block!important}.hours-list{display:none!important}
   .band,.hero-photo,.doc-panel,.care-card,.pg-doc-table-wrap,.hours-table{break-inside:avoid}
-  .roundel,.care-glyph,.roundel-link,.nk-mark,.kicker::before,.why-tile .tick,.rl-norikae::before{print-color-adjust:exact;-webkit-print-color-adjust:exact}
+  .roundel,.care-glyph,.roundel-link,.nk-mark,.kicker::before,.why-tile .tick,.dest-mark{print-color-adjust:exact;-webkit-print-color-adjust:exact}
   .foot-name,.foot-corp,.foot-tel,.foot-meta{color:#000}
   .foot-roundels .roundel{border-color:#000!important}
   .foot-roundels .r-nai{background:#000!important;color:#fff!important}

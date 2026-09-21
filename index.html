@@ -207,58 +207,42 @@
         </div>
 
         <div class="care-stage">
-          <!-- LANE 体 (default) -->
+          <!-- LANE 体 (default). ZONE A = このレーン固有のことだけ。行き先は下の .care-dest に一度だけ。 -->
           <article class="care-card care-lane c-nai is-on" id="naika" role="tabpanel" aria-labelledby="tab-naika">
             <div class="care-head"><span class="care-glyph" aria-hidden="true">体</span><h3>一般内科</h3></div>
-            <p class="lane-promise">健診で気になった数値も、急なかぜも。</p>
             <div class="lane-body">
               <div class="lane-main">
+                <p class="lane-promise">健診で気になった数値も、急なかぜも。</p>
                 <h4 class="lane-h">こんなときに</h4>
                 <ul>
                   <li><a class="lane-more" href="/seikatsushukanbyo.html#kenshin">健康診断で気になった項目のご相談——「要再検査」の紙を、そのままお持ちください。<span aria-hidden="true">→</span></a></li>
                   <li>高血圧・糖尿病・脂質異常症などの生活習慣病を、続けて診てほしい</li>
-                  <li>のどの痛み・せき・鼻水などのかぜ症状（発熱のある方は、下の発熱外来をご覧ください）</li>
+                  <li>のどの痛み・せき・鼻水などのかぜ症状</li>
                   <li>胸やけ・胃もたれ・お腹の調子がすぐれない日が続く</li>
-                  <li>だるさ・動悸・めまい・頭痛が続く（検査で大きな異常がなかったときも）</li>
-                </ul>
-              </div>
-              <div class="lane-aside">
-                <h4 class="lane-h">診察・検査のあとは</h4>
-                <svg class="rt" viewBox="0 0 240 136" aria-hidden="true" focusable="false">
-                  <circle class="rt-from" cx="28" cy="70" r="7.5"/>
-                  <text class="rt-origin" x="28" y="94" text-anchor="middle">診察・検査</text>
-                  <path d="M35.5 70H70"/>
-                  <path d="M70 26V114"/>
-                  <path d="M70 26H92"/><path class="rt-end" d="M92 19V33"/>
-                  <path d="M70 70H92"/><path class="rt-end" d="M92 63V77"/>
-                  <path d="M70 114H92"/>
-                  <circle class="rt-to" cx="99.5" cy="114" r="7.5"/>
-                  <text x="100" y="26" dy=".35em">①</text>
-                  <text x="100" y="70" dy=".35em">②</text>
-                  <text x="112" y="114" dy=".35em">③</text>
-                </svg>
-                <ul class="route-legend">
-                  <li><b>①治療をつづける</b>当院で対応できるものは、治療のご相談を始めます。</li>
-                  <li><b>②連携先へご紹介</b>精密検査や専門的な治療が必要なときは、症状に応じた医療機関をご紹介します。</li>
-                  <li class="rl-norikae"><b>③心療内科・精神科へ</b>眠りや気持ちのこと、ストレスによるからだの症状は、院内の担当医へご案内します。</li>
+                  <li>だるさ・動悸・めまい・頭痛が続く</li>
                 </ul>
                 <p class="nk-line"><svg class="mk-dot" viewBox="0 0 20 12" aria-hidden="true" focusable="false"><circle cx="6" cy="6" r="6" fill="currentColor"/><rect x="6" y="4.5" width="14" height="3" fill="currentColor"/></svg><a href="/seikatsushukanbyo.html">健診の結果と生活習慣病のことは、専用のページへ<span aria-hidden="true">→</span></a></p>
-                <p class="lane-book">予約なしでお越しいただける時間帯があります。<a href="#hours">診療時間を見る</a></p>
               </div>
-            </div>
-            <!-- 発熱外来 = 内科 triage sub-row. Walk-in during hours (clinic decision 2026-09-09): filled ink 熱. Never shown in the 心 lane. -->
-            <div class="care-sub c-netsu" id="hatsunetsu">
-              <span class="care-glyph" aria-hidden="true">熱</span>
-              <div><h4>発熱外来（発熱・かぜの症状）</h4><p>発熱のある方も、診療時間内であればそのままお越しください。受付でその旨をお伝えください。</p></div>
+              <!-- .lane-act = このレーンの「行動」パネル。短くてよい：枠のある物の余りは余白に読める。 -->
+              <aside class="lane-act">
+                <p class="lane-book">予約なしでお越しいただける時間帯があります。<a href="#hours">診療時間を見る</a></p>
+                <!-- 発熱外来 = 内科 triage row. Walk-in during hours (clinic decision 2026-09-09): filled ink 熱. Never shown in the 心 lane. id kept: scroll-margin rules point at #hatsunetsu. -->
+                <div class="care-sub c-netsu" id="hatsunetsu">
+                  <span class="care-glyph" aria-hidden="true">熱</span>
+                  <div><h4>発熱外来（発熱・かぜの症状）</h4><p>発熱のある方も、診療時間内であればそのままお越しください。受付でその旨をお伝えください。</p></div>
+                </div>
+              </aside>
             </div>
           </article>
 
           <!-- LANE 心 -->
           <article class="care-card care-lane c-shin" id="seishinka" role="tabpanel" aria-labelledby="tab-seishinka">
             <div class="care-head"><span class="care-glyph" aria-hidden="true">心</span><h3>心療内科・精神科</h3></div>
-            <p class="lane-promise">眠りのこと、気持ちのこと、仕事のこと。まずは話すところから。</p>
             <div class="lane-body">
               <div class="lane-main">
+                <p class="lane-promise">眠りのこと、気持ちのこと、仕事のこと。まずは話すところから。</p>
+                <!-- 固定文言。1ページ1回・緑・心レーン・押せない。位置だけ promise 直下（2番目に読まれる）。 -->
+                <p class="safety-line">受付も待合も、内科と同じです。</p>
                 <h4 class="lane-h">こんなときに</h4>
                 <ul>
                   <li>寝つけない・夜中に目が覚める・朝早く目が覚めるなど、不眠が何週間も続いている</li>
@@ -267,34 +251,33 @@
                   <li><a class="lane-more" href="/hataraku.html">仕事を続けるためのご相談と、休職・復職に関わる書類のこと<span aria-hidden="true">→</span></a></li>
                   <li>「受診するほどかな」と迷っている段階でも</li>
                 </ul>
-              </div>
-              <div class="lane-aside">
-                <p class="safety-line">受付も待合も、内科と同じです。</p>
-                <h4 class="lane-h">お話をうかがったあとは</h4>
-                <svg class="rt" viewBox="0 0 240 136" aria-hidden="true" focusable="false">
-                  <circle class="rt-from" cx="28" cy="70" r="7.5"/>
-                  <text class="rt-origin" x="28" y="94" text-anchor="middle">診察</text>
-                  <path d="M35.5 70H70"/>
-                  <path d="M70 26V114"/>
-                  <path d="M70 26H92"/><path class="rt-end" d="M92 19V33"/>
-                  <path d="M70 70H92"/><path class="rt-end" d="M92 63V77"/>
-                  <path d="M70 114H92"/>
-                  <circle class="rt-to" cx="99.5" cy="114" r="7.5"/>
-                  <text x="100" y="26" dy=".35em">①</text>
-                  <text x="100" y="70" dy=".35em">②</text>
-                  <text x="112" y="114" dy=".35em">③</text>
-                </svg>
-                <ul class="route-legend">
-                  <li><b>①通院をつづける</b>次回のご案内をします。通院のなかで続けてご相談いただけます。</li>
-                  <li><b>②連携先へご紹介</b>専門的な治療が必要なときは、症状に応じた医療機関をご紹介します。</li>
-                  <li class="rl-norikae"><b>③からだのことは内科で</b>血圧や体重など、からだの面は院内の内科で診ます。</li>
-                </ul>
                 <p class="nk-line"><svg class="mk-dot" viewBox="0 0 20 12" aria-hidden="true" focusable="false"><circle cx="6" cy="6" r="6" fill="currentColor"/><rect x="6" y="4.5" width="14" height="3" fill="currentColor"/></svg><a href="/hataraku.html">休職・復職と書類のことは、はたらく方へ<span aria-hidden="true">→</span></a></p>
-                <!-- GATED (CONFIRM #1). Variant A/B replacement text is in care-spec-notes. -->
-                <p class="lane-book">心療内科・精神科をはじめて受診される方は、まずお電話ください。受診できる枠をご案内します。<a href="/hajimete.html#yoyaku">ご予約について</a></p>
               </div>
+              <aside class="lane-act">
+                <!-- GATED (CONFIRM #1). Variant A/B replacement text is in care-spec-notes. String unchanged until the gate opens. -->
+                <p class="lane-book">心療内科・精神科をはじめて受診される方は、まずお電話ください。受診できる枠をご案内します。<a href="/hajimete.html#yoyaku">ご予約について</a></p>
+              </aside>
             </div>
           </article>
+        </div>
+
+        <!-- ZONE B — 行き先サイン。両 tabpanel の外・.care-stage の兄弟。セクションに一度だけ刷り、タブ切替で変わらない（その不変がメッセージ）。
+             図ではなく活字。番号は使わない（丸数字＝手順の含意）。印：1・2は中立ヘアライン、3だけが のりかえ の分割バー（ページに1本）。
+             .nk-mark は使えない（pages.css にあり index は styles.css しか読まない）。data-reveal は付けない（#care の内側はリビールしない）。 -->
+        <div class="care-dest">
+          <h3 class="dest-title">診察のあとの行き先</h3>
+          <p class="dest-lead">どちらの科から受診されても、行き先は同じ3つです。</p>
+          <ul class="dest-grid">
+            <li class="dest"><span class="dest-mark" aria-hidden="true"></span>
+              <h4>当院で続ける</h4>
+              <p>当院で対応できるものは、治療や通院のご相談を始めます。</p></li>
+            <li class="dest"><span class="dest-mark" aria-hidden="true"></span>
+              <h4>専門の医療機関へご紹介</h4>
+              <p>精密検査や専門的な治療が必要なときは、症状に応じた医療機関をご紹介します。</p></li>
+            <li class="dest"><span class="dest-mark dest-mark--norikae" aria-hidden="true"></span>
+              <h4>院内のもう一方の科へ</h4>
+              <p>眠りや気持ちのことは心療内科・精神科へ。血圧や体重など、からだのことは内科へ。院内でご案内します。</p></li>
+          </ul>
         </div>
       </div>
 

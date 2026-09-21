@@ -800,14 +800,21 @@ def rule_route_strips(pages):
                     pass  # origin label itself is JP text — allowed; only flag branch NAME leakage separately below
 
         if name == "index.html":
-            report("PASS" if len(viewboxes.get(name, [])) >= 2 and len(set(viewboxes[name])) == 1
-                   else "FAIL", f"HOME STRIPS SHARE VIEWBOX [{name}]",
-                   f"viewboxes found: {viewboxes.get(name)}")
+            # 3-BRANCH strip retired from home 2026-09-21 (legend-binding failed the patient test).
+            # Destinations are typeset once in .care-dest. A .rt on index is a regression.
+            report("PASS" if not viewboxes.get(name) else "FAIL",
+                   f"HOME HAS NO ROUTE STRIP [{name}]", f"viewboxes found: {viewboxes.get(name)}")
+            for cls, want in (("route-legend", 0), ("rl-norikae", 0), ("lane-aside", 0), ("care-dest", 1), ("nk-mark", 0)):
+                n = len(re.findall(r'class="[^"]*\b' + cls + r'\b', text))
+                report("PASS" if n == want else "FAIL", f"CARE V2 {cls} count [{name}]", f"count={n}, expected {want}")
+        if name == "seikatsushukanbyo.html":
+            report("PASS" if len(viewboxes.get(name, [])) == 1 else "FAIL",
+                   f"SEIKATSU 4-BRANCH STRIP PRESENT [{name}]", f"viewboxes found: {viewboxes.get(name)}")
     if not viewboxes:
         report("SKIP", "ROUTE STRIPS", "no .rt elements found in checked set")
     else:
         report("PASS", "ROUTE STRIPS structural scan", "completed (see FAILs above if any)")
-    report("MANUAL", "Route strip colour binding (JS-disabled): 内科=vermilion-origin/ink-terminus, 精神科=reverse")
+    report("MANUAL", "Route strip colour binding (JS-disabled): seikatsu 4-branch band is c-nai (vermilion origin / ink terminus). Home has no strip; with JS off both lanes stack and .care-dest appears once beneath them.")
 
 
 # ---------------------------------------------------------------------------
