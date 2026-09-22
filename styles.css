@@ -163,12 +163,12 @@ section{padding-block:64px}
 .roundel.r-shin::after{content:"";position:absolute;left:-1.5px;top:50%;transform:translateY(-50%);width:4.5px;height:2px;background:var(--ink)}
 .roundel-link{width:28px;height:2px;background:linear-gradient(90deg,var(--vermilion) 0 50%,var(--ink) 50% 100%);margin-inline:6px}
 .hero h1{font-size:clamp(32px,4.2vw,54px);line-height:1.35;letter-spacing:.01em;color:var(--ink);margin-top:12px;text-wrap:balance}
-.hero h1 .num{font-size:1.15em}
+.hero h1 .num{font-size:1em}   /* numbers sit on the same size as the words around them (Keeyo 2026-09-23: no 凸凹) */
 .hero .tagline{font-family:var(--font-display);font-weight:500;font-size:clamp(16px,2vw,22px);color:var(--ink);margin-top:14px}
 .fact-strip{margin-top:32px;border-block:1px solid var(--line)}
 .fact-strip .cell{padding:14px 4px;font-weight:600;font-size:15px;border-bottom:1px solid var(--line)}
 .fact-strip .cell:last-child{border-bottom:none}
-.fact-strip .num{font-size:1.2em}
+.fact-strip .num{font-size:1em}
 .hero-cta{display:flex;flex-wrap:wrap;gap:12px;margin-top:24px}
 .hero-cta .btn-call{width:100%}
 .hero-photo{position:relative;margin-top:8px}
@@ -287,7 +287,7 @@ section{padding-block:64px}
 .access-map{display:block;width:100%;max-width:320px;height:auto;aspect-ratio:272/150;margin-top:20px}
 .access-map .am-stop text{font-weight:700;font-size:19px;letter-spacing:0}   /* CHARACTER FLOOR; the face comes from the GLYPH PIN below */
 .access-map .am-name{font-family:var(--font-display);font-weight:700;font-size:var(--t-h4);letter-spacing:.02em}
-.access-map .am-min{font-family:var(--font-body);font-weight:700;font-size:var(--t-h3);font-feature-settings:'tnum';letter-spacing:.02em}
+.access-map .am-min{font-family:var(--font-body);font-weight:700;font-size:var(--t-h4);font-feature-settings:'tnum';letter-spacing:.02em}   /* same size as the station name: one voice, no 凸凹 */
 .access-note{max-width:320px;margin-top:10px;font-size:var(--t-cap);line-height:1.8;color:var(--ink-2)}
 /* 描き込み — 順序＝到着の向き：①2本の脚が駅から合流点へ → ②幹が上下から分岐点へ（上半分は下向き・下半分は上向き）
    → ③最後の脚が院へ入る。丸いものは何も動かない。site.js は無変更（IIFE 4 が [data-reveal-mark] を総称で観測）。
@@ -379,7 +379,7 @@ footer{background:var(--ink);color:var(--paper);padding:48px 0 48px}
 /* ---------- review-pass additions ---------- */
 .pg-updated{padding-block:16px 32px;text-align:center;font-size:var(--t-cap);color:var(--ink-2)}
 .hours-times{font-size:14px;font-weight:600;color:var(--ink);margin-bottom:10px}
-.hours-times .num{font-size:1.05em}
+.hours-times .num{font-size:1em}
 .slot-note{display:block;font-size:11px;font-weight:400;color:var(--steel-text)}
 .th-tag{display:block;font-size:var(--t-cap);color:var(--vermilion-text);font-weight:700;letter-spacing:.04em}
 .first-visit{margin-top:24px;background:var(--paper);border:1px solid var(--line);border-radius:var(--radius);padding:20px 24px;max-width:900px}
