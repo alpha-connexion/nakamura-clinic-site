@@ -831,7 +831,7 @@ def rule_route_strips(pages):
             # Destinations are typeset once in .care-dest. A .rt on index is a regression.
             report("PASS" if not viewboxes.get(name) else "FAIL",
                    f"HOME HAS NO ROUTE STRIP [{name}]", f"viewboxes found: {viewboxes.get(name)}")
-            for cls, want in (("route-legend", 0), ("rl-norikae", 0), ("lane-aside", 0), ("care-dest", 1), ("nk-mark", 0)):
+            for cls, want in (("route-legend", 0), ("rl-norikae", 0), ("lane-aside", 0), ("care-dest", 0), ("nk-mark", 0)):
                 n = sum(1 for attr in re.findall(r'class="([^"]*)"', text) if cls in attr.split())
                 report("PASS" if n == want else "FAIL", f"CARE V2 {cls} count [{name}]", f"count={n}, expected {want}")
         if name == "seikatsushukanbyo.html":

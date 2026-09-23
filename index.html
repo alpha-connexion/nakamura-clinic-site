@@ -207,7 +207,7 @@
         </div>
 
         <div class="care-stage">
-          <!-- LANE 体 (default). ZONE A = このレーン固有のことだけ。行き先は下の .care-dest に一度だけ。 -->
+          <!-- LANE 体 (default). ZONE A = このレーン固有のことだけ（症状リスト・出口リンク・行動パネル）。「診察のあとに、どう進むか」の置き場は .why-tile 2。 -->
           <article class="care-card care-lane c-nai is-on" id="naika" role="tabpanel" aria-labelledby="tab-naika">
             <div class="care-head"><span class="care-glyph" aria-hidden="true">体</span><h3>一般内科</h3></div>
             <div class="lane-body">
@@ -259,25 +259,6 @@
               </aside>
             </div>
           </article>
-        </div>
-
-        <!-- ZONE B — 行き先サイン。両 tabpanel の外・.care-stage の兄弟。セクションに一度だけ刷り、タブ切替で変わらない（その不変がメッセージ）。
-             図ではなく活字。番号は使わない（丸数字＝手順の含意）。印：1・2は中立ヘアライン、3だけが のりかえ の分割バー（ページに1本）。
-             .nk-mark は使えない（pages.css にあり index は styles.css しか読まない）。data-reveal は付けない（#care の内側はリビールしない）。 -->
-        <div class="care-dest">
-          <h3 class="dest-title">診察のあとの行き先</h3>
-          <p class="dest-lead">どちらの科から受診されても、行き先は同じ。この3つのどれかです。</p>
-          <ul class="dest-grid">
-            <li class="dest"><span class="dest-mark" aria-hidden="true"></span>
-              <h4>当院で続ける</h4>
-              <p>当院で対応できるものは、治療や通院のご相談を始めます。</p></li>
-            <li class="dest"><span class="dest-mark" aria-hidden="true"></span>
-              <h4>専門の医療機関へご紹介</h4>
-              <p>精密検査や専門的な治療が必要なときは、症状に応じた医療機関をご紹介します。</p></li>
-            <li class="dest"><span class="dest-mark dest-mark--norikae" aria-hidden="true"></span>
-              <h4>からだもこころも、院内で</h4>
-              <p>眠りや気持ちのことも、血圧や体重などからだのことも、同じ院内でそのままご相談いただけます。診察の日程は受付でご案内します。</p></li>
-          </ul>
         </div>
       </div>
 

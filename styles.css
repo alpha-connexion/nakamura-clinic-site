@@ -528,30 +528,8 @@ html:active-view-transition .care-lane{transition:none}
   .care-lane{padding:22px 20px 22px 24px}   /* card interior 267 → 307px on 375; lanes only (channel note panels share .care-card) */
 }
 
-/* ---------- ZONE B — 行き先サイン (.care-dest) ----------
-   Replaces the two home .rt strips + two .route-legend blocks (retired 2026-09-21: patients read ①②③ as steps).
-   Outside both tabpanels, paper ground, unchanged by the tab switch. No numerals (alternatives, not steps).
-   Marks: neutral hairline 8×1.5 (cards 1–2); the のりかえ split bar 16×2.5 on card 3 only — the sign belongs to the whole
-   clinic, so it takes the PAIR direction (vermilion→ink, like .nk-mark) and is never bound to .c-nai/.c-shin.
-   Zero new badges/glyphs/colours. No reveal, no motion (the existing lane crossfade now carries the message: the sign does not move). */
-.care-dest{margin-top:var(--sec);padding-top:var(--sec);border-top:1px solid var(--line)}
-.dest-title{font-family:var(--font-display);font-weight:700;font-size:var(--t-h3);line-height:1.5;color:var(--ink);margin-bottom:4px;font-feature-settings:'palt'}
-.dest-lead{font-size:var(--t-sub);line-height:1.9;color:var(--ink-2);margin-bottom:20px;text-wrap:balance}
-.dest-grid{list-style:none;display:grid;gap:20px}
-.dest{position:relative}
-.dest+.dest{border-top:1px solid var(--line);padding-top:20px}
-.dest-mark{display:block;width:8px;height:1.5px;background:var(--ink-2);margin-bottom:10px}
-.dest-mark--norikae{width:16px;height:2.5px;background:linear-gradient(90deg,var(--vermilion) 0 50%,var(--ink) 50% 100%)}
-.dest h4{font-family:var(--font-display);font-weight:700;font-size:var(--t-h4);line-height:1.6;color:var(--ink);margin:0 0 4px;font-feature-settings:'palt'}
-.dest p{font-size:var(--t-note);line-height:1.9;color:var(--ink);text-wrap:pretty}
-@media (min-width:768px){
-  .dest-grid{grid-template-columns:repeat(3,1fr);gap:32px}
-  .dest+.dest{border-top:0;padding-top:0}
-  .dest-mark{margin-bottom:12px}
-}
-@media (min-width:1024px){
-  .dest-grid{gap:40px}
-}
+/* ZONE B (.care-dest 行き先サイン) — built 2026-09-21, REMOVED 2026-09-24: destinations 1–2 are table stakes
+   (Keeyo: 「当然のこと」); the razor keeps its single home in .why-tile 2 「診察のあとに、どう進むか。」 */
 @media (min-width:768px){
   .js .care-switch{width:min(100%,480px)}          /* folder-tab: strip fuses into the card's top-left */
   .js .care-lane{border-top-right-radius:var(--radius)}
@@ -804,7 +782,7 @@ html.js.rv-go{--rv-fail:none;--rv-fail-m:none}      /* site.js is alive → disa
   .js .care-lane{grid-area:auto!important;visibility:visible!important;opacity:1!important}
   .hours-table{display:block!important}.hours-list{display:none!important}
   .band,.hero-photo,.doc-panel,.care-card,.pg-doc-table-wrap,.hours-table{break-inside:avoid}
-  .roundel,.care-glyph,.roundel-link,.nk-mark,.kicker::before,.why-tile .tick,.dest-mark,.access-map{print-color-adjust:exact;-webkit-print-color-adjust:exact}
+  .roundel,.care-glyph,.roundel-link,.nk-mark,.kicker::before,.why-tile .tick,.access-map{print-color-adjust:exact;-webkit-print-color-adjust:exact}
   .foot-name,.foot-corp,.foot-tel,.foot-meta{color:#000}
   .foot-roundels .roundel{border-color:#000!important}
   .foot-roundels .r-nai{background:#000!important;color:#fff!important}
