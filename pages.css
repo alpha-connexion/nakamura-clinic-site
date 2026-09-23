@@ -222,7 +222,7 @@
    ========================================================================= */
 
 /* 1. 活字の梯子 */
-.pg-sub{font-size:var(--t-h3);line-height:1.5}   /* site-wide 2026-09-24: was unset (UA 18.72px) on every channel page */
+.pg-sec h3,.pg-band h3,.pg-sub{font-size:var(--t-h3);line-height:1.5}   /* site-wide 2026-09-24: was unset (UA 18.72px) on every channel page */
 .pg-lead{font-size:clamp(16px,1.8vw,18px)}
 .pg-doc-notes li{font-size:var(--t-sub)}
 /* 列ラベルはクローム。>=640px の thead も、<640px の ::before（pages.css:156、無変更）も
