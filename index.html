@@ -118,7 +118,6 @@
       <span class="lbl">電話する</span><span class="tel">06-6245-0378</span>
     </a>
   </div>
-  <div class="hdr-util"><nav class="wrap" aria-label="医院情報"><a href="#hours">診療時間</a><a href="#docs">医師紹介</a><a href="#access">アクセス</a><a href="/shisetsu-kijun.html">院内掲示</a></nav></div>
 </header>
 
 <main id="top" tabindex="-1">
@@ -148,10 +147,20 @@
         <h1>からだのことも、<span class="nowrap">こころのこと</span>も。<br><span class="nowrap">本町駅</span>から<span class="nowrap"><span class="num">徒歩3分</span>。</span></h1>
         <p class="tagline">はたらく人の、からだとこころのかかりつけ。</p>
         <div class="fact-strip">
-          <!-- 堺筋本町駅 徒歩6分 は第三者掲載値 [CONFIRM C13]。アクセス図・最寄駅行と同じ値を保つ。 -->
-          <div class="cell">御堂筋線 <span class="nowrap">本町駅</span> <span class="num">徒歩3分</span><br>堺筋線 <span class="nowrap">堺筋本町駅</span> <span class="num">徒歩6分</span></div>
-          <div class="cell">予約なしOK<span class="slot-note">※ 水曜午後・金曜・土曜午後は完全予約制</span></div>
-          <div class="cell">内科・心療内科・精神科、<span class="nowrap">ひとつの受付</span></div>
+          <!-- 徒歩分数は【この帯】【#access の案内図 .access-map】【医院概要の最寄駅行】の3か所が同じ値を持つ。
+               変えるときは同じコミットで3か所とも直す。堺筋本町駅 徒歩6分 は第三者掲載値 [CONFIRM C13]。 -->
+          <div class="cell">
+            <span class="fx-fact"><span class="nowrap">本町駅</span> <span class="num">徒歩3分</span></span>
+            <span class="fx-note"><span class="nowrap">堺筋本町駅</span> <span class="num">徒歩6分</span></span>
+          </div>
+          <div class="cell">
+            <span class="fx-fact"><span class="nowrap">予約なしでも</span><span class="nowrap">受診できます</span></span>
+            <span class="fx-note">※ 水曜午後・金曜・土曜午後は完全予約制</span>
+          </div>
+          <div class="cell">
+            <span class="fx-fact">内科・心療内科・精神科</span>
+            <span class="fx-note">ひとつの受付</span>
+          </div>
         </div>
         <div class="hero-cta">
           <a class="btn-call" href="tel:0662450378" id="heroCall">
@@ -378,10 +387,12 @@
         <p class="doc-ruby">いしかわ よしひろ</p>
         <h3 class="doc-name-h"><span class="doc-name">院長　石川 賀弘</span><span class="doc-chip">内科</span></h3>
         <p class="pull-line">からだとこころ、分けずに話せる診察室です。</p>
-        <p>お待たせする時間は、できるだけ短く。診察の時間は、急がせない。はたらく皆さまが通いやすいクリニックであるために、この2つを大切にしています。</p>
-        <p>血圧や血糖の数値のことも、眠りや気持ちのことも、分けずにお話しください。どこから診ていくかは、診察室で一緒に整理します。</p>
+        <!-- [CONFIRM D9] 医師本人の承認待ちの草案 -->
+        <p>お待たせする時間は、できるだけ短く。診察の時間は、急がせない。</p>
+        <p>数値のことも、眠りや気持ちのことも、分けずにお話しください。どこから診ていくかは、診察室で一緒に整理します。</p>
         <div class="doc-sub"><span class="n">心療内科・精神科 担当医</span></div>
-        <p class="doc-sub-line">精神科の診療は、担当医がお話をうかがうところから始めます。話す順番も、うまくまとまっているかも、気にしなくて大丈夫です。</p>
+        <!-- [CONFIRM D9] 医師本人の承認待ちの草案 -->
+        <p class="doc-sub-line">心療内科・精神科の診察は、担当医がお話をうかがうところから始まります。話す順番も、うまくまとまっているかも、気にしなくて大丈夫です。会社にお伝えすることがあれば、その内容はご本人と一緒に決めます。</p>
       </div>
       <aside class="doc-panel" aria-hidden="true">
         <!-- 院長ポートレートのスロット。写真が届いたら <picture> をここに置き、.doc-panel-quote を 『院長　石川 賀弘』 のキャプションに差し替え、styles.css:384 の .doc-body .pull-line{display:none} を削除すること。 -->
@@ -406,7 +417,7 @@
           <div class="spec-row"><dt>診療科目</dt><dd>内科・心療内科・精神科</dd></div>
           <div class="spec-row"><dt>所在地</dt><dd>〒541-0054　大阪府大阪市中央区南本町3丁目1-12<br>カネセ中央ビル1階</dd></div>
           <div class="spec-row"><dt>電話</dt><dd><a class="tel-big" href="tel:0662450378">06-6245-0378</a>（外来直通）</dd></div>
-          <!-- 徒歩分数はこの行とアクセス図の2か所にある。変えるときは同じコミットで両方。路線名は「その駅で使う線」だけ（全線の一覧は C13-b の返答後）。出口番号は C13-c の返答まで書かない。 -->
+          <!-- 徒歩分数はこの行とアクセス図とヒーローの事実ストリップの3か所にある。変えるときは同じコミットで3か所とも。路線名は「その駅で使う線」だけ（全線の一覧は C13-b の返答後）。出口番号は C13-c の返答まで書かない。 -->
           <div class="spec-row"><dt>最寄駅</dt><dd>Osaka Metro 御堂筋線「本町駅」徒歩3分／堺筋線「堺筋本町駅」徒歩6分<small>※ 専用駐車場はありません。お車の際は近隣のコインパーキングをご利用ください</small></dd></div>
           <div class="spec-row"><dt>休診日</dt><dd>木曜・日曜・祝日</dd></div>
           <div class="spec-row"><dt>処方</dt><dd>院外処方</dd></div>

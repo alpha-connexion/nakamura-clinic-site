@@ -97,8 +97,14 @@ header{position:sticky;top:0;z-index:100;background:var(--card);border-bottom:1p
 .brand{text-decoration:none;line-height:1.25;display:flex;flex-direction:column;justify-content:center;min-height:44px}
 .brand .name{font-family:var(--font-display);font-weight:700;font-size:18px;letter-spacing:.02em;color:var(--vermilion);display:block}
 .brand .sub{display:none;font-size:10px;color:var(--steel-text);letter-spacing:.06em}
-nav.main{display:none;align-items:center;gap:22px}
-nav.main a{font-size:14px;font-weight:600;text-decoration:none;color:var(--ink);padding-block:4px;border-bottom:2px solid transparent}
+/* ONE BAR（2026-09-24）。第2段 .hdr-util を削除した——4つの行き先は7ページ全ての
+   footer 3グループに既にあり、二重化は ADD-OR-DON'T TEST が唯一禁じているもの。
+   1024px の予算：.wrap 928 ＝ brand 約201 ＋ nav 約426 ＋ .hdr-call 約228 ＋ gap 32。
+   5つ目のナビ項目を足さないこと。 */
+nav.main{display:none;align-items:center;gap:22px;white-space:nowrap}
+nav.main a{position:relative;font-size:14px;font-weight:600;text-decoration:none;color:var(--ink);padding-block:4px;border-bottom:2px solid transparent}
+/* 44px の当たり判定を、2px の朱の下線を文字から引き離さずに作る：padding ではなく透明の pad。 */
+nav.main a::after{content:"";position:absolute;inset:-9px 0}
 nav.main a:hover{border-color:var(--vermilion)}
 nav.main a[aria-current="page"]{border-color:var(--vermilion)}
 .hdr-call{display:inline-flex;align-items:center;gap:8px;background:var(--vermilion-action);color:#fff;text-decoration:none;border-radius:var(--radius-cta);min-height:44px;padding:8px 16px;font-weight:700;font-size:14px;transition:background .12s}
@@ -110,17 +116,9 @@ nav.main a[aria-current="page"]{border-color:var(--vermilion)}
   .brand .name{font-size:20px}
   .brand .sub{display:block}
 }
+/* 1024-1149 が最も狭い窓。フォントのフォールバックが太くてもバーを溢れさせない18pxの余裕。 */
+@media (min-width:1024px) and (max-width:1149px){nav.main{gap:16px}}
 @media (max-width:1023px){.hdr-call .tel{display:none}}
-
-/* ---------- header rank 2 (.hdr-util) — ≥1024px only ---------- */
-.hdr-util{display:none}
-@media (min-width:1024px){
-  .hdr-util{display:block;border-top:1px solid var(--line);background:var(--card)}
-  .hdr-util nav{display:flex;justify-content:flex-end;align-items:center;gap:20px;min-height:34px}
-  .hdr-util a{font-size:var(--t-cap);color:var(--steel-text);text-decoration:none;padding-block:8px}
-  .hdr-util a:hover{color:var(--ink)}
-  section[id],#hatsunetsu{scroll-margin-top:114px}
-}
 
 /* ---------- .notice — 臨時休診 band (ships commented out in every page's shell) ---------- */
 .notice{background:var(--paper);border-block:1px solid var(--line);border-left:4px solid var(--vermilion)}
@@ -165,10 +163,23 @@ section{padding-block:64px}
 .hero h1{font-size:clamp(32px,4.2vw,54px);line-height:1.35;letter-spacing:.01em;color:var(--ink);margin-top:12px;text-wrap:balance}
 .hero h1 .num{font-size:1em}   /* numbers sit on the same size as the words around them (Keeyo 2026-09-23: no 凸凹) */
 .hero .tagline{font-family:var(--font-display);font-weight:500;font-size:clamp(16px,2vw,22px);color:var(--ink);margin-top:14px}
+/* ---------- hero fact strip — 三つの事実、ひとつの行 ----------
+   SHAPE: どのセルも同じ形。1行目＝事実 15px/600、2行目＝但し書き 12px/400。
+   ROW LOCK: .cell は親の2行を subgrid で共有する。事実行が将来折り返しても、
+     三つの但し書きは必ず同じベースラインから始まる。これが「凸凹」への答えで、
+     号数の選び直しではない。
+   SIZE: 以前ここは .slot-note（診療時間表のクラス・11px）を借りていた。型スケールに
+     11px は無い。ヒーローと表を切り離した。.slot-note は表のまま触らない。
+   SPINE: 先頭セル padding-left:0 / 末尾セル padding-right:0。帯の文字が H1・tagline と
+     同じ左端に乗る（ALIGNMENT SPINE, global.md）。 */
 .fact-strip{margin-top:32px;border-block:1px solid var(--line)}
-.fact-strip .cell{padding:14px 4px;font-weight:600;font-size:15px;border-bottom:1px solid var(--line)}
+.fact-strip .cell{display:grid;gap:2px;padding:12px 0;border-bottom:1px solid var(--line)}
 .fact-strip .cell:last-child{border-bottom:none}
-.fact-strip .num{font-size:1em}
+.fx-fact{font-weight:600;font-size:var(--t-h4);line-height:1.7;color:var(--ink)}
+.fx-note{font-weight:400;font-size:var(--t-cap);line-height:1.6;letter-spacing:.02em;color:var(--ink-2)}
+/* 数字だけ太くしない。.num は既定で 700（styles.css:70）。H1 と同じ判断
+   （styles.css:166、Keeyo 2026-09-23「no 凸凹」）をここにも通す。 */
+.fact-strip .num{font-size:1em;font-weight:inherit}
 .hero-cta{display:flex;flex-wrap:wrap;gap:12px;margin-top:24px}
 .hero-cta .btn-call{width:100%}
 .hero-photo{position:relative;margin-top:8px}
@@ -182,11 +193,18 @@ section{padding-block:64px}
   .roundel{width:56px;height:56px;border-width:2px;padding:3.5px;font-size:24px}
   .roundel.r-nai::after{right:-2px;width:5.5px;height:3px}
   .roundel.r-shin::after{left:-2px;width:5.5px;height:3px}
-  .fact-strip{display:flex}
-  .fact-strip .cell{flex:1;padding:16px 24px;border-bottom:none;border-right:1px solid var(--line)}
-  .fact-strip .cell:last-child{border-right:none}
   .hero-cta .btn-call{width:auto}
 }
+/* 行になるのは 1024px から。768-1023 ではヒーロー左段が 416px しかなく、
+   3列にすると各セル約91px＝375px 端末より狭い文字幅になる。ここでは積む。 */
+@media (min-width:1024px){
+  .fact-strip{display:grid;grid-template-columns:minmax(0,6fr) minmax(0,10fr) minmax(0,9fr);grid-template-rows:auto auto}
+  .fact-strip .cell{grid-row:span 2;grid-template-rows:subgrid;row-gap:4px;padding:16px 20px;border-bottom:none;border-right:1px solid var(--line)}
+  .fact-strip .cell:first-child{padding-left:0}
+  .fact-strip .cell:last-child{padding-right:0;border-right:none}
+}
+/* 1024-1149 が最も狭い。内側の余白だけ詰めて約16px を稼ぐ（外側の 0 は :first/:last が勝つ）。 */
+@media (min-width:1024px) and (max-width:1149px){.fact-strip .cell{padding-inline:14px}}
 
 /* レーザーのただ1つの置き場 */
 /* ---------- 選ばれる理由 ---------- */
@@ -738,7 +756,7 @@ html.js.rv-go{--rv-fail:none;--rv-fail-m:none}      /* site.js is alive → disa
   @page{margin:14mm}
   body{display:flex;flex-direction:column;background:#fff;color:#000}
   footer{order:-1;background:#fff;color:#000;border-bottom:1px solid #000;padding:12px 0 16px}
-  header,.hdr-util,.mnav,.notice,.mbar,.close-cta,.skip,.foot-groups,.foot-copy,.pg-acts,.care-switch,.map-btn,.hm-links,.care-note{display:none!important}
+  header,.mnav,.notice,.mbar,.close-cta,.skip,.foot-groups,.foot-copy,.pg-acts,.care-switch,.map-btn,.hm-links,.care-note{display:none!important}
   .wrap{max-width:none;padding-inline:0}
   section,.pg-sec{padding-block:14px}
   a{color:#000;text-decoration:none}

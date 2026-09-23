@@ -65,7 +65,7 @@ def main(argv):
             block = canon[name]
             if name == "header":
                 # re-apply aria-current to this page's own link, but only inside nav.main
-                # (document pages linked from .hdr-util carry no aria-current)
+                # (only nav.main items take aria-current)
                 nav_s = block.find('<nav class="main"'); nav_e = block.find('</nav>', nav_s)
                 if nav_s != -1 and nav_e != -1:
                     nav = block[nav_s:nav_e].replace(f'<a href="/{page}">', f'<a href="/{page}" aria-current="page">', 1)
