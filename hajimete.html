@@ -34,7 +34,7 @@
     {
       "@type": "MedicalWebPage",
       "name": "はじめて受診される方へ",
-      "description": "持ち物と、ご予約のきまり、費用をまとめたページです。",
+      "description": "持ち物と、ご予約のきまり、費用をまとめたページです。オンライン診療についてもご案内します。",
       "inLanguage": "ja",
       "lastReviewed": "2026-09-09",
       "audience": {
@@ -95,7 +95,7 @@
 <main id="top" tabindex="-1">
 
   <nav class="mnav" aria-label="ページ内リンク">
-    <a href="#mochimono">持ち物</a><a href="#yoyaku">ご予約</a><a href="#hiyou">費用</a>
+    <a href="#mochimono">持ち物</a><a href="#yoyaku">ご予約</a><a href="#online">オンライン</a><a href="#hiyou">費用</a>
   </nav>
 
   <!-- お知らせ帯（季節のご案内・臨時休診）。文言は1行、理由の説明は書かない。
@@ -123,7 +123,8 @@
       <ol class="pg-acts">
         <li><a href="#mochimono">①お持ちいただくもの</a></li>
         <li><a href="#yoyaku">②ご予約について</a></li>
-        <li><a href="#hiyou">③費用のこと</a></li>
+        <li><a href="#online">③オンライン診療について</a></li>
+        <li><a href="#hiyou">④費用のこと</a></li>
       </ol>
     </div>
   </section>
@@ -166,12 +167,33 @@
       <p class="pg-body"><b>予約なしでも受診できます。</b>ご予約の方を優先してご案内します。</p>
       <p class="pg-body"><b>水曜午後・金曜・土曜午後は完全予約制です。</b>心療内科・精神科をはじめて受診される方は、まずお電話ください。受診できる枠をご案内します。</p>
       <p class="pg-body">ご予約のお電話で、症状をくわしくお話しいただく必要はありません。ご希望の日時だけで結構です。</p>
-      <p class="pg-body">オンラインでの診療については、お電話でご確認ください。発熱のある方は、<a href="/#naika">発熱外来のご案内</a>をご覧ください。</p>
+      <p class="pg-body">発熱のある方は、<a href="/#hatsunetsu">発熱外来のご案内</a>をご覧ください。</p>
     </div>
   </section>
 
   <!-- ④ 費用のこと -->
-  <section class="pg-sec pg-sec-alt" id="hiyou">
+  <!-- オンライン診療 — 届出済み（2026-09-06）。説明の置き場はここ1か所。トップは短い案内ブロックからここへリンクする。
+       国の指針（オンライン診療の適切な実施に関する指針）と診療報酬の要件に基づく事実だけを書く：
+       ・初診オンラインでは 麻薬・向精神薬／基礎疾患不明の患者へのハイリスク薬／8日分以上 は処方できない（指針）。
+       ・「初診で向精神薬を処方しない」旨のウェブ掲示は施設基準の要件（令和6年〜）。令和8年改定でチェックリスト掲示・重複投薬チェックが追加 → [CONFIRM] 院内掲示ページに掲示文を載せるか事務に確認。
+       ・精神科のオンライン精神療法は、同じ医師による過去1年以内の対面診療がある患者に限る（算定要件）。
+       [CONFIRM C6] 対象科・初診の可否（内科）・予約方法・使うツール・費用（システム利用料の有無）が返ったら本文に足す。 -->
+  <section class="pg-sec pg-sec-alt" id="online">
+    <div class="wrap">
+      <div class="kicker" data-reveal><span lang="en">Online</span></div>
+      <h2>オンライン診療について</h2>
+      <p class="pg-body">スマートフォンやパソコンでの診察にも対応しています。対象となる診療、ご予約の方法、費用は、お電話でご確認ください。</p>
+      <h3 class="pg-sub">先にお伝えしておくこと</h3>
+      <ul class="pg-scope-list">
+        <li>心療内科・精神科のオンライン診療は、当院で対面の診察を受けたことのある方が対象です。はじめての方は、対面でお越しください。</li>
+        <li>オンラインでの初診では、睡眠薬や抗不安薬などの向精神薬はお出しできません。国の指針による決まりです。</li>
+        <li>お薬は、処方箋をもとに薬局でお受け取りいただきます。薬局によっては、オンラインでの服薬指導のあとに配送を受けられます。</li>
+        <li>症状によっては、医師の判断で対面での受診をお願いすることがあります。緊急の症状のときは、オンラインではなく、お電話ください。</li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="pg-sec" id="hiyou">
     <div class="wrap">
       <div class="kicker" data-reveal><span lang="en">Fees</span></div>
       <h2 data-reveal>費用のこと</h2>
