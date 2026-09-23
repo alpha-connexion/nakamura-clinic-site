@@ -248,7 +248,7 @@ section{padding-block:64px}
 .day-row .states{display:flex;flex-wrap:wrap;gap:6px;align-items:center;font-size:13px}
 .day-row .sub{font-size:12px;color:var(--steel-text);width:100%}
 .hours-notes{margin-top:16px;display:grid;gap:6px}
-.hours-notes li{list-style:none;font-size:13px;color:var(--ink-2);padding-left:1.2em;text-indent:-1.2em}
+.hours-notes li{list-style:none;font-size:14px;color:var(--ink-2);padding-left:1.2em;text-indent:-1.2em}
 .hours-notes li::before{content:"・";color:var(--ink-2)}
 .call-card{background:var(--paper);border:1px solid var(--line);border-radius:var(--radius);padding:24px;align-self:start}
 .call-card h3{font-size:15px;margin-bottom:14px}
@@ -318,7 +318,7 @@ section{padding-block:64px}
 .kijun{padding-block:32px 48px}
 .kijun-block{max-width:720px;border-top:1px solid var(--ink);padding-top:18px}
 .kijun-title{font-family:var(--font-display);font-weight:700;font-size:14px;color:var(--ink);margin-bottom:10px}
-.kijun-body{font-size:13px;line-height:1.9;color:var(--ink-2)}
+.kijun-body{font-size:14px;line-height:1.9;color:var(--ink-2)}
 .kijun-body ul{list-style:none;margin:6px 0}
 .kijun-body li{padding-left:1.2em;text-indent:-1.2em}
 .kijun-body li::before{content:"◇ "}
@@ -502,11 +502,11 @@ html:active-view-transition .care-lane{transition:none}
 .lane-body{display:grid;gap:14px}
 .care-lane ul{margin-bottom:0}
 .lane-h{font-size:12px;font-weight:700;letter-spacing:.12em;color:var(--steel-text);margin-bottom:6px}
-.lane-book{font-size:13px;color:var(--ink);margin-top:12px}
+.lane-book{font-size:14px;color:var(--ink);margin-top:12px}
 .lane-book a{text-decoration:underline;text-underline-offset:3px}
 .care-sub{display:flex;gap:12px;align-items:flex-start;margin-top:18px;padding-top:14px;border-top:1px solid var(--line)}
 .care-sub h4{font-size:15px;line-height:1.5}
-.care-sub p{font-size:13px;line-height:1.8;color:var(--ink)}
+.care-sub p{font-size:14px;line-height:1.8;color:var(--ink)}
 .care-sub .care-glyph{width:32px;height:32px;font-size:14px;padding:2px;margin-top:2px}
 
 /* オンライン診療 — small framed block under the lanes (ink spine: information; the one link points to /hajimete.html#online) */
@@ -524,7 +524,7 @@ html:active-view-transition .care-lane{transition:none}
 .lane-main .safety-line{margin:0 0 16px}
 .lane-main>ul>li+li{margin-top:6px}
 .lane-act{background:var(--paper);border:1px solid var(--line);border-radius:var(--radius);padding:16px 18px;align-self:start}
-.lane-act .lane-book{margin:0;font-size:var(--t-note);line-height:1.9}
+.lane-act .lane-book{margin:0;font-size:var(--t-sub);line-height:1.9}
 .lane-act .lane-book a{min-height:44px;display:inline-flex;align-items:center}
 .lane-act .care-sub{margin-top:14px;padding-top:14px}
 /* 720px: at a 768px viewport the container is ~672px; two columns would give the body ~352px (25 chars). One column until it is worth splitting. */
