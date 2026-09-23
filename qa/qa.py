@@ -793,7 +793,7 @@ def rule_imagery_v1(pages):
         report("PASS" if n == want else "FAIL", f"FEE POINTER fixed string [{name}]", f"count={n}, expected {want}")
         if name == "index.html":
             report("PASS" if "受付は17:45まで" not in text else "FAIL", f"HOURS NOTE dedup [{name}]")
-            m = re.search(r'<svg class="access-map" viewBox="0 0 272 120" role="img" data-reveal-mark aria-label="[^"]+"', text)
+            m = re.search(r'<svg class="access-map" viewBox="0 0 272 128" role="img" data-reveal-mark aria-label="[^"]+"', text)
             report("PASS" if m else "FAIL", f"ACCESS MAP viewBox/role/aria [{name}]")
             svg = text[text.find('<svg class="access-map"'):text.find('</svg>', text.find('<svg class="access-map"'))]
             fig = re.findall(r'<text class="am-label"[^>]*>[^<]*徒歩(\d)分</text>', svg)
@@ -826,17 +826,21 @@ def rule_route_strips(pages):
                 if re.search(r'[぀-ヿ一-鿿]', re.sub(r'[①②③④]', '', t)):
                     pass  # origin label itself is JP text — allowed; only flag branch NAME leakage separately below
 
+        # route-legend retired repo-wide 2026-09-24 (seikatsu's 4-branch legend was the last user).
+        n = sum(1 for attr in re.findall(r'class="([^"]*)"', text) if "route-legend" in attr.split())
+        report("PASS" if n == 0 else "FAIL", f"ROUTE-LEGEND REPO-WIDE [{name}]", f"count={n}, expected 0")
+
         if name == "index.html":
             # 3-BRANCH strip retired from home 2026-09-21 (legend-binding failed the patient test).
             # Destinations are typeset once in .care-dest. A .rt on index is a regression.
             report("PASS" if not viewboxes.get(name) else "FAIL",
                    f"HOME HAS NO ROUTE STRIP [{name}]", f"viewboxes found: {viewboxes.get(name)}")
-            for cls, want in (("route-legend", 0), ("rl-norikae", 0), ("lane-aside", 0), ("care-dest", 0), ("nk-mark", 0)):
+            for cls, want in (("rl-norikae", 0), ("lane-aside", 0), ("care-dest", 0), ("nk-mark", 0)):
                 n = sum(1 for attr in re.findall(r'class="([^"]*)"', text) if cls in attr.split())
                 report("PASS" if n == want else "FAIL", f"CARE V2 {cls} count [{name}]", f"count={n}, expected {want}")
         if name == "seikatsushukanbyo.html":
-            report("PASS" if len(viewboxes.get(name, [])) == 1 else "FAIL",
-                   f"SEIKATSU 4-BRANCH STRIP PRESENT [{name}]", f"viewboxes found: {viewboxes.get(name)}")
+            report("PASS" if not viewboxes.get(name) else "FAIL",
+                   f"SEIKATSU HAS NO ROUTE STRIP [{name}]", f"viewboxes found: {viewboxes.get(name)}")
     if not viewboxes:
         report("SKIP", "ROUTE STRIPS", "no .rt elements found in checked set")
     else:

@@ -188,7 +188,7 @@ section{padding-block:64px}
   .hero-cta .btn-call{width:auto}
 }
 
-/* レーザーの唯一の置き場 */
+/* レーザーのただ1つの置き場 */
 /* ---------- 選ばれる理由 ---------- */
 .why{background:var(--card);border-block:1px solid var(--line)}
 .why-grid{display:grid;gap:24px}
@@ -282,12 +282,18 @@ section{padding-block:64px}
 /* ---------- アクセス｜2駅の案内図 (.access-map) ----------
    これは .rt ではない。路線図＝1起点から分岐、の文法に対し、これは2起点が1つの行き先に合流する「案内板」。
    index.html の .rt は 0件のままであること（QA）。幾何は凍結（座標は index.html のコメント参照）。
-   viewBox の幅 272 ＝ 320px 端末の本文幅（.wrap padding 24px×2）。1ユーザー単位 ≤ 1CSSpx となり、
-   駅・院 の 19px が下限を割らない。.wrap の max-width か padding を変えたら、この数字を検算し直すこと。 */
-.access-map{display:block;width:100%;max-width:320px;height:auto;aspect-ratio:272/120;margin-top:20px}
+   viewBox 0 0 272 128（2026-09-24：120→128。下の駅名ラベルを自分のレールの下へ出すため）。
+   max-width も 272px ＝ viewBox の幅（2026-09-24、320px から変更）。これで 1ユーザー単位＝1CSSpx となり、
+   駅・院 はちょうど 19px、.am-label はちょうど 14px で刷られる。
+   以前は 272 の図を 320px で描画していたため ×1.176 で 22.4px／16.5px に膨らみ、
+   図の中の文字だけが本文のどの号数とも一致していなかった（「文字の大きさが揃っていない」の正体）。
+   272 ＝ 320px 端末の本文幅（styles.css:73 .wrap padding 24px×2）。
+   .wrap の max-width か padding を変えたら、この数字を検算し直すこと。 */
+.access-map{display:block;width:100%;max-width:272px;height:auto;aspect-ratio:272/128;margin-top:20px}
 .access-map .am-stop text{font-weight:700;font-size:19px;letter-spacing:0}   /* CHARACTER FLOOR; the face comes from the GLYPH PIN below */
 .access-map .am-label{font-family:var(--font-display);font-weight:700;font-size:var(--t-sub);letter-spacing:.02em}   /* one label per line: 駅名＋徒歩分数, one size, one face */
-.access-note{max-width:320px;margin-top:10px;font-size:var(--t-cap);line-height:1.8;color:var(--ink-2)}
+/* 図の説明文は図より広くしない（2026-09-24：320px→272px＝図の幅と一致）。 */
+.access-note{max-width:272px;margin-top:10px;font-size:var(--t-cap);line-height:1.8;color:var(--ink-2)}
 /* 描き込み — 順序＝到着の向き：①2本の脚が駅から合流点へ → ②幹が上下から分岐点へ（上半分は下向き・下半分は上向き）
    → ③最後の脚が院へ入る。丸いものは何も動かない。site.js は無変更（IIFE 4 が [data-reveal-mark] を総称で観測）。
    6本の線すべてが class="leg" を持つので、描き込み・.rv-now・print の既存規則をそのまま受け取る。 */
@@ -354,8 +360,7 @@ footer{background:var(--ink);color:var(--paper);padding:48px 0 48px}
 
 /* ---------- MOTION — what may move, and what must never ----------
    TABOO, do not animate:
-   1. svg.rt — no draw-on, no scroll-tracing, no disc pulse. A 路線図 is a factual diagram;
-      animating it turns it into an infographic. The geometry is frozen.
+   1. 図のディスクは動かない。図の <text> も単独では動かない——図はブロックと一緒に落ち着く。自分で描いてよいのは 2px の rect だけ、1回、その意味が走る向きに。
    2. .roundel / .care-glyph / .foot-roundels / .nk-mark / .why-tile .tick — the mark family.
       No pulse, spin, hover-grow, staggered entrance. These are a logo; logos do not move.
    3. .hero-photo .ph and .band img — no Ken Burns, no parallax, no zoom-on-hover.
@@ -389,7 +394,7 @@ footer{background:var(--ink);color:var(--paper);padding:48px 0 48px}
 .doc-sub-line{font-size:var(--t-sub);color:var(--ink);line-height:1.9;margin-top:10px;max-width:38em}
 
 /* ---------- doc panel (item 5) ---------- */
-/* レスポンシブ入替（重複ではない）。片方を消すときはもう片方の display を必ず戻す。 */
+/* レスポンシブ入替（重複ではない）。片方を消すときはもう片方の display をかならず戻す。 */
 .doc-grid{display:grid;gap:40px}
 .doc-panel{display:none}
 @media (min-width:768px){
@@ -537,56 +542,6 @@ html:active-view-transition .care-lane{transition:none}
   .js .care-lane{border-top-right-radius:var(--radius)}
 }
 
-/* ---------- route strip — the 診療案内 right column (Play 1) ----------
-   FROZEN GEOMETRY (both variants — do not redraw ad hoc, copy these coordinates):
-   3-BRANCH (RETIRED from home 2026-09-21 — legend-binding failed the patient test; coordinates kept as history, no live user) — viewBox="0 0 240 136": origin circle .rt-from cx28 cy70 r7.5;
-   origin text .rt-origin x28 y94 anchor middle; feeder M35.5 70H70; trunk M70 26V114;
-   stubs M70 26H92 + .rt-end M92 19V33, M70 70H92 + .rt-end M92 63V77; terminus M70 114H92 +
-   circle .rt-to cx99.5 cy114 r7.5; branch numbers as <text> at x=100 dy=".35em" on y=26 and
-   y=70, and x=112 dy=".35em" on y=114.
-   4-BRANCH (.pg-band--route, seikatsu) — viewBox="0 0 240 176": origin .rt-from cx28 cy88 r7.5;
-   origin text x28 y112 anchor middle; feeder M35.5 88H70; trunk M70 26V150; stubs
-   M70 26H92 + .rt-end M92 19V33, M70 62H92 + .rt-end M92 55V69, M70 98H92 + .rt-end M92 91V105;
-   terminus M70 150H92 + circle .rt-to cx99.5 cy150 r7.5; numbers at x=100 on y=26/62/98 and
-   x=112 on y=150. TEXT CONTENT: the origin label only plus ①②③(④) — NO branch names inside
-   the SVG, they live in the .route-legend beneath.
-   LANE BINDING: state comes from the lane's OWN class (.c-nai/.c-shin), NOT #care[data-lane]
-   and NOT --lane. With JS off data-lane is absent and --lane resolves to vermilion, so a
-   token-bound strip would paint the stacked 精神科 card with the 内科 hue.
-   Rule 7 is unchanged: --lane still colours exactly three surfaces (tab rail, kicker bar,
-   card spine). The strip's discs are coloured by the card's own class, like the spine.
-   No view-transition-name here — a duplicate name across the two copies aborts every
-   transition. The strip has no animation of its own; the lane crossfade already owns motion.
-   No glyph inside the discs → the ORANGE floor (white text on #F0533A >=19px) is never touched. */
-.rt{display:block;width:100%;max-width:320px;height:auto;margin:2px 0 12px;color:var(--ink)}
-.rt path{fill:none;stroke:currentColor;stroke-width:1.5;stroke-linecap:square;stroke-linejoin:miter;vector-effect:non-scaling-stroke}
-.rt .rt-end{stroke:var(--steel);stroke-width:1}
-.rt circle{stroke:none}
-.rt text{font-family:var(--font-body);font-weight:600;font-size:var(--t-cap);letter-spacing:.04em;fill:var(--ink)}
-.rt .rt-origin{font-weight:400;font-size:11px;fill:var(--ink-2)}
-.c-nai .rt .rt-from{fill:var(--vermilion)}
-.c-nai .rt .rt-to{fill:var(--ink)}
-.c-shin .rt .rt-from{fill:var(--ink)}
-.c-shin .rt .rt-to{fill:var(--vermilion)}
-/* lane door links: an existing self-recognition item becomes the way into its channel page — text stays ink, only the arrow is orange (text role).
-   text-decoration, NOT border-bottom: this link wraps to 3 line boxes at 375px and a border paints a full grey rule under each, reading as three table rules.
-   The --steel hue is preserved via text-decoration-color. The block/flex link rows (.nk-text, .hm-links a, .pg-acts li) keep border-bottom — they never wrap. */
-.lane-more{color:inherit;text-decoration:underline;text-decoration-color:var(--steel);text-decoration-thickness:1px;text-underline-offset:4px;transition:text-decoration-color .12s}
-.lane-more span{color:var(--vermilion-text);font-weight:700;margin-left:6px}
-.lane-more:hover{text-decoration-color:var(--ink)}
-/* legend = the same branches as the SVG, beneath the drawing — the only copy of the branch names.
-   The circled number in <b> is the tie to the drawing; this list is the accessible, complete text
-   while the SVG stays aria-hidden focusable="false". */
-.route-legend{list-style:none;font-size:var(--t-note)}
-.route-legend li{font-size:var(--t-note);line-height:1.8;padding-left:16px;position:relative}
-.route-legend li::before{content:"";position:absolute;left:2px;top:.85em;width:8px;height:1.5px;background:var(--ink-2)}
-.route-legend b{font-family:var(--font-display);font-weight:700;margin-right:6px}
-@media (max-width:639px){
-  .route-legend li{line-height:1.75;margin-bottom:12px}
-  .route-legend li:last-child{margin-bottom:0}
-  .route-legend b{display:block;margin-right:0;margin-bottom:2px}
-}
-
 /* =========================================================================
    MOTION — 「落ち着く」/ SETTLE.  APPEND TO styles.css AS THE LAST BLOCK.
    The page is a printed spread that happens to scroll: it is already set when
@@ -648,7 +603,7 @@ html.js.rv-go{--rv-fail:none;--rv-fail-m:none}      /* site.js is alive → disa
 /* ---------- RULE — the mark family draws itself, left to right ----------
    Only marks: the 24×4 .kicker::before, the 40×3 .why-tile .tick, the 24×2
    .nk-mark, the access diagram's legs, trunk and spur (all class="leg"), and the closing band's centred ::before.
-   Nothing round ever moves (.roundel / .care-glyph / .stop / .rt discs). */
+   Nothing round ever moves (.roundel / .care-glyph / すべての図のディスク). */
 .js [data-reveal] .tick,.js [data-reveal] .nk-mark,.js [data-reveal] .kicker::before,.js .kicker[data-reveal]::before,.js [data-reveal-mark] .leg{transform:scaleX(var(--rv-s));transform-origin:left center;transition:transform var(--rv-r) var(--rv-e) 80ms;animation:var(--rv-fail-m) 1ms linear 2.4s forwards}
 .js [data-reveal-mark]::before{transform:scaleX(var(--rv-s));transition:transform var(--rv-r) var(--rv-e) 80ms;animation:var(--rv-fail-m) 1ms linear 2.4s forwards}   /* .close-cta::before is margin:0 auto → draws from its centre */
 .js [data-reveal].rv-in .tick,.js [data-reveal].rv-in .nk-mark,.js [data-reveal].rv-in .kicker::before,.js .kicker[data-reveal].rv-in::before,.js [data-reveal-mark].rv-in .leg,.js [data-reveal-mark].rv-in::before{transform:scaleX(1)}
@@ -738,6 +693,13 @@ html.js.rv-go{--rv-fail:none;--rv-fail-m:none}      /* site.js is alive → disa
 /* 4. THE TRANSFER BRANCH — retired from the home legends 2026-09-21 together with the two home route strips
    (the legend-binding failed the patient comprehension test). The のりかえ split bar now lives ONCE per page as
    .dest-mark--norikae on the third card of .care-dest. */
+
+/* 5. lane door links — index.html only. MOVED 2026-09-24 from between the retired .rt (541-570) and
+   .route-legend (577-588), which the seikatsu 4-branch retirement would otherwise have swept away.
+   index.html:218 and :251 use .lane-more, and index.html loads ONLY styles.css — this is its one home. */
+.lane-more{color:inherit;text-decoration:underline;text-decoration-color:var(--steel);text-decoration-thickness:1px;text-underline-offset:4px;transition:text-decoration-color .12s}
+.lane-more span{color:var(--vermilion-text);font-weight:700;margin-left:6px}
+.lane-more:hover{text-decoration-color:var(--ink)}
 
 /* 6. .nk-line — MOVED from pages.css (deleted there in the same commit). BUG: used only on index.html, which
    never loads pages.css → both home lane doors rendered with no underline and a black arrow. .mk-dot is a SINGLE

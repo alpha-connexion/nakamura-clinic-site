@@ -41,11 +41,8 @@
    mirrors .band::before exactly (panel-relative decoration, deliberately
    unaligned to the text column). The wrapper MUST carry .c-nai or
    .c-shin (disc and glyph hues bind to it).
-   FILL A — .pg-band--route (seikatsu Ch.2): left = the 4-branch strip,
-   right = the numbered legend.
-   FILL B — .pg-band--hinge (hataraku Ch.3): left = .hinge-mark (体
-   glyph + .roundel-link + 心 glyph with .c-shin-glyph), right = h3 +
-   three .pg-body paragraphs.
+   FILL A — .pg-band--chapter（seikatsu Ch.2）：帯が章そのもの。.sec-head ＋ 行き先案内板 ＋ 一文 ＋ h3 ＋ .pg-policy を、1枚のカード地と1つの角印で持つ。
+   FILL B — .pg-band--hinge（hataraku Ch.3）：.hinge-mark ＋ h3 ＋ .pg-body 3本。
    --------------------------------------------------------- */
 .pg-band{padding:0;background:var(--card);border-block:1px solid var(--line);position:relative}
 .pg-sec-alt + .pg-band,
@@ -53,10 +50,7 @@
 .pg-band::before{content:"";position:absolute;top:-12px;left:24px;width:60px;height:60px;border-top:2px solid var(--vermilion);border-left:2px solid var(--vermilion);z-index:1;pointer-events:none}
 .pg-band .wrap{padding-block:40px}
 @media (min-width:768px){.pg-band .wrap{display:grid;gap:48px;align-items:center;padding-block:56px}
-  .pg-band--route .wrap{grid-template-columns:minmax(0,420px) minmax(0,1fr)}
   .pg-band--hinge .wrap{grid-template-columns:minmax(0,180px) minmax(0,1fr)}}
-.pg-band .rt{max-width:420px;margin:0}
-@media (max-width:767px){.pg-band .rt{margin-bottom:20px}}
 .hinge-mark{display:flex;align-items:center;gap:0}
 .hinge-mark .care-glyph{width:40px;height:40px;font-size:19px}
 
@@ -95,7 +89,7 @@
 .hm-links a span{color:var(--vermilion-text);font-weight:700;margin-left:6px}
 
 /* JP TYPOGRAPHY (design-system corrections) — pretty wraps on flowing body copy; table cells never force horizontal scroll. */
-.pg-body,.pg-faq p,.route-legend li,.pg-scope-list li{text-wrap:pretty}
+.pg-body,.pg-faq p,.pg-scope-list li{text-wrap:pretty}
 .pg-doc-table td{overflow-wrap:anywhere}
 
 .pg-hero{padding-block:40px 32px}
@@ -179,7 +173,6 @@
 .pg-paths li{counter-increment:p;background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:14px 16px 14px 50px;position:relative;font-size:var(--t-sub);line-height:1.85;color:var(--ink)}
 .pg-paths li::before{content:counter(p);position:absolute;left:14px;top:15px;width:22px;height:22px;border:1.5px solid var(--ink);border-radius:var(--radius);font-family:var(--font-body);font-feature-settings:'tnum';font-weight:700;font-size:12px;display:flex;align-items:center;justify-content:center}
 .pg-paths b{display:block;font-family:var(--font-display);font-weight:700;font-size:16px;margin-bottom:2px}
-.pg-note{margin-top:14px;font-size:14px;color:var(--ink-2)}
 .pg-policy{max-width:760px;margin-top:20px;border:1px solid var(--line);border-left:4px solid var(--ink);border-radius:var(--radius);background:var(--card);padding:14px 18px;font-size:var(--t-sub);line-height:1.9}
 
 /* ---------------------------------------------------------
@@ -199,3 +192,135 @@
 .pg-doc-page .doc-col{max-width:var(--measure);font-size:var(--t-note);line-height:1.9;color:var(--ink-2)}
 .pg-doc-page table{width:100%;border-collapse:collapse;min-width:0}
 .pg-doc-page th,.pg-doc-page td{border-bottom:1px solid var(--line);padding:12px 0;text-align:left;font-size:var(--t-note);vertical-align:top}
+
+/* =========================================================================
+   BLOCK: .pg-seikatsu v2 — 2026-09-24「clean・simple」pass. APPEND-ONLY.
+
+   このページの活字は5段＋クローム1段。6段目を作らないこと。
+     COPY
+       h1     clamp(28px,4vw,44px)  .pg-plate h1
+       h2     var(--t-h2)           .sec-title
+       h3     var(--t-h3)   20px    .pg-sub · .pg-hinge h3 · .care-card h3
+       body   var(--t-body) 16px    .pg-body · .ps-k · モバイル表のキー列
+       small  var(--t-sub)  14px    表の本文セル · .pg-doc-notes · .pg-scope-list
+                                    · FAQ · .pg-policy · .ps-v · .ps-def · .pg-acts
+     CHROME（ラベルと日付。ラベルは中身と同じ号数にしない）
+       chrome var(--t-cap)  12px    .pg-crumb · .mnav a · .pg-updated ·
+                                    表の列ラベル（thead th と縦積みの td::before の両方）
+   本文に 11/13/15/17/18 は無い。style 属性に font-size を書かない。
+   出荷ゲート：このページの本文を font-size:1[35]px で grep → 0件。
+
+   未指定だった3つのサイズをここで閉じる：
+   (a) .pg-sub はリポジトリのどこにも font-size が無かった（pages.css:108 は margin-top のみ、
+       styles.css:61 は family/weight/line-height のみ、素の h3 規則は存在しない）。
+       結果、章内の4つの見出しが UA 既定 ≈18.72px で刷られ、直上のカード見出し 20px と
+       1.3px ずれていた。「文字サイズが揃っていない」の最大の原因。
+   (b) .pg-lead（pages.css:103）は clamp の床 15px に張り付き、375px では本文より1段小さい。
+   (c) モバイル表のキー列は var(--t-h4) 15px（pages.css:155）。
+   ページ限定にしてある：(a)(b) は hataraku・hajimete・404 も同じだが、今日見ていない
+   3ページを組み直さない。グローバル修正はコミットメッセージに次の1行として記録する。
+   ========================================================================= */
+
+/* 1. 活字の梯子 */
+.pg-seikatsu .pg-sub{font-size:var(--t-h3);line-height:1.5}
+.pg-seikatsu .pg-lead{font-size:clamp(16px,1.8vw,18px)}
+.pg-seikatsu .pg-doc-notes li{font-size:var(--t-sub)}
+/* 列ラベルはクローム。>=640px の thead も、<640px の ::before（pages.css:156、無変更）も
+   同じ 12px。14px にすると「ラベルが中身と同じ号数」になり、階層が weight と色だけになる。 */
+.pg-seikatsu .pg-doc-table thead th{font-size:var(--t-cap)}
+@media (max-width:639px){
+  .pg-seikatsu .pg-doc-table td:first-child{font-size:var(--t-body)}
+}
+
+/* 2. D3 — 区分のものさし。表ではなく定義リスト。
+   外枠なし・角丸なし・thead なし・data-l なし・min-width なし・639px の縦積み規則なし。
+   もともと表ではないのでメディアクエリが要らず、320 と 1440 で同じ形に組まれる。
+   C・D を強調しない——どちらを持って来た読者かはページに分からない。 */
+.pg-scale{max-width:var(--measure-wide);margin-top:16px}
+.ps-row{display:grid;grid-template-columns:2.5em minmax(0,1fr);gap:12px;
+        border-top:1px solid var(--line);padding-block:12px}
+.ps-row:last-child{border-bottom:1px solid var(--line)}
+.ps-k{font-family:var(--font-display);font-weight:700;font-size:var(--t-body);
+      line-height:1.6;color:var(--ink)}
+.ps-v{font-size:var(--t-sub);line-height:1.8;color:var(--ink);overflow-wrap:anywhere}
+.ps-def{display:block;margin-top:4px;font-size:var(--t-sub);line-height:1.8;
+        color:var(--ink-2);text-wrap:pretty}
+
+/* 3. CH.2 — 章そのものが帯。
+   カスケード注記：.pg-band--chapter .wrap は (0,2,0) で pages.css:54 の .pg-band .wrap と
+   >=768px の .pg-band .wrap（:55）と同じ詳細度。メディアクエリは詳細度を足さない。
+   この規則が勝つのは「同じファイルの後ろにある」からだけ。並べ替えるなら
+   .pg-band.pg-band--chapter .wrap (0,3,0) に書き直すこと。
+   角印（.pg-band::before top:-12px;left:24px）には触らない。 */
+.pg-band--chapter{padding-block:var(--band)}
+.pg-band--chapter .wrap{display:block;padding-block:0}
+
+/* 4. 図のスロット — 1ユーザー単位 ＝ 1CSSpx。
+   どの図も CSS の max-width（px）が viewBox の幅と等しく、aspect-ratio は viewBox の比と
+   等しい（塗る前に箱が確保される＝CLS 0）。図は「決まった大きさで刷られた案内板」であって、
+   器に合わせて伸びるグラフィックではない。伸ばした瞬間に図の中の文字だけが本文より大きくなる
+   ——退役した .rt（240幅を 420px で描画＝×1.75、12px の番号が 21px で刷られていた）がその実例。
+   272 ＝ 320px 端末の本文幅（styles.css:73 .wrap padding 24px×2）。327（375px 端末の本文幅）に
+   しないのは、327 だと 320px 端末で 0.832 倍になり 14単位が 11.65px＝12px 下限を割るため。
+   .pg-fig は総称：次にどの診療案内ページへ図を足すときもこの法則を継承する。 */
+.pg-fig{display:block;width:100%;height:auto;margin:0}
+.pg-fig--board{max-width:272px;aspect-ratio:272/196}
+.pg-fig--pace{max-width:272px;aspect-ratio:272/84;margin-top:16px}
+.pg-fig + .pg-body{margin-top:20px;max-width:var(--measure)}
+
+/* 図の中の文字は2種類だけ、どちらもページのトークン。11/12/13/15/19 は入れない。
+   どちらの図にもディスクの中の文字が無いので 19px の CHARACTER FLOOR は関与しない。 */
+.pg-fig text{letter-spacing:.02em}
+.fig-lbl{font-family:var(--font-body);font-weight:400;font-size:var(--t-sub);fill:#4B4B55}
+.fig-val{font-family:var(--font-display);font-weight:700;font-size:var(--t-body);fill:#17171C}
+
+/* 5. D4 — ヒンジ（組版）。
+   1px のヘアライン、体|心 の印、h3、本文2行。カードなし・地色なし・緑なし
+   （--plant / --plant-tint / --plant-line / .safety-line いずれも使わない）・
+   2つめの .pg-band なし・印に新クラスを作らない。.hinge-mark は hataraku のものを
+   そのまま再利用＝これで両方の字が同じ 40px になる（旧カードは 40px の体に
+   32px の .pg-mini-glyph の心が並んでいた）。
+   このページに緑の面は残らないので「受付も待合も、内科と同じです。」に戻る場所がない。 */
+.pg-hinge{max-width:var(--measure-wide);margin-top:var(--sec);padding-top:var(--sec);
+          border-top:1px solid var(--line)}
+.pg-hinge .hinge-mark{margin-bottom:14px}
+.pg-hinge h3{font-size:var(--t-h3);line-height:1.5;margin-bottom:12px}
+
+/* 6. JP 組版 — 削除する .route-legend が持っていた pretty wrap を新要素へ引き継ぐ。 */
+.ps-def,.pg-hinge .pg-body{text-wrap:pretty}
+
+/* =========================================================================
+   MOTION — 描き込みは2本だけ。丸いものは動かない。文字も単独では動かない。
+
+   transform-box:fill-box は必須。styles.css:294 の .access-map .leg は
+   セレクタが .access-map に限定されていて .pg-fig には届かず、アニメーター側の
+   規則にも transform-box は無い。これが無いと rect の scale 原点が SVG 座標系の
+   0,0 になり、枝も軸も画面外から伸びてくる。落とさないこと。
+   ========================================================================= */
+.pg-fig .leg,.pg-fig .mb-spine{transform-box:fill-box}
+
+/* D1 — 幹が上から下へ 300ms、着いてから枝が左→右へ 160ms（開始 340ms）。500ms で静止。
+   .mb-tick は styles.css:652 の .js [data-reveal-mark] .leg を土台に、尺と遅延だけ上書き。
+   幹の animation:var(--rv-fail-m) は意図的（.am-sp と同じ）。rv-draw は
+   to{transform:scaleX(1)} で、scaleY を「置き換えて」要素を可視のまま着地させる。
+   scaleY 版の keyframe を足して「直す」ことはしない。 */
+.js .pg-fig[data-reveal-mark] .mb-spine{transform:scaleY(var(--rv-s));transform-origin:center top;transition:transform .30s var(--rv-e);animation:var(--rv-fail-m) 1ms linear 2.4s forwards}
+.js .pg-fig[data-reveal-mark].rv-in .mb-spine{transform:scaleY(1)}
+.js .pg-fig[data-reveal-mark] .mb-tick{transition-duration:.16s;transition-delay:340ms}
+
+/* 初期表示でフェードさせない。styles.css:661 は .rv-now と .rv-now .leg を止めるので
+   .mb-tick は既に対象、.mb-spine は .leg ではないので対象外。これが無いと
+   ファーストビューに入った案内板が冷間ロードで幹だけアニメーションする。
+   site.js は観測ノード自身（=<svg>）に .rv-now を付けるので複合セレクタで書く。 */
+.js .rv-now.pg-fig .mb-spine{transition:none!important}
+
+/* D2 の軸は class="leg" だけ＝RULE プリミティブそのまま（左→右、--rv-r、+80ms）。
+   時間が走る向きに時間を描く。追加規則なし。 */
+
+/* 印刷：styles.css:695 は [data-reveal-mark] .leg しか戻さないので、scaleY の幹が
+   取り残される（枝4本と軸だけ印刷される案内板になる）。ページ限定でここに置く——
+   共有の styles.css の print ブロックに1ページ用セレクタを入れない。 */
+@media print{.pg-fig .mb-spine{transform:none!important}}
+
+/* prefers-reduced-motion は追加規則不要：styles.css:706 で --rv-s:1 となり
+   scaleY(var(--rv-s)) がそのまま終状態、加えて *,*::before,*::after の kill が効く。 */

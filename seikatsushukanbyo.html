@@ -36,7 +36,7 @@
       "name": "健康診断のあとの相談・生活習慣病の継続治療",
       "description": "健康診断の要再検査・要精密検査のご相談と、高血圧・糖尿病・脂質異常症の生活習慣病を書面の療養計画とともに継続して診ていく内科のご案内です。",
       "inLanguage": "ja",
-      "lastReviewed": "2026-09-06",
+      "lastReviewed": "2026-09-24",
       "about": [
         {
           "@type": "MedicalCondition",
@@ -219,21 +219,18 @@
         <p class="pg-body">結果用紙があれば、どの項目をどの順番で確かめるかを、診察のときに一緒に決められます。</p>
       </article>
 
-      <h3 class="pg-sub">「再検査」と「精密検査」は、意味が違います。</h3>
-      <p class="pg-body">再検査は、同じ検査をもう一度行い、そのときだけの変動かどうかを確かめるものです。</p>
-      <p class="pg-body">精密検査は、別の検査を行って原因を調べるものです。</p>
-      <div class="pg-doc-table-wrap" data-reveal>
-        <table class="pg-doc-table">
-          <thead><tr><th>区分</th><th>意味</th></tr></thead>
-          <tbody>
-            <tr><td data-l="区分">A</td><td data-l="意味">異常なし</td></tr>
-            <tr><td data-l="区分">B</td><td data-l="意味">軽度異常</td></tr>
-            <tr><td data-l="区分">C</td><td data-l="意味">要再検査・要経過観察</td></tr>
-            <tr><td data-l="区分">D</td><td data-l="意味">要精密検査・要治療</td></tr>
-            <tr><td data-l="区分">E</td><td data-l="意味">治療中</td></tr>
-          </tbody>
-        </table>
-      </div>
+      <h3 class="pg-sub">「再検査」と「精密検査」の違い</h3>
+      <!-- D3 — 区分のものさし。表ではなく定義リスト：外枠なし・thead なし・min-width なし・
+           639px の縦積みハックなし。320px でも 1440px でも同じ形に組まれ、横スクロールしない。
+           C と D の2行目は、上にあった2つの段落をそのまま移したもの（新しい文ではない）。
+           C・D を色や印で強調しない——「あなたはここ」はこのページには言えない。 -->
+      <dl class="pg-scale" data-reveal>
+        <div class="ps-row"><dt class="ps-k">A</dt><dd class="ps-v">異常なし</dd></div>
+        <div class="ps-row"><dt class="ps-k">B</dt><dd class="ps-v">軽度異常</dd></div>
+        <div class="ps-row"><dt class="ps-k">C</dt><dd class="ps-v">要再検査・要経過観察<span class="ps-def">再検査は、同じ検査をもう一度行い、そのときだけの変動かどうかを確かめるものです。</span></dd></div>
+        <div class="ps-row"><dt class="ps-k">D</dt><dd class="ps-v">要精密検査・要治療<span class="ps-def">精密検査は、別の検査を行って原因を調べるものです。</span></dd></div>
+        <div class="ps-row"><dt class="ps-k">E</dt><dd class="ps-v">治療中</dd></div>
+      </dl>
       <ul class="pg-doc-notes">
         <li>区分の書き方は健診機関によって異なります。</li>
         <li>症状がなくても、数か月のうちに一度確認しておくことをおすすめしています。</li>
@@ -247,8 +244,8 @@
             <tr><td data-l="項目">血圧</td><td data-l="診察で行うこと">診察室と家庭での測定、心電図、必要な血液・尿検査を行います。</td></tr>
             <tr><td data-l="項目">血糖・HbA1c</td><td data-l="診察で行うこと">採血で再確認し、治療が必要かを判断します。</td></tr>
             <tr><td data-l="項目">コレステロール・中性脂肪</td><td data-l="診察で行うこと">採血で再確認します。</td></tr>
-            <tr><td data-l="項目">肝機能（AST・ALT・γ-GTP）・脂肪肝</td><td data-l="診察で行うこと">採血とともに、お酒・食事の状況をうかがいます。腹部の画像検査が必要な場合はご紹介します。</td></tr>
-            <tr><td data-l="項目">尿酸</td><td data-l="診察で行うこと">採血で再確認し、痛風発作があったかどうかをうかがいます。</td></tr>
+            <tr><td data-l="項目">肝機能（AST・ALT・γ-GTP）・脂肪肝</td><td data-l="診察で行うこと">採血に加えて、お酒・食事の状況をうかがいます。</td></tr>
+            <tr><td data-l="項目">尿酸</td><td data-l="診察で行うこと">採血で再確認し、痛風発作の有無をうかがいます。</td></tr>
             <tr><td data-l="項目">尿蛋白・尿潜血</td><td data-l="診察で行うこと">尿検査を行い、腎臓の評価が必要な場合はご紹介します。</td></tr>
             <tr><td data-l="項目">心電図・胸部レントゲンの所見</td><td data-l="診察で行うこと">当院で確認し、必要に応じて連携医療機関へご紹介します。</td></tr>
           </tbody>
@@ -257,45 +254,42 @@
     </div>
   </section>
 
-  <!-- CH.2 — 健診の結果から、進む道すじをお伝えします -->
-  <section class="pg-sec pg-sec-alt" id="michisuji">
+  <!-- CH.2 — 健診の結果から、進む道すじをお伝えします。
+       2026-09-24：3つのセクション（見出しだけの帯／図の帯／本文の帯）を1つに統合した。
+       この章そのものが .pg-band（カード地）。ページ内の .pg-band は1つ、朱の角印も1つ。
+       4分岐の路線図（.rt）と凡例（.route-legend）は退役。行き先の名前は図の中にある。
+       角印は .pg-band::before（top:-12px;left:24px）のまま——パネル基準の装飾で、
+       本文の列にはわざと揃えない（.band::before と同じ）。 -->
+  <section class="pg-sec pg-band pg-band--chapter c-nai" id="michisuji">
     <div class="wrap">
       <div class="sec-head" data-reveal>
         <div class="kicker"><span lang="en">Next Steps</span></div>
         <h2 class="sec-title">健診の結果から、進む道すじをお伝えします。</h2>
       </div>
-    </div>
-  </section>
 
-  <section class="pg-band pg-band--route c-nai">
-    <div class="wrap">
-      <svg class="rt" viewBox="0 0 240 176" aria-hidden="true" focusable="false">
-        <circle class="rt-from" cx="28" cy="88" r="7.5"/>
-        <text class="rt-origin" x="28" y="112" text-anchor="middle">健診の結果</text>
-        <path d="M35.5 88H70"/>
-        <path d="M70 26V150"/>
-        <path d="M70 26H92"/><path class="rt-end" d="M92 19V33"/>
-        <path d="M70 62H92"/><path class="rt-end" d="M92 55V69"/>
-        <path d="M70 98H92"/><path class="rt-end" d="M92 91V105"/>
-        <path d="M70 150H92"/>
-        <circle class="rt-to" cx="99.5" cy="150" r="7.5"/>
-        <text x="100" y="26" dy=".35em">①</text>
-        <text x="100" y="62" dy=".35em">②</text>
-        <text x="100" y="98" dy=".35em">③</text>
-        <text x="112" y="150" dy=".35em">④</text>
+      <!-- D1 — 行き先案内板。viewBox 幅 272 ＝ 320px 端末の本文幅（.wrap padding 24px×2）。
+           .pg-fig--board が max-width:272px と aspect-ratio を固定するので 1ユーザー単位＝1CSSpx。
+           凡例なし・丸数字なし・ディスクの中に文字なし・ディスクは4つとも朱。
+           <svg> は下の <p class="pg-body"> の直前の兄弟であること（.pg-fig + .pg-body で間隔を取る）。 -->
+      <svg class="pg-fig pg-fig--board" viewBox="0 0 272 196" role="img" data-reveal-mark aria-label="健診の結果から進む道すじは4通りです。生活習慣の見直しから、追加の検査で確かめる、治療を始める、専門の医療機関へ。">
+        <text class="fig-lbl" x="0" y="14">健診の結果</text>
+        <circle cx="10" cy="34" r="10" fill="#F0533A"/>
+        <rect class="mb-spine" x="9" y="44" width="2" height="137" fill="#17171C"/>
+        <rect class="leg mb-tick" x="9" y="54" width="18" height="2" fill="#17171C"/>
+        <rect class="leg mb-tick" x="9" y="96" width="18" height="2" fill="#17171C"/>
+        <rect class="leg mb-tick" x="9" y="138" width="18" height="2" fill="#17171C"/>
+        <rect class="leg mb-tick" x="9" y="180" width="18" height="2" fill="#17171C"/>
+        <circle cx="37" cy="55" r="10" fill="#F0533A"/>
+        <circle cx="37" cy="97" r="10" fill="#F0533A"/>
+        <circle cx="37" cy="139" r="10" fill="#F0533A"/>
+        <circle cx="37" cy="181" r="10" fill="#F0533A"/>
+        <text class="fig-val" x="53" y="55" dy=".35em">生活習慣の見直しから</text>
+        <text class="fig-val" x="53" y="97" dy=".35em">追加の検査で確かめる</text>
+        <text class="fig-val" x="53" y="139" dy=".35em">治療を始める</text>
+        <text class="fig-val" x="53" y="181" dy=".35em">専門の医療機関へ</text>
       </svg>
-      <ol class="route-legend">
-        <li><b>① いまは生活習慣の見直しから</b>数値の程度によっては、まず食事・運動・睡眠・お酒の見直しから始め、期間を決めて再確認します。</li>
-        <li><b>② 追加の検査で確かめる</b>そのときだけの変動かどうかを、採血や尿検査で確かめます。</li>
-        <li><b>③ 治療を始める</b>治療が必要と判断した場合は、方針を書面にしてお渡しし、通院のペースを一緒に決めます。</li>
-        <li><b>④ 専門的な治療が必要なとき</b>連携医療機関をご紹介します。紹介状は保険診療で作成します。</li>
-      </ol>
-    </div>
-  </section>
 
-  <section class="pg-sec pg-sec-alt">
-    <div class="wrap">
-      <p class="pg-note">診察の中で、ご自身がどれにあたるかをお伝えします。</p>
+      <p class="pg-body">どれにあたるかは、診察の中でお伝えします。生活習慣の見直しから始めるときは、期間を決めて、もう一度確かめます。</p>
 
       <h3 class="pg-sub" id="kusuri">お薬について</h3>
       <div class="pg-body">
@@ -315,24 +309,38 @@
         <div class="kicker"><span lang="en">Care Plan</span></div>
         <h2 class="sec-title">続けていくための、書面の計画</h2>
       </div>
-      <article class="care-card c-nai" data-reveal>
-        <div class="care-head"><span class="care-glyph" aria-hidden="true">体</span><h3>療養計画書をお渡しします</h3></div>
-        <p class="pg-body">高血圧・糖尿病・脂質異常症の治療では、治療の方針を書面（療養計画書）にしてお渡ししています。</p>
-        <p class="pg-body">食事・運動・睡眠・お酒、体重や血圧の測り方について、目標を一緒に決め、定期的に見直します。</p>
-      </article>
+      <!-- 章の見出しが既に「書面の計画」と言っているので、その定義2文に枠は要らない。 -->
+      <p class="pg-body">高血圧・糖尿病・脂質異常症の治療では、治療の方針を書面（療養計画書）にしてお渡ししています。</p>
+      <p class="pg-body">食事・運動・睡眠・お酒、体重や血圧の測り方について、目標を一緒に決め、定期的に見直します。</p>
 
       <h3 class="pg-sub">通院のペース</h3>
-      <p class="pg-body">はじめは月に1回程度、状態が落ち着いてきたら1〜2か月に1回を目安に、ご相談しながら決めます。</p>
+      <!-- D2 — 通院のペースのタイムライン。2つの間隔（月に1回／1〜2か月に1回）は図に移した。
+           下の一文に数字は戻さない。軸は右端まで続き矢印で止めない——それが「続けていく」。
+           この h3 に id は付けない（#tsuin は存在しないし、追加もしない）。 -->
+      <svg class="pg-fig pg-fig--pace" viewBox="0 0 272 84" role="img" data-reveal-mark aria-label="通院のペースは、はじめは月に1回程度、状態が落ち着いてきたら1〜2か月に1回を目安にします。">
+        <rect class="leg" x="10" y="42" width="262" height="2" fill="#17171C"/>
+        <circle cx="20" cy="43" r="10" fill="#F0533A"/>
+        <circle cx="180" cy="43" r="10" fill="#F0533A"/>
+        <text class="fig-lbl" x="10" y="22">はじめ</text>
+        <text class="fig-lbl" x="180" y="22" text-anchor="middle">落ち着いてきたら</text>
+        <text class="fig-val" x="10" y="74">月に1回</text>
+        <text class="fig-val" x="180" y="74" text-anchor="middle">1〜2か月に1回</text>
+      </svg>
+      <p class="pg-body">間隔は、ご相談しながら決めます。</p>
 
-      <h3 class="pg-sub" id="nemuri">血圧のことと一緒に、眠りのこともうかがいます。</h3>
-      <article class="care-card c-nai" data-reveal>
-        <div class="care-head">
-          <span class="care-glyph" aria-hidden="true">体</span><span class="care-glyph c-shin-glyph pg-mini-glyph" aria-hidden="true">心</span>
-          <h3>眠り・お酒・生活のリズムも一緒に</h3>
+      <!-- D4 — ヒンジ。カードなし・地色なし・緑なし・.safety-line なし・2つめの .pg-band なし。
+           体 と 心 は同じ 40px（従来は 40px の体に 32px の .pg-mini-glyph の心が並んでいた——
+           これも「文字の大きさが揃っていない」の一因）。.c-nai-glyph / .c-shin-glyph は
+           pages.css:174-175 の !important 付き。.pg-hinge には .c-nai 祖先が無いので、
+           この明示クラスが無いと 体 が地に溶ける（404.html・hajimete.html と同じ書き方）。 -->
+      <div class="pg-hinge" data-reveal>
+        <div class="hinge-mark" aria-hidden="true">
+          <span class="care-glyph c-nai-glyph" aria-hidden="true">体</span><span class="roundel-link"></span><span class="care-glyph c-shin-glyph" aria-hidden="true">心</span>
         </div>
+        <h3 id="nemuri">眠り・お酒・生活のリズムも一緒に</h3>
         <p class="pg-body">眠りが浅い、お酒の量が増えた、夜遅い食事が続いている——血圧や血糖の治療では、こうしたことも一緒にうかがいます。</p>
         <p class="pg-body">必要なときは、精神科の担当医の診察をご案内します。</p>
-      </article>
+      </div>
     </div>
   </section>
 
@@ -345,9 +353,8 @@
       </div>
 
       <h3 class="pg-sub" id="hiyou-note">費用のこと</h3>
-      <p class="pg-body">健康診断のあとの再検査・精密検査は、健康保険が使えます。</p>
+      <p class="pg-body">健康診断のあとの再検査・精密検査は、健康保険が使えます。紹介状（診療情報提供書）も健康保険で作成します。</p>
       <p class="pg-body">文書の費用は院内に掲示しています（<a href="/shisetsu-kijun.html#hiyou">費用に関する掲示</a>）。</p>
-      <p class="pg-body">紹介状（診療情報提供書）は健康保険で作成します。</p>
 
       <h3 class="pg-sub">当院で行っていないこと</h3>
       <ul class="pg-scope-list" data-reveal>
@@ -392,7 +399,7 @@
     <p class="hm-links"><a href="/#hours">診療時間の詳しい表を見る<span aria-hidden="true">→</span></a><a href="/hajimete.html">はじめての方へ（持ち物・受付の流れ）<span aria-hidden="true">→</span></a></p>
   </aside>
 
-  <p class="pg-updated wrap">最終更新：2026年9月6日／制度に関する記載は令和8年6月時点のものです。</p>
+  <p class="pg-updated wrap">最終更新：2026年9月24日／制度に関する記載は令和8年6月時点のものです。</p>
 
   <!-- closing conversion band -->
   <section class="close-cta" data-reveal-mark>
