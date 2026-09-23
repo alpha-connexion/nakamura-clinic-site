@@ -55,7 +55,7 @@ TEL_EXPECT = {
 }
 
 RECEPTION_SENTENCE_EXPECT = {
-    "index.html": 1, "seikatsushukanbyo.html": 1, "hataraku.html": 1,
+    "index.html": 1, "seikatsushukanbyo.html": 0, "hataraku.html": 0,
     "hajimete.html": 0, "shisetsu-kijun.html": 0, "privacy.html": 0, "404.html": 0,
 }
 
@@ -793,10 +793,10 @@ def rule_imagery_v1(pages):
         report("PASS" if n == want else "FAIL", f"FEE POINTER fixed string [{name}]", f"count={n}, expected {want}")
         if name == "index.html":
             report("PASS" if "受付は17:45まで" not in text else "FAIL", f"HOURS NOTE dedup [{name}]")
-            m = re.search(r'<svg class="access-map" viewBox="0 0 272 150" role="img" data-reveal-mark aria-label="[^"]+"', text)
+            m = re.search(r'<svg class="access-map" viewBox="0 0 272 120" role="img" data-reveal-mark aria-label="[^"]+"', text)
             report("PASS" if m else "FAIL", f"ACCESS MAP viewBox/role/aria [{name}]")
             svg = text[text.find('<svg class="access-map"'):text.find('</svg>', text.find('<svg class="access-map"'))]
-            fig = re.findall(r'<text class="am-min"[^>]*>徒歩(\d)分</text>', svg)
+            fig = re.findall(r'<text class="am-label"[^>]*>[^<]*徒歩(\d)分</text>', svg)
             row = re.search(r'<dt>最寄駅</dt><dd>([^<]*)<', text)
             rowmins = re.findall(r'徒歩(\d)分', row.group(1)) if row else []
             report("PASS" if fig == rowmins and fig else "FAIL", f"ACCESS MAP minutes == 最寄駅 row [{name}]", f"figure={fig}, row={rowmins}")

@@ -284,10 +284,9 @@ section{padding-block:64px}
    index.html の .rt は 0件のままであること（QA）。幾何は凍結（座標は index.html のコメント参照）。
    viewBox の幅 272 ＝ 320px 端末の本文幅（.wrap padding 24px×2）。1ユーザー単位 ≤ 1CSSpx となり、
    駅・院 の 19px が下限を割らない。.wrap の max-width か padding を変えたら、この数字を検算し直すこと。 */
-.access-map{display:block;width:100%;max-width:320px;height:auto;aspect-ratio:272/150;margin-top:20px}
+.access-map{display:block;width:100%;max-width:320px;height:auto;aspect-ratio:272/120;margin-top:20px}
 .access-map .am-stop text{font-weight:700;font-size:19px;letter-spacing:0}   /* CHARACTER FLOOR; the face comes from the GLYPH PIN below */
-.access-map .am-name{font-family:var(--font-display);font-weight:700;font-size:var(--t-h4);letter-spacing:.02em}
-.access-map .am-min{font-family:var(--font-body);font-weight:700;font-size:var(--t-h4);font-feature-settings:'tnum';letter-spacing:.02em}   /* same size as the station name: one voice, no 凸凹 */
+.access-map .am-label{font-family:var(--font-display);font-weight:700;font-size:var(--t-sub);letter-spacing:.02em}   /* one label per line: 駅名＋徒歩分数, one size, one face */
 .access-note{max-width:320px;margin-top:10px;font-size:var(--t-cap);line-height:1.8;color:var(--ink-2)}
 /* 描き込み — 順序＝到着の向き：①2本の脚が駅から合流点へ → ②幹が上下から分岐点へ（上半分は下向き・下半分は上向き）
    → ③最後の脚が院へ入る。丸いものは何も動かない。site.js は無変更（IIFE 4 が [data-reveal-mark] を総称で観測）。
