@@ -1,2 +1,0 @@
-'class="pg-tax">（3割負担で約300円' False
-'class="pg-tax">（3割負担で約750円' False
