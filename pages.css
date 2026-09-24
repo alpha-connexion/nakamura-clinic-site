@@ -131,7 +131,6 @@
 /* AA FIX (launch blocker) — white glyph on #F0533A must be >=19px (styles.css:410 ORANGE floor). */
 .pg-mini-glyph{width:32px;height:32px;font-size:19px;padding:2px}
 .pg-mini-glyph::after{width:2px;height:4px}
-.pg-tax{display:block;font-size:12px;color:var(--ink-2);font-weight:400}
 .pg-doc-notes{list-style:none;margin-top:16px;display:grid;gap:6px;max-width:42em}
 .pg-doc-notes li{font-size:var(--t-sub);color:var(--ink-2);padding-left:1.2em;text-indent:-1.2em}
 .pg-doc-notes li::before{content:"・";color:var(--ink-2)}

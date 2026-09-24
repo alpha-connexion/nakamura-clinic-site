@@ -333,7 +333,8 @@ def rule_single_home(pages):
 # ---------------------------------------------------------------------------
 
 def rule_bunshoryo_amounts(pages):
-    whitelisted_amounts = ["（3割負担で約300円）", "（3割負担で約750円）"]
+    # 2026-09-25 Keeyo: no fee estimates on the site at all (A6 withdrawn) — the list stays empty on purpose
+    whitelisted_amounts = []
     for name, text in pages.items():
         if name == "shisetsu-kijun.html":
             report("SKIP", f"文書料 AMOUNTS [{name}]", "amounts belong here by rule")
