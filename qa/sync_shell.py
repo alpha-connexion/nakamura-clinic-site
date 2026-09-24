@@ -48,7 +48,7 @@ def main(argv):
             print(f"[WARN] {SOURCE} has no {name} block"); continue
         block = src[s[0]:s[1]].replace(' aria-current="page"', "")
         # index.html links same-page anchors as href="#x"; every other page must use href="/#x"
-        canon[name] = re.sub(r'href="#', 'href="/#', block)
+        canon[name] = re.sub(r'href="#(?!site-index")', 'href="/#', block)   # #site-index is a same-page anchor on every page (no-JS menu)
     changed = 0
     for page in PAGES:
         path = ROOT / page

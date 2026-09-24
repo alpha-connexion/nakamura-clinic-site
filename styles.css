@@ -364,9 +364,10 @@ footer{background:var(--ink);color:var(--paper);padding:48px 0 48px}
 @media (max-width:767px){footer{padding-bottom:110px}}
 
 /* ---------- sticky mobile bar ---------- */
-.mbar{position:fixed;left:0;right:0;bottom:0;z-index:110;background:var(--card);border-top:1px solid var(--line);box-shadow:0 -4px 16px rgba(23,23,28,.10);padding:8px;padding-bottom:calc(8px + env(safe-area-inset-bottom));display:none;grid-template-columns:1fr 1.7fr;gap:8px;transform:translateY(110%);transition:transform .2s}
-.mbar.show{transform:translateY(0)}
-.mbar .m-map{display:flex;align-items:center;justify-content:center;border:1.5px solid var(--ink);border-radius:var(--radius-cta);text-decoration:none;color:var(--ink);min-height:48px;font-family:var(--font-display);font-weight:700;font-size:14px}
+.mbar{position:fixed;left:0;right:0;bottom:0;z-index:110;background:var(--card);border-top:1px solid var(--line);box-shadow:0 -4px 16px rgba(23,23,28,.10);padding:8px;padding-bottom:calc(8px + env(safe-area-inset-bottom));display:none;grid-template-columns:1fr 1.7fr;gap:8px;transition:transform .2s}
+.js .mbar{transform:translateY(110%)}   /* hidden state exists only when JS runs: with JS off the bar is always up */
+.js .mbar.show{transform:translateY(0)}
+.mbar .m-map{display:flex;align-items:center;justify-content:center;border:1.5px solid var(--ink);border-radius:var(--radius-cta);text-decoration:none;color:var(--ink);min-height:48px;font-family:var(--font-display);font-weight:700;font-size:15px}
 .mbar .m-map .mrow{display:flex;align-items:center;gap:6px}
 .mbar .m-map svg{width:16px;height:16px;stroke:currentColor}
 .mbar .m-call{display:flex;align-items:center;justify-content:center;gap:8px;background:var(--vermilion-action);border-radius:var(--radius-cta);text-decoration:none;color:#fff;min-height:48px;font-weight:700;font-size:15px}
@@ -374,7 +375,7 @@ footer{background:var(--ink);color:var(--paper);padding:48px 0 48px}
 .mbar .m-call svg{width:18px;height:18px;stroke:#fff}
 .mbar .m-call .tel{font-feature-settings:'tnum';font-size:15px}
 @media (max-width:767px){.mbar{display:grid}}
-@media (max-width:360px){.mbar .m-call{flex-direction:column;gap:0}.mbar .m-call .tel{font-size:13px}}
+@media (max-width:359px){.mbar .m-call>span:not(.tel){display:none}}   /* <360: icon + 06-6245-0378 on one 48px row; the bar never grows */
 
 /* ---------- MOTION — what may move, and what must never ----------
    TABOO, do not animate:
@@ -429,18 +430,36 @@ footer{background:var(--ink);color:var(--paper);padding:48px 0 48px}
 .cap-d{display:none}
 @media (min-width:768px){.cap-m{display:none}.cap-d{display:inline}}
 
-/* ---------- mobile capture repair (item 2) ---------- */
-.mnav{display:none}
+/* ---------- phones (<768px) — mobile pass 2026-09-25 (docs-internal/mobile-review/spec.md) ----------
+   CHROME: header = brand + 「メニュー」 (.hdr-call is >=768px only); the .mbar is the only chrome phone.
+   .mnav is DELETED (2026-09-25) — its anchors live in the menu sheet, channel pages keep .pg-acts.
+   TARGET SCALE: 44 control / text link · 48 bar button / list row · 56 content button / disclosure row.
+   The menu sheet has no transition: it is there or not (MOTION — only [data-reveal] moves). */
+.hdr-menu{display:none}
+nav.main .gnav-u{display:none}   /* sheet-only rows; the >=768px bar keeps exactly four items */
 @media (max-width:767px){
-  .mnav{display:flex;background:var(--card);border-bottom:1px solid var(--line)}
-  .mnav a{flex:1;display:flex;align-items:center;justify-content:center;min-height:44px;padding:10px 2px;font-size:var(--t-cap);font-weight:600;letter-spacing:0;line-height:1.35;text-align:center;color:var(--ink);text-decoration:none;border-right:1px solid var(--line)}
-  .mnav a:last-child{border-right:none}
+  /* header + phone menu. 57 = header height below 768px (.bar 56 + 1px border). */
+  .brand .name{white-space:nowrap}
+  .hdr-call{display:none}
+  .hdr-menu{display:inline-flex;align-items:center;justify-content:center;min-width:88px;min-height:44px;padding:0 12px;border:1.5px solid var(--ink);border-radius:var(--radius-cta);background:var(--card);color:var(--ink);text-decoration:none;font-family:var(--font-display);font-weight:700;font-size:15px;line-height:1;letter-spacing:0}
+  .hdr-menu .mn-c{display:none}
+  html.menu-open .hdr-menu{background:var(--ink);color:var(--paper)}
+  html.menu-open .hdr-menu .mn-o{display:none}
+  html.menu-open .hdr-menu .mn-c{display:inline}
+  html.menu-open,html.menu-open body{overflow:hidden}
+  html.menu-open nav.main{display:block;position:fixed;top:57px;left:0;right:0;bottom:0;z-index:1;background:var(--card);border-top:1px solid var(--line);padding:8px 24px calc(88px + env(safe-area-inset-bottom));overflow-y:auto;overscroll-behavior:contain;white-space:normal}
+  html.menu-open nav.main a{display:flex;align-items:center;justify-content:space-between;gap:12px;min-height:48px;padding:0;border-bottom:1px solid var(--line);font-family:var(--font-display);font-size:var(--t-body);font-weight:700;line-height:1.4;color:var(--ink)}
+  html.menu-open nav.main a:hover,html.menu-open nav.main a[aria-current="page"]{border-bottom-color:var(--line)}
+  html.menu-open nav.main a::after{content:"→";content:"→" / "";position:static;color:var(--vermilion-text)}   /* replaces the 44px pad; the alt-text form keeps the arrow out of the link name */
+  html.menu-open nav.main a[aria-current="page"]::before{content:"";position:absolute;left:-24px;top:0;bottom:0;width:4px;background:var(--vermilion)}   /* you-are-here rail on the screen edge, the .notice grammar */
+  html.menu-open nav.main a:not(.gnav-u)+.gnav-u{margin-top:24px;border-top:1px solid var(--ink)}
+  html.menu-open .mbar{transform:none}   /* the call stays in the thumb zone while the sheet is open */
+  /* hero (order and spacing unchanged) */
   .hero-grid > div:first-child{display:flex;flex-direction:column}
   .roundels{order:1}
   .hero h1{order:2}
   .hero .tagline{order:3}
   .hero-cta{order:4;margin-top:20px;gap:10px}
-  .hero-cta .btn-ghost{min-height:56px;padding-inline:20px}
   .fact-strip{order:5;margin-top:24px}
   section{padding-block:48px}
   .hero{padding-top:40px;padding-bottom:48px}
@@ -448,11 +467,28 @@ footer{background:var(--ink);color:var(--paper);padding:48px 0 48px}
   .sec-head{margin-bottom:24px}
   section[id],#hatsunetsu{scroll-margin-top:64px}
   .hours-list .chip{font-size:13px;padding:4px 11px}
+  /* buttons — one shape per role (56) */
+  .btn-call{width:100%;min-height:56px;padding:6px 20px;line-height:1.2}
+  .btn-ghost{min-height:56px;padding:0 20px;font-family:var(--font-display);font-weight:700;font-size:15px}
+  /* a record, not a call: digits the size of the words around them */
+  .spec-row .tel-big{font-size:var(--t-sub)}
+  .spec-row{grid-template-columns:80px 1fr}   /* 「診療科目」 is 58px; the value column gains 16px */
+  /* marks: corner keylines one size on phones; list dashes on whole pixels */
+  .hero-photo::before,.band::before{width:40px;height:40px}
+  .care-card li::before{height:2px}
+  /* footer: two columns of real 44px rows (was 25px boxes padded to 45 on a 27px pitch) */
+  .foot-groups{grid-template-columns:1fr 1fr;gap:24px 16px}
+  .fg{gap:0;align-content:start}
+  .fg-t{margin-bottom:4px}
+  .fg a{display:flex;align-items:center;min-height:44px;padding:0;margin:0;line-height:1.5}
+  .notice .wrap{text-wrap:balance}   /* two even lines instead of 「…ご確認く / ださい。」 */
 }
 @media (max-width:400px){
   .hero h1{font-size:30px;letter-spacing:0}
-  .hdr-call{padding:8px 13px}
-  .hdr-call .lbl{display:none}
+  .hero .tagline{letter-spacing:0}   /* 21 chars x 16px = 336 <= 342: one line at 390 */
+}
+@media (max-width:359px){
+  .hero h1{font-size:28px}   /* 272px column: 「本町駅から徒歩3分。」 9.1em x 30 = 273 > 272 -> 4 lines; x 28 = 255 -> 3 lines */
 }
 
 /* ---------- closing conversion band (item 10) ---------- */
@@ -461,6 +497,11 @@ footer{background:var(--ink);color:var(--paper);padding:48px 0 48px}
 .close-cta::before{content:"";display:block;width:32px;height:4px;background:linear-gradient(90deg,var(--vermilion) 0 50%,var(--paper) 50% 100%);margin:0 auto 20px}   /* the PAIR on ink (decision D, 2026-09-21) */
 .close-next{margin-top:20px;font-size:var(--t-note);color:rgba(250,250,248,.75)}
 .close-next a{color:var(--paper);text-decoration:underline;text-underline-offset:3px}
+@media (max-width:767px){
+  .close-next a{display:inline-flex;align-items:center;min-height:44px}
+  .close-cta{padding-block:48px}
+  footer{border-top:1px solid rgba(250,250,248,.15)}   /* same rule as .foot-copy; ends the ~120px ink void */
+}
 .hours-sec .call-card .btn-call .cap{display:none}
 
 /* ---------- .pre-call — 「お電話の前に」, inside the home .call-card only ---------- */
@@ -502,6 +543,9 @@ footer{background:var(--ink);color:var(--paper);padding:48px 0 48px}
   .care-switch [role="tab"]{padding:8px 6px}
   .care-switch [role="tab"] b{font-size:15px;letter-spacing:0;white-space:nowrap}
 }
+@media (max-width:767px){
+  .care-switch [role="tab"] small{font-size:var(--t-cap)}   /* 11px is kicker-only on the ladder */
+}
 
 /* stage: both lanes stacked in ONE grid cell → stage height never changes on switch */
 .care-stage{display:grid;gap:16px;container:care-stage / inline-size}
@@ -533,6 +577,9 @@ html:active-view-transition .care-lane{transition:none}
 .care-online p{font-size:var(--t-sub);line-height:1.9;color:var(--ink);max-width:46em}
 .care-online a{text-decoration:underline;text-underline-offset:3px;white-space:nowrap}
 .care-online a span{color:var(--vermilion-text);font-weight:700;margin-left:4px}
+@media (max-width:767px){
+  .care-online a{display:inline-flex;align-items:center;min-height:44px}   /* was a 21px-tall target */
+}
 
 /* ---------- 診療案内 v2 — レーン＝私のこと、サイン＝私たちのこと (spec: docs-internal/care-review/spec.md) ----------
    左列は読者自身の言葉（--measure で右端を定義）。右列は枠のある「行動」パネル：短いのは意図であって欠落ではない——
@@ -551,6 +598,7 @@ html:active-view-transition .care-lane{transition:none}
 }
 @media (max-width:519px){
   .care-lane{padding:22px 20px 22px 24px}   /* card interior 267 → 307px on 375; lanes only (channel note panels share .care-card) */
+  .lane-act{padding:16px 0 0;background:none;border:0;border-top:1px solid var(--line);border-radius:0}   /* stacked, the frame no longer balances a column; box-in-box-in-box left 152px of text at 320 */
 }
 
 /* ZONE B (.care-dest 行き先サイン) — built 2026-09-21, REMOVED 2026-09-24: destinations 1–2 are table stakes
@@ -756,7 +804,7 @@ html.js.rv-go{--rv-fail:none;--rv-fail-m:none}      /* site.js is alive → disa
   @page{margin:14mm}
   body{display:flex;flex-direction:column;background:#fff;color:#000}
   footer{order:-1;background:#fff;color:#000;border-bottom:1px solid #000;padding:12px 0 16px}
-  header,.mnav,.notice,.mbar,.close-cta,.skip,.foot-groups,.foot-copy,.pg-acts,.care-switch,.map-btn,.hm-links,.care-note{display:none!important}
+  header,.notice,.mbar,.close-cta,.skip,.foot-groups,.foot-copy,.pg-acts,.care-switch,.map-btn,.hm-links,.care-note{display:none!important}
   .wrap{max-width:none;padding-inline:0}
   section,.pg-sec{padding-block:14px}
   a{color:#000;text-decoration:none}

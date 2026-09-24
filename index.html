@@ -107,11 +107,15 @@
       <span class="name">なかむらクリニック</span>
       <span class="sub">内科・心療内科・精神科｜医療法人佳真会</span>
     </a>
-    <nav class="main" aria-label="メインメニュー">
+    <a class="hdr-menu" href="#site-index"><span class="mn-o">メニュー</span><span class="mn-c">閉じる</span></a>
+    <nav class="main" id="gnav" aria-label="メインメニュー">
       <a href="#care">診療案内</a>
       <a href="/hajimete.html">はじめての方へ</a>
       <a href="/seikatsushukanbyo.html">健診・生活習慣病</a>
       <a href="/hataraku.html">はたらく方へ</a>
+      <a class="gnav-u" href="#hours">診療時間</a>
+      <a class="gnav-u" href="#docs">医師紹介</a>
+      <a class="gnav-u" href="#access">アクセス</a>
     </nav>
     <a class="hdr-call" href="tel:0662450378">
       <svg viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke-linecap="square" stroke-linejoin="miter" aria-hidden="true"><path d="M5 3h3.5l1.5 5-2.5 1.5a12.5 12.5 0 0 0 7 7L16 14l5 1.5V19a2 2 0 0 1-2 2A18 18 0 0 1 3 5a2 2 0 0 1 2-2Z"/></svg>
@@ -122,9 +126,6 @@
 
 <main id="top" tabindex="-1">
 
-  <nav class="mnav" aria-label="ページ内リンク">
-    <a href="#care">診療案内</a><a href="#hours">診療時間</a><a href="#docs">医師紹介</a><a href="#access">アクセス</a>
-  </nav>
 
   <!-- お知らせ帯（季節のご案内・臨時休診）。文言は1行、理由の説明は書かない。
        変更・削除は全ページ同時に行う（1ページだけ変えない）。
@@ -145,7 +146,7 @@
           <span class="roundel r-shin">心</span>
         </div>
         <h1>からだのことも、<span class="nowrap">こころのこと</span>も。<br><span class="nowrap">本町駅</span>から<span class="nowrap"><span class="num">徒歩3分</span>。</span></h1>
-        <p class="tagline">はたらく人の、からだとこころのかかりつけ。</p>
+        <p class="tagline">はたらく人の、<span class="nowrap">からだとこころの</span>かかりつけ。</p>
         <div class="fact-strip">
           <!-- 徒歩分数は【この帯】【#access の案内図 .access-map】【医院概要の最寄駅行】の3か所が同じ値を持つ。
                変えるときは同じコミットで3か所とも直す。堺筋本町駅 徒歩6分 は第三者掲載値 [CONFIRM C13]。 -->
@@ -222,7 +223,7 @@
             <div class="care-head"><span class="care-glyph" aria-hidden="true">体</span><h3>一般内科</h3></div>
             <div class="lane-body">
               <div class="lane-main">
-                <p class="lane-promise">健診で気になった数値も、急なかぜも。</p>
+                <p class="lane-promise">健診で気になった数値も、<span class="nowrap">急なかぜも。</span></p>
                 <h4 class="lane-h">こんなときに</h4>
                 <ul>
                   <li><a class="lane-more" href="/seikatsushukanbyo.html#kenshin">健康診断で気になった項目のご相談——「要再検査」の紙を、そのままお持ちください。<span aria-hidden="true">→</span></a></li>
@@ -386,7 +387,7 @@
       <div class="doc-body">
         <p class="doc-ruby">いしかわ よしひろ</p>
         <h3 class="doc-name-h"><span class="doc-name">院長　石川 賀弘</span><span class="doc-chip">内科</span></h3>
-        <p class="pull-line">からだとこころ、分けずに話せる診察室です。</p>
+        <p class="pull-line">からだとこころ、<span class="nowrap">分けずに話せる</span>診察室です。</p>
         <!-- [CONFIRM D9] 医師本人の承認待ちの草案 -->
         <p>お待たせする時間は、できるだけ短く。診察の時間は、急がせない。</p>
         <p>数値のことも、眠りや気持ちのことも、分けずにお話しください。どこから診ていくかは、診察室で一緒に整理します。</p>
@@ -412,7 +413,7 @@
       </div>
       <div class="access-grid">
         <dl class="spec-list">
-          <div class="spec-row"><dt>医院名</dt><dd>医療法人佳真会 なかむらクリニック</dd></div>
+          <div class="spec-row"><dt>医院名</dt><dd>医療法人佳真会 <span class="nowrap">なかむらクリニック</span></dd></div>
           <div class="spec-row"><dt>院長</dt><dd>石川 賀弘</dd></div>
           <div class="spec-row"><dt>診療科目</dt><dd>内科・心療内科・精神科</dd></div>
           <div class="spec-row"><dt>所在地</dt><dd>〒541-0054　大阪府大阪市中央区南本町3丁目1-12<br>カネセ中央ビル1階</dd></div>
@@ -473,7 +474,7 @@
   <!-- 9.5 closing conversion band -->
   <section class="close-cta" data-reveal-mark>
     <div class="wrap">
-      <p class="close-line">からだのことも、こころのことも。<br>まずは、お電話でご相談ください。</p>
+      <p class="close-line">からだのことも、こころのことも。<br>まずは、お電話で<span class="nowrap">ご相談ください。</span></p>
       <a class="btn-call" href="tel:0662450378">
         <span class="row">
           <svg viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke-linecap="square" stroke-linejoin="miter" aria-hidden="true"><path d="M5 3h3.5l1.5 5-2.5 1.5a12.5 12.5 0 0 0 7 7L16 14l5 1.5V19a2 2 0 0 1-2 2A18 18 0 0 1 3 5a2 2 0 0 1 2-2Z"/></svg>
@@ -497,7 +498,7 @@
     </div>
     <a class="foot-tel" href="tel:0662450378">06-6245-0378</a>
     <p class="foot-meta">〒541-0054　大阪府大阪市中央区南本町3丁目1-12 カネセ中央ビル1階<br>午前 9:00–13:00（土曜〈第2・第4週のみ〉は10:00〜）／午後 14:00–17:45（受付）｜水曜午後・金曜・土曜午後は完全予約制｜休診：木・日・祝</p>
-    <nav class="foot-groups" aria-label="サイト内リンク">
+    <nav class="foot-groups" id="site-index" aria-label="サイト内リンク">
       <div class="fg"><p class="fg-t">診療</p><a href="#naika">内科</a><a href="#seishinka">心療内科・精神科</a><a href="/seikatsushukanbyo.html">健診・生活習慣病</a><a href="/hataraku.html">はたらく方へ</a></div>
       <div class="fg"><p class="fg-t">はじめての方</p><a href="/hajimete.html">はじめての方へ</a><a href="#hours">診療時間</a><a href="#access">アクセス</a><a href="#docs">医師紹介</a></div>
       <div class="fg"><p class="fg-t">医院について</p><a href="#access">医院概要</a><a href="/shisetsu-kijun.html">院内掲示（施設基準等）</a><a href="/privacy.html">個人情報の取扱い</a></div>

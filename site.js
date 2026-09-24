@@ -25,16 +25,35 @@
   }
 })();
 
-// 2. STICKY BAR — one implementation, one behaviour. On pages with a #heroCall anchor
-//    (index.html) the bar appears once the hero CTA scrolls away. On every other page
-//    (no #heroCall) it shows immediately.
+// 2. STICKY BAR — one filled phone button on screen, never two. Below 768px the bar is the
+//    only chrome phone. It shows whenever no .btn-call inside <main> (hero, .call-card,
+//    closing band) is in the clear band between the sticky header and the bar itself, and
+//    hides while one is. Pages without a .btn-call (the two document pages) show it at once.
+//    JS off: styles.css scopes the hidden state to html.js, so the bar simply stays up.
 (function(){
-  var hero = document.getElementById('heroCall'), bar = document.getElementById('mbar');
+  var bar = document.getElementById('mbar');
   if(!bar) return;
-  if(!hero || !('IntersectionObserver' in window)){ bar.classList.add('show'); return; }
-  new IntersectionObserver(function(es){
-    es.forEach(function(e){ bar.classList.toggle('show', !e.isIntersecting); });
-  }).observe(hero);
+  var calls = [].slice.call(document.querySelectorAll('main .btn-call'));
+  if(!calls.length || !('IntersectionObserver' in window)){ bar.classList.add('show'); return; }
+  var hdr = document.querySelector('header'),
+      top = hdr ? Math.round(hdr.getBoundingClientRect().height) : 0,
+      low = Math.round(bar.getBoundingClientRect().height),
+      inBand = [], io, r, i;
+  function sync(){
+    for(var k = 0; k < inBand.length; k++){ if(inBand[k]){ bar.classList.remove('show'); return; } }
+    bar.classList.add('show');
+  }
+  // First frame decided synchronously, so the bar does not slide in on load where it belongs.
+  for(i = 0; i < calls.length; i++){
+    r = calls[i].getBoundingClientRect();
+    inBand[i] = r.bottom > top && r.top < innerHeight - low;
+  }
+  sync();
+  io = new IntersectionObserver(function(es){
+    for(var k = 0; k < es.length; k++) inBand[calls.indexOf(es[k].target)] = es[k].isIntersecting;
+    sync();
+  }, { rootMargin: (-top) + 'px 0px ' + (-low) + 'px 0px', threshold: 0 });
+  for(i = 0; i < calls.length; i++) io.observe(calls[i]);
 })();
 
 // 3. LANE SWITCH — 体×心 lane switch. APG tablist, hash deep links (#naika / #seishinka),
@@ -116,4 +135,47 @@
     io.observe(nodes[i]);
   }
   done();
+})();
+
+// 5. MENU — the phone header menu (<768px). JS off: .hdr-menu is a plain link to the
+//    footer's site index (#site-index) and nothing here runs. JS on: it becomes a
+//    disclosure button for nav.main (#gnav), which styles.css shows as a full-width sheet
+//    under the sticky header while html.menu-open is set. No motion: the sheet is there or
+//    not (MOTION — only [data-reveal] moves). While it is open the page behind does not
+//    scroll and the .mbar stays up, so the call is still one thumb away.
+(function(){
+  var btn = document.querySelector('.hdr-menu'),
+      nav = document.getElementById('gnav'),
+      hdr = document.querySelector('header');
+  if(!btn || !nav || !hdr || !window.matchMedia) return;
+  var root = document.documentElement, mq = matchMedia('(max-width: 767px)');
+  btn.setAttribute('role', 'button');
+  btn.setAttribute('aria-controls', 'gnav');
+  btn.setAttribute('aria-expanded', 'false');
+  function isOpen(){ return root.classList.contains('menu-open'); }
+  function set(open){
+    root.classList.toggle('menu-open', open);
+    btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+  }
+  function reset(){ if(isOpen()) set(false); }
+  btn.addEventListener('click', function(e){
+    if(!mq.matches) return;                            // >=768px the control is display:none anyway
+    e.preventDefault();
+    set(!isOpen());
+  });
+  btn.addEventListener('keydown', function(e){         // an <a role="button"> must answer Space as well as Enter
+    if(e.key === ' ' || e.key === 'Spacebar'){ e.preventDefault(); btn.click(); }
+  });
+  hdr.addEventListener('click', function(e){           // any other header link (a sheet row, the brand): close
+    var a = e.target.closest('a');                     // first, then the browser follows it — same-page
+    if(a && a !== btn) reset();                        // #care / #hours / #docs / #access scroll as usual
+  });
+  document.addEventListener('keydown', function(e){
+    if((e.key === 'Escape' || e.key === 'Esc') && isOpen()){ set(false); btn.focus(); }
+  });
+  document.addEventListener('focusin', function(e){    // Tab past the last row closes the sheet instead of
+    if(isOpen() && !hdr.contains(e.target)) set(false); // focusing content hidden behind it
+  });
+  if(mq.addEventListener) mq.addEventListener('change', reset); else if(mq.addListener) mq.addListener(reset);
+  addEventListener('pageshow', reset);                 // bfcache: Back never returns to an open sheet
 })();

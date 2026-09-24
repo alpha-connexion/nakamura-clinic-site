@@ -899,6 +899,26 @@ def rule_template_conformance(pages):
 
 
 # ---------------------------------------------------------------------------
+# RULE: PHONE MENU SHELL (mobile pass 2026-09-25) — .mnav deleted everywhere; the header
+# carries the 「メニュー」 control (a no-JS link to the page's own footer #site-index) and #gnav
+# ---------------------------------------------------------------------------
+
+def rule_phone_menu_shell(pages):
+    for name, text in pages.items():
+        if 'class="mnav"' in text:
+            report("FAIL", f"MNAV DELETED [{name}]", 'class="mnav" is present (deleted 2026-09-25 — anchors live in the header menu sheet)')
+        else:
+            report("PASS", f"MNAV DELETED [{name}]", "0 occurrences")
+        hdr = extract_block(text, r"<header>", "</header>") or ""
+        ftr = extract_block(text, r"<footer>", "</footer>") or ""
+        missing = [m for m, where in (('class="hdr-menu" href="#site-index"', hdr), ('id="gnav"', hdr), ('class="gnav-u"', hdr), ('id="site-index"', ftr)) if m not in where]
+        if missing:
+            report("FAIL", f"PHONE MENU SHELL [{name}]", f"missing: {missing}")
+        else:
+            report("PASS", f"PHONE MENU SHELL [{name}]", "hdr-menu → #site-index, #gnav + .gnav-u rows, footer #site-index")
+
+
+# ---------------------------------------------------------------------------
 # MANUAL rules (declared, not executed)
 # ---------------------------------------------------------------------------
 
@@ -941,6 +961,7 @@ def main():
     rule_imagery_v1(pages)
     rule_green_audit(pages)
     rule_template_conformance(pages)
+    rule_phone_menu_shell(pages)
     rule_manual_declarations()
 
     fails = [r for r in results if r[0] == "FAIL"]

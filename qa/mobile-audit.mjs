@@ -15,6 +15,8 @@ const BASE = arg("base", "http://127.0.0.1:8792");
 const W = parseInt(arg("w", "390"), 10);
 const H = parseInt(arg("h", "844"), 10);
 const PAGES = arg("pages", "index,hajimete,seikatsushukanbyo,hataraku,shisetsu-kijun,privacy,404").split(",");
+const DESKTOP = process.argv.includes("--desktop");   // no phone emulation (desktop regression captures)
+const NOJS = process.argv.includes("--nojs");         // script execution off: the no-JS fallbacks
 const PORT = 9333 + Math.floor(Math.random() * 200);
 const CHROME = ["C:/Program Files/Google/Chrome/Application/chrome.exe", "C:/Program Files (x86)/Google/Chrome/Application/chrome.exe"].find(existsSync);
 if (!CHROME) { console.error("chrome.exe not found"); process.exit(2); }
@@ -99,14 +101,17 @@ const AUDIT = `(() => {
     const { sessionId } = await cdp.send("Target.attachToTarget", { targetId, flatten: true });
     const s = (m, p) => cdp.send(m, p, sessionId);
     await s("Page.enable");
-    await s("Emulation.setDeviceMetricsOverride", { width: W, height: H, deviceScaleFactor: 2, mobile: true, screenWidth: W, screenHeight: H });
-    await s("Emulation.setTouchEmulationEnabled", { enabled: true, maxTouchPoints: 5 });
-    await s("Emulation.setUserAgentOverride", { userAgent: "Mozilla/5.0 (iPhone; CPU iPhone OS 17_5 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/17.5 Mobile/15E148 Safari/604.1" });
+    await s("Emulation.setDeviceMetricsOverride", { width: W, height: H, deviceScaleFactor: DESKTOP ? 1 : 2, mobile: !DESKTOP, screenWidth: W, screenHeight: H });
+    if (!DESKTOP) {
+      await s("Emulation.setTouchEmulationEnabled", { enabled: true, maxTouchPoints: 5 });
+      await s("Emulation.setUserAgentOverride", { userAgent: "Mozilla/5.0 (iPhone; CPU iPhone OS 17_5 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/17.5 Mobile/15E148 Safari/604.1" });
+    }
+    if (NOJS) await s("Emulation.setScriptExecutionDisabled", { value: true });
     await s("Page.navigate", { url });
     await cdp.waitEvent("Page.loadEventFired", sessionId);
     await s("Runtime.evaluate", { expression: "document.fonts.ready.then(()=>1)", awaitPromise: true });
     await sleep(900);
-    const shots = [];
+    const shots = [], phones = [];
     const { result: { value: sh } } = await s("Runtime.evaluate", { expression: "document.documentElement.scrollHeight", returnByValue: true });
     for (let y = 0, i = 0; y < sh; y += H, i++) {
       await s("Runtime.evaluate", { expression: `scrollTo({top:${y},behavior:'instant'})` });
@@ -115,6 +120,14 @@ const AUDIT = `(() => {
       const file = `${page}-${W}-s${String(i).padStart(2, "0")}.png`;
       writeFileSync(join(OUT, file), Buffer.from(data, "base64"));
       shots.push(file);
+      // filled phone buttons on this screen: the bar (if up) + any main .btn-call in the clear band
+      const { result: { value: n } } = await s("Runtime.evaluate", { returnByValue: true, expression: `(() => {
+        const top = document.querySelector('header').getBoundingClientRect().bottom, bar = document.getElementById('mbar');
+        const barTop = bar ? bar.getBoundingClientRect().top : innerHeight, barUp = bar && getComputedStyle(bar).display !== 'none' && barTop < innerHeight - 1;
+        let k = barUp ? 1 : 0; const floor = barUp ? barTop : innerHeight;
+        for (const b of document.querySelectorAll('main .btn-call')) { const r = b.getBoundingClientRect(); if (r.bottom > top && r.top < floor) k++; }
+        return k; })()` });
+      phones.push(n);
     }
     // audit at top of page, then bar state after a scroll
     // the site sets scroll-behavior:smooth — force instant scrolls so the audit reads y=0, not mid-animation
@@ -124,9 +137,20 @@ const AUDIT = `(() => {
     await s("Runtime.evaluate", { expression: "scrollTo({top:1200,behavior:'instant'})" }); await sleep(500);
     const { result: { value: barAfter } } = await s("Runtime.evaluate", { expression: "(()=>{const b=document.getElementById('mbar');return b?JSON.stringify({shown:b.classList.contains('show'),h:Math.round(b.getBoundingClientRect().height),bottom:Math.round(b.getBoundingClientRect().bottom),ih:innerHeight}):null})()", returnByValue: true });
     audit.mbarAfterScroll = barAfter ? JSON.parse(barAfter) : null;
+    audit.phonesPerScreen = phones;
+    // the phone menu sheet (if the page has one): open, capture, close
+    const { result: { value: hasMenu } } = await s("Runtime.evaluate", { expression: "!!document.querySelector('.hdr-menu') && getComputedStyle(document.querySelector('.hdr-menu')).display !== 'none'", returnByValue: true });
+    if (hasMenu) {
+      await s("Runtime.evaluate", { expression: "scrollTo({top:0,behavior:'instant'}); document.querySelector('.hdr-menu').click()" }); await sleep(350);
+      const { data } = await s("Page.captureScreenshot", { format: "png" });
+      writeFileSync(join(OUT, `${page}-${W}-menu.png`), Buffer.from(data, "base64"));
+      const { result: { value: menuState } } = await s("Runtime.evaluate", { returnByValue: true, expression: "(()=>{const b=document.querySelector('.hdr-menu');const rows=[...document.querySelectorAll('#gnav a')].filter(a=>a.getBoundingClientRect().height>0).map(a=>({t:a.textContent.trim(),h:Math.round(a.getBoundingClientRect().height),cur:a.hasAttribute('aria-current')}));return JSON.stringify({open:document.documentElement.classList.contains('menu-open'),expanded:b.getAttribute('aria-expanded'),label:b.innerText.trim(),btn:{w:Math.round(b.getBoundingClientRect().width),h:Math.round(b.getBoundingClientRect().height)},rows,barUp:document.getElementById('mbar')?.classList.contains('show')})})()" });
+      audit.menu = JSON.parse(menuState);
+      await s("Runtime.evaluate", { expression: "document.dispatchEvent(new KeyboardEvent('keydown',{key:'Escape'}))" }); await sleep(150);
+    }
     audit.screens = shots.length; audit.shots = shots;
     writeFileSync(join(OUT, `${page}-${W}-audit.json`), JSON.stringify(audit, null, 1));
-    summary.push({ page, width: W, scrollH: audit.scrollH, screens: shots.length, hOverflow: audit.hOverflow, overflowing: audit.overflowing.length, smallTargets: audit.smallTargets.length, smallText: audit.smallText.length, telLinks: audit.telLinks.filter((t) => t.visible).length });
+    summary.push({ page, width: W, scrollH: audit.scrollH, screens: shots.length, hOverflow: audit.hOverflow, overflowing: audit.overflowing.length, smallTargets: audit.smallTargets.length, smallText: audit.smallText.length, telLinks: audit.telLinks.filter((t) => t.visible).length, phones: phones.join(""), menu: audit.menu ? (audit.menu.open ? "ok" : "FAIL") : "-" });
     await cdp.send("Target.closeTarget", { targetId });
   }
   writeFileSync(join(OUT, `summary-${W}.json`), JSON.stringify(summary, null, 1));

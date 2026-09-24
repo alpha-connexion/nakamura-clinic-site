@@ -204,7 +204,7 @@
        small  var(--t-sub)  14px    表の本文セル · .pg-doc-notes · .pg-scope-list
                                     · FAQ · .pg-policy · .ps-v · .ps-def · .pg-acts
      CHROME（ラベルと日付。ラベルは中身と同じ号数にしない）
-       chrome var(--t-cap)  12px    .pg-crumb · .mnav a · .pg-updated ·
+       chrome var(--t-cap)  12px    .pg-crumb · .pg-updated ·
                                     表の列ラベル（thead th と縦積みの td::before の両方）
    本文に 11/13/15/17/18 は無い。style 属性に font-size を書かない。
    出荷ゲート：このページの本文を font-size:1[35]px で grep → 0件。
@@ -323,3 +323,39 @@
 
 /* prefers-reduced-motion は追加規則不要：styles.css:706 で --rv-s:1 となり
    scaleY(var(--rv-s)) がそのまま終状態、加えて *,*::before,*::after の kill が効く。 */
+
+/* =========================================================================
+   PHONES (<768px) — mobile pass 2026-09-25 (docs-internal/mobile-review/spec.md). APPEND-ONLY.
+   ========================================================================= */
+@media (max-width:767px){
+  /* cards that sit directly in <main> take the page gutter (they ran edge to edge on the screen) */
+  main > .norikae,main > .hours-mini{margin-inline:24px}
+  .pg-404 .norikae{margin-top:24px}
+  /* one call button per screen: the bar is up wherever .hours-mini is; the link stays in the DOM (tel: count holds) */
+  .hm-call{display:none}
+  /* 44px targets */
+  .pg-crumb a{padding-inline:4px;margin-inline:-4px}
+  /* marks: the 60px corner met the kicker / the 体 glyph on the 24px phone gutter; dashes on whole pixels */
+  .pg-band::before{width:40px;height:40px}
+  .pg-check-list li::before,.pg-scope-list li::before{height:2px}
+  /* headings never sit on their content */
+  .pg-sec .wrap > h3{margin-bottom:12px}
+  .pg-sec .wrap > h3 + .pg-scale,.pg-sec .wrap > h3 + .pg-fig{margin-top:0}
+  .pg-band--hinge .hinge-mark{margin-bottom:16px}
+  .pg-band--hinge h3{margin-bottom:12px}
+  .pg-hajimete .pg-sec h2{margin-bottom:24px}   /* this page's h2s are bare (no .sec-head); 24 = .sec-head on phones */
+  /* document pages: 13px is band/footer-only on the ladder; one size with .kijun-body, and air between paragraphs */
+  .pg-doc-page .doc-col{font-size:var(--t-sub)}
+  .pg-doc-page .doc-col p + p,.pg-doc-page .doc-col ul + p{margin-top:12px}
+}
+@media (max-width:767px){
+  .pg-sec:not(.pg-sec-alt) + .norikae{margin-top:0}   /* paper chapter → paper card: the chapter's 48px is enough (was 96px of blank) */
+  .nk-row{min-height:56px}
+  .pg-faq summary{text-wrap:pretty}
+  .pg-404 .pg-doc-head{margin-top:24px}   /* the notice's bottom line and the ink rule no longer read as a double rule */
+}
+@media (max-width:639px){
+  .pg-doc-table td:first-child{font-size:var(--t-body)}   /* one key size on both channel pages (seikatsu already 16) */
+  .pg-seikatsu .pg-doc-table td:not(:first-child)::before{content:none}   /* two-column table: 「診察で行うこと」 x7 is noise under the h3 */
+  .pg-hataraku .pg-doc-table td:not(:first-child){display:grid;grid-template-columns:76px minmax(0,1fr);column-gap:8px}   /* labels in a column, values hang — no orphans under the label */
+}
