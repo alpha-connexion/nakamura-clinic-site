@@ -32,3 +32,11 @@
   for = "/favicon.svg"
   [headers.values]
     Cache-Control = "public, max-age=1209600"
+
+# The qa/ harness ships in the repo (and therefore in the build) but is not part of the site.
+# Answer any request for it with the 404 page instead of serving the scripts.
+[[redirects]]
+  from = "/qa/*"
+  to = "/404.html"
+  status = 404
+  force = true
