@@ -5,6 +5,9 @@
 [[headers]]
   for = "/*"
   [headers.values]
+    # STAGING GUARD - remove this one line on launch day (when nakamura.n-clinics.jp goes live).
+    # Until then the netlify.app preview must not be indexed as a duplicate of the future site.
+    X-Robots-Tag = "noindex"
     X-Content-Type-Options = "nosniff"
     X-Frame-Options = "SAMEORIGIN"
     Referrer-Policy = "strict-origin-when-cross-origin"
