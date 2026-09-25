@@ -357,5 +357,5 @@
 @media (max-width:639px){
   .pg-doc-table td:first-child{font-size:var(--t-body)}   /* one key size on both channel pages (seikatsu already 16) */
   .pg-seikatsu .pg-doc-table td:not(:first-child)::before{content:none}   /* two-column table: 「診察で行うこと」 x7 is noise under the h3 */
-  .pg-hataraku .pg-doc-table td:not(:first-child){display:grid;grid-template-columns:76px minmax(0,1fr);column-gap:8px}   /* labels in a column, values hang — no orphans under the label */
+  .pg-hataraku .pg-doc-table td:not(:first-child){display:grid;grid-template-columns:76px minmax(0,1fr);column-gap:8px;align-items:baseline}   /* labels in a column, values hang — no orphans under the label */
 }

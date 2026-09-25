@@ -141,10 +141,11 @@ const AUDIT = `(() => {
     // the phone menu sheet (if the page has one): open, capture, close
     const { result: { value: hasMenu } } = await s("Runtime.evaluate", { expression: "!!document.querySelector('.hdr-menu') && getComputedStyle(document.querySelector('.hdr-menu')).display !== 'none'", returnByValue: true });
     if (hasMenu) {
-      await s("Runtime.evaluate", { expression: "scrollTo({top:0,behavior:'instant'}); document.querySelector('.hdr-menu').click()" }); await sleep(350);
+      // 500ms lets the bar's 0.2s slide finish; with JS off the click is a real #site-index jump under scroll-behavior:smooth
+      await s("Runtime.evaluate", { expression: "scrollTo({top:0,behavior:'instant'}); document.querySelector('.hdr-menu').click()" }); await sleep(NOJS ? 1600 : 500);
       const { data } = await s("Page.captureScreenshot", { format: "png" });
       writeFileSync(join(OUT, `${page}-${W}-menu.png`), Buffer.from(data, "base64"));
-      const { result: { value: menuState } } = await s("Runtime.evaluate", { returnByValue: true, expression: "(()=>{const b=document.querySelector('.hdr-menu');const rows=[...document.querySelectorAll('#gnav a')].filter(a=>a.getBoundingClientRect().height>0).map(a=>({t:a.textContent.trim(),h:Math.round(a.getBoundingClientRect().height),cur:a.hasAttribute('aria-current')}));return JSON.stringify({open:document.documentElement.classList.contains('menu-open'),expanded:b.getAttribute('aria-expanded'),label:b.innerText.trim(),btn:{w:Math.round(b.getBoundingClientRect().width),h:Math.round(b.getBoundingClientRect().height)},rows,barUp:document.getElementById('mbar')?.classList.contains('show')})})()" });
+      const { result: { value: menuState } } = await s("Runtime.evaluate", { returnByValue: true, expression: "(()=>{const b=document.querySelector('.hdr-menu');const rows=[...document.querySelectorAll('#gnav a')].filter(a=>a.getBoundingClientRect().height>0).map(a=>({t:a.textContent.trim(),h:Math.round(a.getBoundingClientRect().height),cur:a.hasAttribute('aria-current')}));return JSON.stringify({open:document.documentElement.classList.contains('menu-open'),expanded:b.getAttribute('aria-expanded'),label:b.innerText.trim(),btn:{w:Math.round(b.getBoundingClientRect().width),h:Math.round(b.getBoundingClientRect().height)},rows,barUp:(()=>{const m=document.getElementById('mbar');if(!m)return null;const r=m.getBoundingClientRect();return r.height>0&&r.bottom<=innerHeight+1&&r.top<innerHeight})()})})()" });
       audit.menu = JSON.parse(menuState);
       await s("Runtime.evaluate", { expression: "document.dispatchEvent(new KeyboardEvent('keydown',{key:'Escape'}))" }); await sleep(150);
     }

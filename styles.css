@@ -447,7 +447,7 @@ nav.main .gnav-u{display:none}   /* sheet-only rows; the >=768px bar keeps exact
   html.menu-open .hdr-menu .mn-o{display:none}
   html.menu-open .hdr-menu .mn-c{display:inline}
   html.menu-open,html.menu-open body{overflow:hidden}
-  html.menu-open nav.main{display:block;position:fixed;top:57px;left:0;right:0;bottom:0;z-index:1;background:var(--card);border-top:1px solid var(--line);padding:8px 24px calc(88px + env(safe-area-inset-bottom));overflow-y:auto;overscroll-behavior:contain;white-space:normal}
+  html.menu-open nav.main{display:block;position:fixed;top:57px;left:0;right:0;bottom:0;z-index:1;background:var(--card);padding:8px 24px calc(88px + env(safe-area-inset-bottom));overflow-y:auto;overscroll-behavior:contain;white-space:normal}   /* no border-top: the header's 1px bottom rule is the sheet's top edge */
   html.menu-open nav.main a{display:flex;align-items:center;justify-content:space-between;gap:12px;min-height:48px;padding:0;border-bottom:1px solid var(--line);font-family:var(--font-display);font-size:var(--t-body);font-weight:700;line-height:1.4;color:var(--ink)}
   html.menu-open nav.main a:hover,html.menu-open nav.main a[aria-current="page"]{border-bottom-color:var(--line)}
   html.menu-open nav.main a::after{content:"→";content:"→" / "";position:static;color:var(--vermilion-text)}   /* replaces the 44px pad; the alt-text form keeps the arrow out of the link name */
@@ -472,7 +472,7 @@ nav.main .gnav-u{display:none}   /* sheet-only rows; the >=768px bar keeps exact
   .btn-ghost{min-height:56px;padding:0 20px;font-family:var(--font-display);font-weight:700;font-size:15px}
   /* a record, not a call: digits the size of the words around them */
   .spec-row .tel-big{font-size:var(--t-sub)}
-  .spec-row{grid-template-columns:80px 1fr}   /* 「診療科目」 is 58px; the value column gains 16px */
+  .spec-row{grid-template-columns:80px 1fr;align-items:baseline}   /* 「診療科目」 is 58px; the value column gains 16px; the 「電話」 label sits on the number's line */
   /* marks: corner keylines one size on phones; list dashes on whole pixels */
   .hero-photo::before,.band::before{width:40px;height:40px}
   .care-card li::before{height:2px}
