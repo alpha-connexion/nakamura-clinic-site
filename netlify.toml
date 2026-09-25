@@ -13,20 +13,10 @@
     Referrer-Policy = "strict-origin-when-cross-origin"
     Permissions-Policy = "geolocation=(), microphone=(), camera=()"
 
-[[headers]]
-  for = "/styles.css"
-  [headers.values]
-    Cache-Control = "public, max-age=604800, must-revalidate"
-
-[[headers]]
-  for = "/site.js"
-  [headers.values]
-    Cache-Control = "public, max-age=604800, must-revalidate"
-
-[[headers]]
-  for = "/pages.css"
-  [headers.values]
-    Cache-Control = "public, max-age=604800, must-revalidate"
+# styles.css / site.js / pages.css deliberately carry NO long Cache-Control (removed 2026-09-25):
+# Netlify's default (max-age=0, must-revalidate + ETag) makes every visit revalidate, so a phone
+# that opened the site last week never renders new HTML with week-old CSS. Deploys are atomic;
+# a 304 costs nothing. Only the favicon keeps a long cache.
 
 [[headers]]
   for = "/favicon.svg"
