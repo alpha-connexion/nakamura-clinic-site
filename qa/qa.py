@@ -921,6 +921,56 @@ def rule_phone_menu_shell(pages):
 
 
 # ---------------------------------------------------------------------------
+# RULE: GA4 READINESS (2026-10-07) — site.js IIFE 6 loads GA4 only once GA_ID holds a real
+# Measurement ID (qa/set_ga_id.py). A real ID may never ship while privacy.html still says the
+# site uses no analytics, and the gtag config must keep Google signals and ad personalisation off.
+# Reads site.js and privacy.html from disk, so it runs whatever subset of pages is being checked.
+# ---------------------------------------------------------------------------
+
+GA_ID_LINE_RE = re.compile(r"^const GA_ID = '([^']*)';", re.M)   # same pattern as qa/set_ga_id.py
+GA_PLACEHOLDER_RE = re.compile(r"G-X+")
+GA_ID_FORMAT_RE = re.compile(r"G-[A-Z0-9]+")
+
+
+def rule_ga4_readiness():
+    rule = "GA4 READINESS"
+    js_path, pv_path = ROOT / "site.js", ROOT / "privacy.html"
+    if not js_path.exists() or not pv_path.exists():
+        report("FAIL", rule, "site.js or privacy.html not found")
+        return
+    js = js_path.read_text(encoding="utf-8")
+    ids = GA_ID_LINE_RE.findall(js)
+    if len(ids) != 1:
+        report("FAIL", rule, f"expected exactly one `const GA_ID = '…';` line in site.js, found {len(ids)}")
+        return
+    cfg = re.search(r"gtag\(\s*'config'\s*,\s*GA_ID\s*,\s*\{([^}]*)\}\s*\)", js)
+    missing = [k for k in ("allow_google_signals", "allow_ad_personalization_signals")
+               if not cfg or not re.search(k + r"\s*:\s*false\b", cfg.group(1))]
+    if missing:
+        report("FAIL", rule, "gtag('config', GA_ID, {…}) must set " + ", ".join(k + ": false" for k in missing))
+        return
+    if not cfg or not re.search(r"cookie_domain\s*:\s*'nakamura\.n-clinics\.jp'", cfg.group(1)):
+        report("FAIL", rule, "gtag('config', GA_ID, {…}) must set cookie_domain: 'nakamura.n-clinics.jp' "
+                             "(the default would share one _ga visitor ID across every n-clinics.jp site)")
+        return
+    ga_id = ids[0]
+    if GA_PLACEHOLDER_RE.fullmatch(ga_id):
+        report("PASS", rule, "placeholder: GA inactive")
+        return
+    if not GA_ID_FORMAT_RE.fullmatch(ga_id):
+        report("FAIL", rule, f"GA_ID {ga_id!r} is not a GA4 Measurement ID (G- then capitals/digits)")
+        return
+    pv = pv_path.read_text(encoding="utf-8")
+    sec = extract_block(pv, r'<section id="access-log">', "</section>") or pv
+    if "使用していません" in sec:
+        report("FAIL", rule, f"GA_ID {ga_id} is live but privacy.html #access-log still says 「使用していません」")
+    elif "Google アナリティクス" in sec or "Google Analytics" in sec:
+        report("PASS", rule, f"GA_ID {ga_id} live; privacy.html #access-log describes Google Analytics")
+    else:
+        report("FAIL", rule, f"GA_ID {ga_id} is live but privacy.html #access-log never names Google Analytics")
+
+
+# ---------------------------------------------------------------------------
 # MANUAL rules (declared, not executed)
 # ---------------------------------------------------------------------------
 
@@ -998,6 +1048,7 @@ def main():
     rule_template_conformance(pages)
     rule_phone_menu_shell(pages)
     rule_font_glyph_coverage()
+    rule_ga4_readiness()
     rule_manual_declarations()
 
     fails = [r for r in results if r[0] == "FAIL"]

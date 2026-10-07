@@ -1,6 +1,11 @@
 // なかむらクリニック — shared site behaviour. Loaded with defer from every page.
 // 表・モバイル一覧・フッター要約・JSON-LD は同じコミットで直す。
 
+// GA4 Measurement ID (IIFE 6). The placeholder is replaced at launch with
+// `python qa/set_ga_id.py G-…`, in the same deploy as the privacy.html #access-log notice.
+// While it is the placeholder, nothing loads and nothing is sent.
+const GA_ID = 'G-XXXXXXXXXX';
+
 // 1. TODAY HIGHLIGHT — desktop column tint + mobile row pin. Guarded: only runs on pages
 //    that actually carry the 診療時間表 (index.html only, per SINGLE HOME rule).
 (function(){
@@ -178,4 +183,55 @@
   });
   if(mq.addEventListener) mq.addEventListener('change', reset); else if(mq.addListener) mq.addListener(reset);
   addEventListener('pageshow', reset);                 // bfcache: Back never returns to an open sheet
+})();
+
+// 6. ANALYTICS (GA4) — inert until GA_ID (top of this file) holds a real Measurement ID.
+//    Kept minimal on purpose (psychiatry site; rules in the SEO/MEO regulatory guardrails §4):
+//    - Page views, scrolls and outbound clicks come from GA4 enhanced measurement (an admin
+//      setting, no code here).
+//    - Two events of our own, phone_tap and map_tap, each carrying ONE fixed label
+//      (tap_location). Never link text, page text, or anything a visitor types.
+//    - Google signals and ad personalisation off. No User-ID, no user properties, no other
+//      Google product.
+//    - Never on a booking, 問診 or contact-form page. None exists today; a future one must not
+//      run this block.
+//    privacy.html #access-log describes exactly this list: change one, change the other in the
+//    same commit (qa.py GA4 READINESS). If an ad blocker stops gtag.js, the queue below simply
+//    never drains; nothing here throws.
+(function(){
+  try{
+    if(!/^G-[A-Z0-9]+$/.test(GA_ID) || /^G-X+$/.test(GA_ID)) return;   // placeholder or malformed: load nothing
+    var w = window;
+    w.dataLayer = w.dataLayer || [];
+    var gtag = function(){ w.dataLayer.push(arguments); };            // gtag.js reads the arguments object as-is
+    gtag('js', new Date());
+    // cookie_domain = this host only: the default would set _ga on .n-clinics.jp and share one visitor ID
+    // with every other n-clinics.jp site (hajime.n-clinics.jp runs its own analytics).
+    gtag('config', GA_ID, { allow_google_signals: false, allow_ad_personalization_signals: false, cookie_domain: 'nakamura.n-clinics.jp' });
+    var s = document.createElement('script');
+    s.async = true;
+    s.src = 'https://www.googletagmanager.com/gtag/js?id=' + encodeURIComponent(GA_ID);
+    document.head.appendChild(s);
+
+    // tap_location: the closest known container. .hm-call (the line under .hours-mini on the
+    // three channel pages) and .spec-row (医院概要 on the home page) carry the phone number inline
+    // in a line of text, so both are 'note'. Anything else is 'other': today that is the home page's
+    // .call-card phone button and its アクセス section map button (.map-btn).
+    var PLACES = [['.mbar', 'mbar'], ['header', 'header'], ['footer', 'footer'], ['.hero', 'hero'],
+                  ['.close-cta', 'close-cta'], ['.hm-call, .spec-row', 'note']];
+    var MAP = /^https?:\/\/((www\.)?google\.[a-z.]+\/maps|maps\.google\.[a-z.]+\/|maps\.app\.goo\.gl\/|goo\.gl\/maps|maps\.apple\.com\/)/i;
+    var place = function(a){
+      for(var i = 0; i < PLACES.length; i++){ if(a.closest(PLACES[i][0])) return PLACES[i][1]; }
+      return 'other';
+    };
+    document.addEventListener('click', function(e){
+      try{
+        var a = e.target && e.target.closest ? e.target.closest('a[href]') : null;
+        if(!a) return;
+        var h = a.getAttribute('href') || '';
+        if(/^tel:/i.test(h)) gtag('event', 'phone_tap', { tap_location: place(a) });
+        else if(MAP.test(h)) gtag('event', 'map_tap', { tap_location: place(a) });
+      }catch(err){}
+    }, true);                                          // capture: counted even if a later handler stops the click
+  }catch(e){}
 })();
