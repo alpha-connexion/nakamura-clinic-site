@@ -487,9 +487,6 @@ nav.main .gnav-u{display:none}   /* sheet-only rows; the >=768px bar keeps exact
   .hero h1{font-size:30px;letter-spacing:0}
   .hero .tagline{letter-spacing:0}   /* 21 chars x 16px = 336 <= 342: one line at 390 */
 }
-@media (max-width:359px){
-  .hero h1{font-size:28px}   /* 272px column: 「本町駅から徒歩3分。」 9.1em x 30 = 273 > 272 -> 4 lines; x 28 = 255 -> 3 lines */
-}
 
 /* ---------- closing conversion band (item 10) ---------- */
 .close-cta{background:var(--ink);padding-block:56px;text-align:center}
