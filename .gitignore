@@ -3,3 +3,4 @@ qa/frame.html
 drafts/
 docs-internal/
 __pycache__/
+.claude/
