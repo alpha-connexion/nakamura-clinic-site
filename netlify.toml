@@ -5,9 +5,8 @@
 [[headers]]
   for = "/*"
   [headers.values]
-    # STAGING GUARD - remove this one line on launch day (when nakamura.n-clinics.jp goes live).
-    # Until then the netlify.app preview must not be indexed as a duplicate of the future site.
-    X-Robots-Tag = "noindex"
+    # LAUNCHED 2026-10-07 on nakamura.n-clinics.jp — the staging noindex guard was removed. The netlify.app
+    # address forwards to the primary domain, and every page carries its canonical URL.
     X-Content-Type-Options = "nosniff"
     X-Frame-Options = "SAMEORIGIN"
     Referrer-Policy = "strict-origin-when-cross-origin"
@@ -22,6 +21,13 @@
   for = "/favicon.svg"
   [headers.values]
     Cache-Control = "public, max-age=1209600"
+
+# One public address: the netlify.app preview URL forwards permanently to the clinic's domain.
+[[redirects]]
+  from = "https://nakamura-clinic.netlify.app/*"
+  to = "https://nakamura.n-clinics.jp/:splat"
+  status = 301
+  force = true
 
 # The qa/ harness ships in the repo (and therefore in the build) but is not part of the site.
 # Answer any request for it with the 404 page instead of serving the scripts.
