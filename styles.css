@@ -1,4 +1,14 @@
 /* なかむらクリニック — 本町サイン (Urban Precision) design system */
+/* SELF-HOSTED WEB FONTS (2026-10-07). Built by qa/build_fonts.py from the SIL OFL 1.1 originals:
+   NK Display = Zen Kaku Gothic New, NK Body = IBM Plex Sans JP, NK Accent = Shippori Mincho.
+   Renamed because a subset is a Modified Version and IBM Plex reserves the name "Plex". Licences: /fonts/OFL-*.txt.
+   Each file holds only the characters this site uses (QA rule FONT GLYPH COVERAGE) — rebuild when copy adds new kanji. */
+@font-face{font-family:"NK Display";font-weight:500;font-style:normal;font-display:swap;src:url("/fonts/nk-display-500.woff2") format("woff2")}
+@font-face{font-family:"NK Display";font-weight:700;font-style:normal;font-display:swap;src:url("/fonts/nk-display-700.woff2") format("woff2")}
+@font-face{font-family:"NK Body";font-weight:400;font-style:normal;font-display:swap;src:url("/fonts/nk-body-400.woff2") format("woff2")}
+@font-face{font-family:"NK Body";font-weight:600;font-style:normal;font-display:swap;src:url("/fonts/nk-body-600.woff2") format("woff2")}
+@font-face{font-family:"NK Body";font-weight:700;font-style:normal;font-display:swap;src:url("/fonts/nk-body-700.woff2") format("woff2")}
+@font-face{font-family:"NK Accent";font-weight:500;font-style:normal;font-display:swap;src:url("/fonts/nk-accent-500.woff2") format("woff2")}
 :root{
   /* ORANGE GOVERNANCE — three non-overlapping roles:
      --vermilion MARK ONLY: wordmark, badges, kicker bar, corner keylines, why-ticks,
@@ -34,9 +44,9 @@
   --plant-line:#D8E2D5;
   --tint-today:rgba(240,83,58,0.08);
   --tint-closed:rgba(142,147,155,0.12);
-  --font-display:'Zen Kaku Gothic New','Hiragino Sans','Yu Gothic',sans-serif;
-  --font-body:'IBM Plex Sans JP','Hiragino Sans','Yu Gothic',sans-serif;
-  --font-accent:'Shippori Mincho','Hiragino Mincho ProN','Yu Mincho',serif;
+  --font-display:'NK Display','Hiragino Sans','Yu Gothic',sans-serif;
+  --font-body:'NK Body','Hiragino Sans','Yu Gothic',sans-serif;
+  --font-accent:'NK Accent','Hiragino Mincho ProN','Yu Mincho',serif;
   --radius:2px;
   --radius-cta:6px;
   /* SPACING & TYPE — unify channel pages to the HOME rhythm; do NOT re-token .wrap. */
@@ -738,7 +748,7 @@ html.js.rv-go{--rv-fail:none;--rv-fail-m:none}      /* site.js is alive → disa
    so nothing moves; this pins the em box to ZKGN's metrics (880/120 — verify with fontTools before commit) and picks
    the nearest local Bold, so the swap is a shape flicker only, never a position shift. Marks only, never headings. */
 @font-face{font-family:"NK Mark Fallback";font-weight:700;src:local("Hiragino Sans W7"),local("HiraginoSans-W7"),local("Hiragino Sans W6"),local("HiraginoSans-W6"),local("Yu Gothic Bold"),local("YuGothic-Bold"),local("Meiryo Bold");ascent-override:88%;descent-override:12%;line-gap-override:0%}
-.roundel,.care-glyph,.access-map .am-stop text{font-family:'Zen Kaku Gothic New',"NK Mark Fallback",var(--font-display);line-height:1;font-synthesis:none}
+.roundel,.care-glyph,.access-map .am-stop text{font-family:'NK Display',"NK Mark Fallback",var(--font-display);line-height:1;font-synthesis:none}
 
 /* 2. CHARACTER FLOOR REPAIR — footer 体 was 13px and the access 駅 10px, white on #F0533A inside aria-hidden wrappers
    (axe-blind). 32/19 = the .pg-mini-glyph cut already signed off. CSS only: the shared shell stays byte-identical. */

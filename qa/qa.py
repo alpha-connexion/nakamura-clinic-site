@@ -935,6 +935,39 @@ def rule_manual_declarations():
 # main
 # ---------------------------------------------------------------------------
 
+def rule_font_glyph_coverage():
+    """FONT GLYPH COVERAGE (2026-10-07): the self-hosted fonts are subsets holding only this site's characters.
+    A character a page uses but a subset lacks would render in the fallback face mid-word, so any gap FAILs.
+    Fix by re-running qa/build_fonts.py (see its docstring)."""
+    try:
+        from fontTools.ttLib import TTFont
+        sys.path.insert(0, str(Path(__file__).resolve().parent))
+        import build_fonts as bf
+    except Exception as exc:  # fontTools/brotli missing on this machine
+        report("SKIP", "FONT GLYPH COVERAGE", f"needs fonttools + brotli ({exc})")
+        return
+    wanted = {which: {c for c in bf.needed_text(which) if ord(c) >= 0x20} for which in ["site", *bf.CLASS_SETS]}
+    gaps_path = ROOT / "qa" / "font-source-gaps.json"
+    gaps = json.loads(gaps_path.read_text(encoding="utf-8")) if gaps_path.exists() else {}
+    for out_name, _src, _family, _style, _weight, which in bf.FACES:
+        path = ROOT / "fonts" / out_name
+        if not path.exists():
+            report("FAIL", f"FONT GLYPH COVERAGE [{out_name}]", "file missing — run qa/build_fonts.py")
+            continue
+        cmap = TTFont(str(path)).getBestCmap()
+        needed = wanted[which]
+        known = set(gaps.get(out_name, ""))   # never in the original font: same fallback as under Google Fonts
+        missing = sorted(c for c in needed if ord(c) not in cmap and not c.isspace() and ord(c) != 0xFEFF and c not in known)
+        if missing:
+            report("FAIL", f"FONT GLYPH COVERAGE [{out_name}]", "missing: " + "".join(missing[:40]))
+        else:
+            report("PASS", f"FONT GLYPH COVERAGE [{out_name}]", f"{len(needed)} characters covered")
+    css = (ROOT / "styles.css").read_text(encoding="utf-8")
+    stray = [n for n in ("Zen Kaku Gothic New", "IBM Plex Sans JP", "Shippori Mincho")
+             if re.search(r"font-family:[^;}]*" + re.escape(n), css) or re.search(r"--font-\w+:'" + re.escape(n), css)]
+    report("PASS" if not stray else "FAIL", "FONT FAMILY NAMES are the renamed subsets", "stray: " + ", ".join(stray) if stray else "NK Display / NK Body / NK Accent only")
+
+
 def main():
     argv = sys.argv[1:]
     pages = load_pages(argv)
@@ -964,6 +997,7 @@ def main():
     rule_green_audit(pages)
     rule_template_conformance(pages)
     rule_phone_menu_shell(pages)
+    rule_font_glyph_coverage()
     rule_manual_declarations()
 
     fails = [r for r in results if r[0] == "FAIL"]
