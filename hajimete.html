@@ -4,9 +4,9 @@
 <meta charset="UTF-8">
 <script>document.documentElement.classList.add('js')</script>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<!-- ②受付から診察まで を復活させるときは、title・description・og:title・og:description・JSON-LD description・.pg-lead の6か所に 受付の流れ を同じコミットで戻すこと。 -->
-<title>はじめての方へ｜持ち物・ご予約・費用｜本町のなかむらクリニック</title>
-<meta name="description" content="本町駅徒歩3分の内科・心療内科・精神科へ、はじめて受診される方へ。お持ちいただくもの、ご予約について、費用のことをまとめました。予約なしでも受診できます。ご予約・ご相談はお電話で承ります。">
+<!-- ②受付から診察まで を復活させるときは、title・description・og:title・og:description・JSON-LD description・.pg-lead の6か所に 受付の流れ を同じコミットで戻すこと。他ページのリンク文言（index .pre-call-more／hataraku・seikatsushukanbyo の .nk-text と .hm-links）も「受付の流れ」に戻す。 -->
+<title>はじめての方へ（初診）｜持ち物・予約・費用｜本町のなかむらクリニック</title>
+<meta name="description" content="本町駅徒歩3分の内科・心療内科・精神科に、はじめて受診される方（初診の方）へ。お持ちいただくもの、ご予約について、費用のことをまとめました。予約なしでも受診できます（一部予約制）。ご予約・ご相談はお電話で承ります。">
 <meta name="robots" content="index,follow,max-image-preview:large">
 <link rel="canonical" href="https://nakamura.n-clinics.jp/hajimete.html">
 <meta name="theme-color" content="#F0533A">
@@ -14,36 +14,35 @@
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="なかむらクリニック">
-<meta property="og:title" content="はじめての方へ｜持ち物・ご予約・費用｜本町のなかむらクリニック">
+<meta property="og:title" content="はじめての方へ（初診）｜持ち物・予約・費用｜本町のなかむらクリニック">
 <meta property="og:description" content="お持ちいただくもの、ご予約について、費用のことをまとめました。本町駅徒歩3分。">
 <meta property="og:url" content="https://nakamura.n-clinics.jp/hajimete.html">
 <meta property="og:image" content="https://nakamura.n-clinics.jp/photos/og.jpg">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="なかむらクリニックの入口。内科・心療内科・精神科／Osaka Metro 本町駅 徒歩3分">
 <meta property="og:locale" content="ja_JP">
 <meta name="twitter:card" content="summary_large_image">
-<link rel="preload" href="/fonts/nk-display-700.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="preload" href="/fonts/nk-body-400.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="styles.css">
-<link rel="stylesheet" href="pages.css">
+<link rel="preload" href="/fonts/nk-display-700.woff2?v=b5c70b6851" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/fonts/nk-body-400.woff2?v=4f1824aeae" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="/styles.css">
+<link rel="stylesheet" href="/pages.css">
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
   "@graph": [
     {
       "@type": "MedicalWebPage",
+      "@id": "https://nakamura.n-clinics.jp/hajimete.html#webpage",
       "name": "はじめて受診される方へ",
       "description": "持ち物と、ご予約のきまり、費用、予防接種をまとめたページです。",
       "inLanguage": "ja",
-      "lastReviewed": "2026-10-07",
+      "lastReviewed": "2026-10-08",
       "audience": {
         "@type": "Patient"
       },
-      "isPartOf": {
-        "@type": "WebSite",
-        "url": "https://nakamura.n-clinics.jp/"
-      },
-      "mainEntityOfPage": "https://nakamura.n-clinics.jp/hajimete.html",
+      "isPartOf": { "@type": "WebSite", "@id": "https://nakamura.n-clinics.jp/#website", "url": "https://nakamura.n-clinics.jp/" },
+      "url": "https://nakamura.n-clinics.jp/hajimete.html",
       "publisher": {
         "@id": "https://nakamura.n-clinics.jp/#clinic"
       }
@@ -222,7 +221,7 @@
     <p class="hm-links"><a href="/#hours">診療時間の詳しい表を見る<span aria-hidden="true">→</span></a></p>
   </aside>
 
-  <p class="pg-updated wrap">最終更新：2026年10月7日</p>
+  <p class="pg-updated wrap">最終更新：2026年10月8日</p>
 
   <!-- closing conversion band -->
   <section class="close-cta" data-reveal-mark>

@@ -22,19 +22,18 @@ works too.
 
 Run:   python qa/build_fonts.py <source-folder>
 Then:  python qa/qa.py   (rule FONT GLYPH COVERAGE fails if a page uses a character a subset lacks)
+Stamp only (no rebuild): python qa/build_fonts.py --stamp-only   (rewrites the ?v=<hash> in styles.css + preloads)
 
 Re-run this script whenever page copy adds a character the QA rule reports as missing.
 Needs: pip install fonttools brotli
 """
 import glob
+import hashlib
 import json
 import os
 import re
 import sys
 from html.parser import HTMLParser
-
-from fontTools import subset
-from fontTools.ttLib import TTFont
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 OUT = os.path.join(ROOT, "fonts")
@@ -177,9 +176,44 @@ def rename(font, family, style):
         font["CFF "].cff.fontNames = [new[6]]
 
 
+def font_versions():
+    """Short content hash per font file. The ?v= query changes whenever a subset is rebuilt, so the files can be
+    served with a one-year immutable cache (netlify.toml) and a rebuilt font is never served stale."""
+    out = {}
+    for out_name, *_ in FACES:
+        with open(os.path.join(OUT, out_name), "rb") as fh:
+            out[out_name] = hashlib.sha256(fh.read()).hexdigest()[:10]
+    return out
+
+
+def stamp_versions():
+    """Write /fonts/<file>?v=<hash> into styles.css (@font-face) and every page's <link rel=preload>. Both must
+    match exactly or the browser downloads the font twice (QA rule FONT URLS VERSIONED checks this)."""
+    versions = font_versions()
+    targets = ["styles.css"] + PAGES
+    for name in targets:
+        path = os.path.join(ROOT, name)
+        with open(path, encoding="utf-8") as fh:
+            text = fh.read()
+        new = text
+        for out_name, ver in versions.items():
+            new = re.sub(r"/fonts/" + re.escape(out_name) + r"(\?v=[0-9a-f]+)?(?=[\"'])",
+                         f"/fonts/{out_name}?v={ver}", new)
+        if new != text:
+            with open(path, "w", encoding="utf-8", newline="") as fh:
+                fh.write(new)
+    return versions
+
+
 def main():
+    if len(sys.argv) == 2 and sys.argv[1] == "--stamp-only":
+        for k, v in stamp_versions().items():
+            print(f"{k:24s} v={v}")
+        return
     if len(sys.argv) != 2:
         sys.exit(__doc__)
+    from fontTools import subset   # only a real build needs fonttools; --stamp-only and qa.py do not
+
     src = sys.argv[1]
     os.makedirs(OUT, exist_ok=True)
     base = safety_set()
@@ -215,6 +249,8 @@ def main():
         if lic:
             with open(lic, encoding="utf-8") as fh, open(os.path.join(OUT, out_name), "w", encoding="utf-8", newline="\n") as out:
                 out.write(fh.read())
+    for k, v in stamp_versions().items():
+        print(f"stamped {k} v={v}")
 
 
 if __name__ == "__main__":

@@ -22,9 +22,30 @@
   [headers.values]
     Cache-Control = "public, max-age=1209600"
 
+# Fonts carry ?v=<content hash> in every URL (qa/build_fonts.py stamps styles.css + the preloads; QA rule
+# FONT URLS VERSIONED), so a rebuilt subset always gets a new URL and the files can be cached for a year.
+[[headers]]
+  for = "/fonts/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+# Photos: 30 days. When a photo is REPLACED, give the new file a new name (never overwrite in place),
+# or returning visitors keep the old image for up to a month.
+[[headers]]
+  for = "/photos/*"
+  [headers.values]
+    Cache-Control = "public, max-age=2592000"
+
 # One public address: the netlify.app preview URL forwards permanently to the clinic's domain.
 [[redirects]]
   from = "https://nakamura-clinic.netlify.app/*"
+  to = "https://nakamura.n-clinics.jp/:splat"
+  status = 301
+  force = true
+
+# The branch-deploy host serves the same site and is indexable (deploy permalinks get noindex; this one does not).
+[[redirects]]
+  from = "https://main--nakamura-clinic.netlify.app/*"
   to = "https://nakamura.n-clinics.jp/:splat"
   status = 301
   force = true

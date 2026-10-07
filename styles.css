@@ -3,12 +3,12 @@
    NK Display = Zen Kaku Gothic New, NK Body = IBM Plex Sans JP, NK Accent = Shippori Mincho.
    Renamed because a subset is a Modified Version and IBM Plex reserves the name "Plex". Licences: /fonts/OFL-*.txt.
    Each file holds only the characters this site uses (QA rule FONT GLYPH COVERAGE) — rebuild when copy adds new kanji. */
-@font-face{font-family:"NK Display";font-weight:500;font-style:normal;font-display:swap;src:url("/fonts/nk-display-500.woff2") format("woff2")}
-@font-face{font-family:"NK Display";font-weight:700;font-style:normal;font-display:swap;src:url("/fonts/nk-display-700.woff2") format("woff2")}
-@font-face{font-family:"NK Body";font-weight:400;font-style:normal;font-display:swap;src:url("/fonts/nk-body-400.woff2") format("woff2")}
-@font-face{font-family:"NK Body";font-weight:600;font-style:normal;font-display:swap;src:url("/fonts/nk-body-600.woff2") format("woff2")}
-@font-face{font-family:"NK Body";font-weight:700;font-style:normal;font-display:swap;src:url("/fonts/nk-body-700.woff2") format("woff2")}
-@font-face{font-family:"NK Accent";font-weight:500;font-style:normal;font-display:swap;src:url("/fonts/nk-accent-500.woff2") format("woff2")}
+@font-face{font-family:"NK Display";font-weight:500;font-style:normal;font-display:swap;src:url("/fonts/nk-display-500.woff2?v=faac17261d") format("woff2")}
+@font-face{font-family:"NK Display";font-weight:700;font-style:normal;font-display:swap;src:url("/fonts/nk-display-700.woff2?v=b5c70b6851") format("woff2")}
+@font-face{font-family:"NK Body";font-weight:400;font-style:normal;font-display:swap;src:url("/fonts/nk-body-400.woff2?v=4f1824aeae") format("woff2")}
+@font-face{font-family:"NK Body";font-weight:600;font-style:normal;font-display:swap;src:url("/fonts/nk-body-600.woff2?v=9bee015a6e") format("woff2")}
+@font-face{font-family:"NK Body";font-weight:700;font-style:normal;font-display:swap;src:url("/fonts/nk-body-700.woff2?v=3fd2f511fa") format("woff2")}
+@font-face{font-family:"NK Accent";font-weight:500;font-style:normal;font-display:swap;src:url("/fonts/nk-accent-500.woff2?v=4108773ced") format("woff2")}
 :root{
   /* ORANGE GOVERNANCE — three non-overlapping roles:
      --vermilion MARK ONLY: wordmark, badges, kicker bar, corner keylines, why-ticks,
@@ -262,8 +262,8 @@ section{padding-block:64px}
 .hours-table th,.hours-table td{border:1px solid var(--line);background:var(--card);text-align:center;padding:12px 6px;font-size:14px}
 .hours-table thead th{font-family:var(--font-display);font-weight:700;font-size:15px}
 .hours-table thead th sup{display:block;font-size:10px;color:var(--vermilion-text);font-weight:700;letter-spacing:.02em}
-.hours-table td.slot{font-feature-settings:'tnum';font-weight:600;font-size:13px;color:var(--ink-2);white-space:nowrap;padding-inline:12px}
-.hours-table td.slot b{display:block;font-size:15px;color:var(--ink)}
+.hours-table .slot{font-feature-settings:'tnum';font-weight:600;font-size:13px;color:var(--ink-2);white-space:nowrap;padding-inline:12px}
+.hours-table .slot b{display:block;font-size:15px;color:var(--ink)}
 .hours-table .col-closed{background:var(--tint-closed)}
 .hours-table .col-today{background:var(--tint-today)}
 .hours-list{display:grid;gap:0;border:1px solid var(--line);border-radius:var(--radius);overflow:hidden;background:var(--card)}

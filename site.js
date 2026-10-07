@@ -208,10 +208,22 @@ const GA_ID = 'G-83JN4R6176';
     // cookie_domain = this host only: the default would set _ga on .n-clinics.jp and share one visitor ID
     // with every other n-clinics.jp site (hajime.n-clinics.jp runs its own analytics).
     gtag('config', GA_ID, { allow_google_signals: false, allow_ad_personalization_signals: false, cookie_domain: 'nakamura.n-clinics.jp' });
-    var s = document.createElement('script');
-    s.async = true;
-    s.src = 'https://www.googletagmanager.com/gtag/js?id=' + encodeURIComponent(GA_ID);
-    document.head.appendChild(s);
+    // gtag.js is injected only after the page has loaded and the browser is idle (SEO review 2026-10-07:
+    // injected at once it cost ~30 lab points on / through long tasks before first render). The config and
+    // any phone/map taps wait in dataLayer and are sent when it arrives; a visitor who leaves within the
+    // first seconds is not counted.
+    var inject = function(){
+      var s = document.createElement('script');
+      s.async = true;
+      s.src = 'https://www.googletagmanager.com/gtag/js?id=' + encodeURIComponent(GA_ID);
+      document.head.appendChild(s);
+    };
+    var later = function(){
+      if('requestIdleCallback' in w) w.requestIdleCallback(inject, { timeout: 3000 });
+      else setTimeout(inject, 1);
+    };
+    if(document.readyState === 'complete') later();
+    else w.addEventListener('load', later, { once: true });
 
     // tap_location: the closest known container. .hm-call (the line under .hours-mini on the
     // three channel pages) and .spec-row (医院概要 on the home page) carry the phone number inline

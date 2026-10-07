@@ -45,7 +45,8 @@ RECEPTION_SENTENCE = "受付も待合も、内科と同じです。"
 RETIRED_BLUEPRINT_LINE = "ひとつの受付から、ふたつの診療科へ。"
 
 FIXED_HOURS_EXPECT = {
-    "index.html": 2, "hajimete.html": 2, "seikatsushukanbyo.html": 2,
+    # index 2 -> 3 (2026-10-08): the 発熱外来 note now names the booked-only slots with the fixed string verbatim.
+    "index.html": 3, "hajimete.html": 2, "seikatsushukanbyo.html": 2,
     "hataraku.html": 2, "shisetsu-kijun.html": 1, "privacy.html": 1, "404.html": 1,
 }
 
@@ -499,13 +500,23 @@ def rule_accessibility(pages):
 # RULE: JSON-LD
 # ---------------------------------------------------------------------------
 
+def _no_duplicate_keys(pairs):
+    # plain json.loads silently keeps the last of two identical keys; a repeated "@id" slipped through on 2026-10-08
+    seen = set()
+    for key, _ in pairs:
+        if key in seen:
+            raise ValueError(f"duplicate key {key!r}")
+        seen.add(key)
+    return dict(pairs)
+
+
 def collect_ld_nodes(text):
     nodes = []
     for m in re.finditer(r'<script type="application/ld\+json">(.*?)</script>', text, re.S):
         raw = m.group(1)
         try:
-            data = json.loads(raw)
-        except json.JSONDecodeError as e:
+            data = json.loads(raw, object_pairs_hook=_no_duplicate_keys)
+        except (json.JSONDecodeError, ValueError) as e:
             nodes.append({"__parse_error__": str(e), "__raw__": raw})
             continue
         graph = data.get("@graph") if isinstance(data, dict) else None
@@ -757,6 +768,54 @@ def rule_sitemap():
         report("FAIL", "SITEMAP excludes 404/sas", f"found forbidden entries in {locs}")
     else:
         report("PASS", "SITEMAP excludes 404/sas", "clean")
+
+
+def rule_jsonld_graph(pages):
+    """JSON-LD GRAPH (2026-10-08): the values that now live in more than one place must agree, so an edit to one
+    copy cannot drift silently: one WebSite node, each page's WebPage @id/url/isPartOf, the geo meta tags vs the
+    JSON-LD geo, and each sitemap <lastmod> vs that page's lastReviewed."""
+    home = "https://nakamura.n-clinics.jp/"
+    nodes = {name: collect_ld_nodes(text) for name, text in pages.items()}
+    sites = [n for ns in nodes.values() for n in ns if "WebSite" in node_types(n) and "name" in n]
+    og_site = re.search(r'<meta property="og:site_name" content="([^"]+)"', pages.get("index.html", ""))
+    ok = (len(sites) == 1 and sites[0].get("@id") == home + "#website" and sites[0].get("url") == home
+          and og_site and sites[0].get("name") == og_site.group(1))
+    report("PASS" if ok else "FAIL", "JSON-LD GRAPH one WebSite node",
+           "#website, url = home, name = og:site_name" if ok else f"found {len(sites)}: {sites}")
+    sitemap = (ROOT / "sitemap.xml").read_text(encoding="utf-8") if (ROOT / "sitemap.xml").exists() else ""
+    lastmods = dict(re.findall(r"<loc>([^<]+)</loc>\s*<lastmod>([^<]+)</lastmod>", sitemap))
+    for name, text in pages.items():
+        canon = re.search(r'<link rel="canonical" href="([^"]+)"', text)
+        if not canon:
+            continue
+        url = canon.group(1)
+        webpages = [n for n in nodes[name] if any(t.endswith("WebPage") for t in node_types(n))]
+        problems = []
+        if len(webpages) != 1:
+            problems.append(f"{len(webpages)} WebPage nodes")
+        else:
+            wp = webpages[0]
+            if wp.get("@id") != url + "#webpage":
+                problems.append(f"@id {wp.get('@id')}")
+            if wp.get("url") != url:
+                problems.append(f"url {wp.get('url')}")
+            if (wp.get("isPartOf") or {}).get("@id") != home + "#website":
+                problems.append(f"isPartOf {wp.get('isPartOf')}")
+            if url in lastmods and wp.get("lastReviewed") != lastmods[url]:
+                problems.append(f"sitemap lastmod {lastmods[url]} != lastReviewed {wp.get('lastReviewed')}")
+        report("PASS" if not problems else "FAIL", f"JSON-LD GRAPH WebPage [{name}]",
+               "; ".join(problems) if problems else "@id, url, isPartOf, sitemap lastmod agree")
+    text = pages.get("index.html", "")
+    clinic = next((n for n in nodes.get("index.html", []) if "MedicalClinic" in node_types(n) and "geo" in n), None)
+    pos = re.search(r'<meta name="geo.position" content="([\d.]+);([\d.]+)"', text)
+    icbm = re.search(r'<meta name="ICBM" content="([\d.]+), ([\d.]+)"', text)
+    if clinic and pos and icbm:
+        ld = (f'{clinic["geo"]["latitude"]}', f'{clinic["geo"]["longitude"]}')
+        ok = pos.groups() == ld == icbm.groups() and all(len(v.split(".")[1]) >= 5 for v in ld)
+        report("PASS" if ok else "FAIL", "JSON-LD GRAPH geo meta = JSON-LD geo",
+               f"{ld[0]}, {ld[1]}" if ok else f"JSON-LD {ld}, geo.position {pos.groups()}, ICBM {icbm.groups()}")
+    elif "index.html" in pages:
+        report("FAIL", "JSON-LD GRAPH geo meta = JSON-LD geo", "geo.position / ICBM / JSON-LD geo missing on index.html")
 
 
 def rule_404_noindex(pages):
@@ -1018,6 +1077,29 @@ def rule_font_glyph_coverage():
     report("PASS" if not stray else "FAIL", "FONT FAMILY NAMES are the renamed subsets", "stray: " + ", ".join(stray) if stray else "NK Display / NK Body / NK Accent only")
 
 
+def rule_font_urls_versioned():
+    """FONT URLS VERSIONED (2026-10-08): /fonts/* is cached for a year (netlify.toml), so every font URL must carry
+    ?v=<current content hash>, and each page's preload must equal the stylesheet URL exactly (a mismatch downloads
+    the font twice). Fix: python qa/build_fonts.py --stamp-only"""
+    try:
+        sys.path.insert(0, str(Path(__file__).resolve().parent))
+        import build_fonts as bf
+        versions = bf.font_versions()
+    except Exception as exc:
+        report("FAIL", "FONT URLS VERSIONED", f"could not hash fonts ({exc})")
+        return
+    css = (ROOT / "styles.css").read_text(encoding="utf-8")
+    css_urls = dict(re.findall(r'url\("/fonts/(nk-[\w-]+\.woff2)\?v=([0-9a-f]+)"\)', css))
+    bad = [f"{n}: css v={css_urls.get(n)} file v={v}" for n, v in versions.items() if css_urls.get(n) != v]
+    report("PASS" if not bad else "FAIL", "FONT URLS VERSIONED [styles.css]", "; ".join(bad) if bad else f"{len(versions)} @font-face URLs match the files")
+    for name in CANONICAL_PAGES:
+        text = (ROOT / name).read_text(encoding="utf-8")
+        pre = re.findall(r'<link rel="preload" href="/fonts/(nk-[\w-]+\.woff2)(\?v=[0-9a-f]+)?"', text)
+        wrong = [f"{n}{q or ''}" for n, q in pre if q != f"?v={versions.get(n)}"]
+        report("PASS" if pre and not wrong else "FAIL", f"FONT PRELOAD = CSS URL [{name}]",
+               f"{len(pre)} preloads match" if pre and not wrong else f"mismatch: {wrong or 'no preloads'}")
+
+
 def main():
     argv = sys.argv[1:]
     pages = load_pages(argv)
@@ -1041,6 +1123,7 @@ def main():
     rule_hours_consistency(pages)
     rule_link_integrity(pages)
     rule_sitemap()
+    rule_jsonld_graph(pages)
     rule_404_noindex(pages)
     rule_route_strips(pages)
     rule_imagery_v1(pages)
@@ -1048,6 +1131,7 @@ def main():
     rule_template_conformance(pages)
     rule_phone_menu_shell(pages)
     rule_font_glyph_coverage()
+    rule_font_urls_versioned()
     rule_ga4_readiness()
     rule_manual_declarations()
 
