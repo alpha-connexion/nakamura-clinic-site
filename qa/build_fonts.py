@@ -48,6 +48,16 @@ FACES = [
     ("nk-body-700.woff2", "IBMPlexSansJP-Bold.ttf", "NK Body", "Bold", 700, "site"),
     ("nk-accent-500.woff2", "ShipporiMincho-Medium.ttf", "NK Accent", "Medium", 500, "accent"),
 ]
+# OpenType features kept per family = exactly what Google Fonts' own served slices carry (checked 2026-10-07 by
+# reading GSUB/GPOS of the gstatic woff2 files). The originals carry more — notably 'palt' in Shippori Mincho and
+# 'liga' everywhere — and keeping them changed line breaks wherever the CSS asks for font-feature-settings:'palt'
+# (.pg-lead, .pull-line, .doc-panel-quote), so the site would no longer look as it did under Google Fonts.
+FEATURES = {
+    "NK Display": ["kern", "mark", "mkmk"],
+    "NK Body": ["ccmp", "vert", "vrt2", "halt", "kern", "palt", "vhal", "vkrn", "vpal"],
+    "NK Accent": ["ccmp", "vert", "vrt2", "mark", "mkmk", "vpal"],
+}
+
 LICENCES = [
     ("OFL-ZenKakuGothicNew.txt", "zenkakugothicnew"),
     ("OFL-IBMPlexSansJP.txt", "ibmplexsansjp"),
@@ -179,7 +189,7 @@ def main():
     for out_name, src_name, family, style, _weight, which in FACES:
         options = subset.Options()
         options.flavor = "woff2"
-        options.layout_features = ["*"]          # keep palt, kern and the rest
+        options.layout_features = FEATURES[family]   # match Google Fonts' served feature set (see FEATURES)
         options.name_IDs = ["*"]
         options.name_languages = ["*"]
         options.notdef_outline = True
