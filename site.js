@@ -4,7 +4,7 @@
 // GA4 Measurement ID (IIFE 6). The placeholder is replaced at launch with
 // `python qa/set_ga_id.py G-…`, in the same deploy as the privacy.html #access-log notice.
 // While it is the placeholder, nothing loads and nothing is sent.
-const GA_ID = 'G-XXXXXXXXXX';
+const GA_ID = 'G-83JN4R6176';
 
 // 1. TODAY HIGHLIGHT — desktop column tint + mobile row pin. Guarded: only runs on pages
 //    that actually carry the 診療時間表 (index.html only, per SINGLE HOME rule).
