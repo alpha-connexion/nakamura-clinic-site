@@ -55,7 +55,8 @@
       "geo": { "@type": "GeoCoordinates", "latitude": 34.6820, "longitude": 135.4985 },
       "hasMap": "https://www.google.com/maps/search/?api=1&query=%E5%A4%A7%E9%98%AA%E5%BA%9C%E5%A4%A7%E9%98%AA%E5%B8%82%E4%B8%AD%E5%A4%AE%E5%8C%BA%E5%8D%97%E6%9C%AC%E7%94%BA3%E4%B8%81%E7%9B%AE1-12%20%E3%82%AB%E3%83%8D%E3%82%BB%E4%B8%AD%E5%A4%AE%E3%83%93%E3%83%AB",
       "openingHoursSpecification": [
-        { "@type": "OpeningHoursSpecification", "dayOfWeek": ["Monday","Tuesday","Wednesday","Friday"], "opens": "09:00", "closes": "13:00" },
+        { "@type": "OpeningHoursSpecification", "dayOfWeek": ["Monday","Tuesday","Friday"], "opens": "09:00", "closes": "13:00" },
+        { "@type": "OpeningHoursSpecification", "dayOfWeek": "Wednesday", "opens": "10:00", "closes": "12:00" },
         { "@type": "OpeningHoursSpecification", "dayOfWeek": ["Monday","Tuesday","Wednesday","Friday"], "opens": "14:00", "closes": "17:45" },
         { "@type": "OpeningHoursSpecification", "dayOfWeek": "Saturday", "opens": "10:00", "closes": "13:00" },
         { "@type": "OpeningHoursSpecification", "dayOfWeek": "Saturday", "opens": "14:00", "closes": "17:45" }
@@ -80,7 +81,7 @@
       "@id": "https://nakamura.n-clinics.jp/#webpage",
       "name": "本町駅3分の内科・心療内科・精神科｜なかむらクリニック",
       "inLanguage": "ja",
-      "lastReviewed": "2026-09-09",
+      "lastReviewed": "2026-10-07",
       "mainEntityOfPage": "https://nakamura.n-clinics.jp/",
       "about": { "@id": "https://nakamura.n-clinics.jp/#clinic" },
       "isPartOf": { "@type": "WebSite", "url": "https://nakamura.n-clinics.jp/" },
@@ -134,7 +135,7 @@
        満たせず、「費用はお電話で」では代えられない（問い合わせ先の記載は別要件）。
        /shisetsu-kijun.html#hoken-gai に金額と主な副反応を掲載できたときに限り、
        診療名を出した文言に戻してよい。「在庫」など小売の語は使わない。 -->
-  <div class="notice"><div class="wrap">インフルエンザワクチンのご案内は、お電話でご確認ください。</div></div>
+  <div class="notice"><div class="wrap">インフルエンザの予防接種を行っています（10月1日から）。<a href="/hajimete.html#yobou">費用と副反応について</a></div></div>
 
   <!-- 1. HERO — station board -->
   <section class="hero">
@@ -240,7 +241,7 @@
                 <!-- 発熱外来 = 内科 triage row. Walk-in during hours (clinic decision 2026-09-09): filled ink 熱. Never shown in the 心 lane. id kept: scroll-margin rules point at #hatsunetsu. -->
                 <div class="care-sub c-netsu" id="hatsunetsu">
                   <span class="care-glyph" aria-hidden="true">熱</span>
-                  <div><h4>発熱外来（発熱・かぜの症状）</h4><p>発熱のある方も、診療時間内であればそのままお越しください。受付でその旨をお伝えください。</p></div>
+                  <div><h4>発熱外来（発熱・かぜの症状）</h4><p>発熱のある方も、診療時間内であればそのままお越しください。受付で、発熱があることをお伝えください。ほかの方とは場所を分けてご案内し、必要に応じてインフルエンザ・新型コロナの抗原検査を行います。</p></div>
                 </div>
               </aside>
             </div>
@@ -273,11 +274,7 @@
         </div>
       </div>
 
-      <!-- オンライン診療 — a small framed block (client: keep it small but clear). The explanation lives once, on /hajimete.html#online; this only points there. Never a badge or a hero item. -->
-      <div class="care-online">
-        <h4>オンライン診療</h4>
-        <p>スマートフォンやパソコンでの診察にも対応しています。対象となる診療やご予約は、お電話でご確認ください。<a href="/hajimete.html#online">くわしくは、はじめての方へ<span aria-hidden="true">→</span></a></p>
-      </div>
+      <!-- オンライン診療の案内ブロックは 2026-10-07 にいったん外した（予約システム稼働まで。原文は docs-internal/backlog/online-section.html）。 -->
     </div>
   </section>
 
@@ -309,14 +306,14 @@
               <thead>
                 <tr>
                   <th></th>
-                  <th scope="col" data-day="1">月</th><th scope="col" data-day="2">火</th><th scope="col" data-day="3">水</th>
+                  <th scope="col" data-day="1">月</th><th scope="col" data-day="2">火</th><th scope="col" data-day="3">水<sup>内科のみ</sup></th>
                   <th scope="col" data-day="4">木</th><th scope="col" data-day="5">金</th>
                   <th scope="col" data-day="6">土<sup>第2・4のみ</sup></th><th scope="col" data-day="0">日・祝</th>
                 </tr>
               </thead>
               <tbody>
                 <tr>
-                  <td class="slot">午前<b>9:00–13:00</b><span class="slot-note">土曜は10:00から</span></td>
+                  <td class="slot">午前<b>9:00–13:00</b><span class="slot-note">水曜は10:00–12:00／土曜は10:00から</span></td>
                   <td data-day="1"><span class="chip chip-open">◎<span class="vh">予約なしOK</span></span></td>
                   <td data-day="2"><span class="chip chip-open">◎<span class="vh">予約なしOK</span></span></td>
                   <td data-day="3"><span class="chip chip-open">◎<span class="vh">予約なしOK</span></span></td>
@@ -338,18 +335,19 @@
               </tbody>
             </table>
           </div>
-          <p class="hours-times">午前 <span class="num">9:00–13:00</span>（土曜〈第2・第4週のみ〉は10:00〜）／午後 <span class="num">14:00–17:45</span>（受付）</p>
+          <p class="hours-times">午前 <span class="num">9:00–13:00</span>（水曜は10:00–12:00、土曜〈第2・第4週のみ〉は10:00〜）／午後 <span class="num">14:00–17:45</span>（受付）</p>
           <div class="hours-list" id="hoursList">
             <div class="day-row" data-day="1"><span class="day-glyph">月</span><span class="states">午前 <span class="chip chip-open">◎<span class="vh">予約なしOK</span></span>　午後 <span class="chip chip-open">◎<span class="vh">予約なしOK</span></span></span></div>
             <div class="day-row" data-day="2"><span class="day-glyph">火</span><span class="states">午前 <span class="chip chip-open">◎<span class="vh">予約なしOK</span></span>　午後 <span class="chip chip-open">◎<span class="vh">予約なしOK</span></span></span></div>
-            <div class="day-row" data-day="3"><span class="day-glyph">水</span><span class="states">午前 <span class="chip chip-open">◎<span class="vh">予約なしOK</span></span>　午後 <span class="chip chip-appt">●<span class="vh">完全予約制</span></span></span></div>
+            <div class="day-row" data-day="3"><span class="day-glyph">水</span><span class="states">午前 <span class="chip chip-open">◎<span class="vh">予約なしOK</span></span>　午後 <span class="chip chip-appt">●<span class="vh">完全予約制</span></span><span class="sub">内科のみ／午前は10:00–12:00／第5水曜は休診</span></span></div>
             <div class="day-row" data-day="4"><span class="day-glyph">木</span><span class="states"><span class="off-dash">−<span class="vh">休診</span></span> 休診</span></div>
             <div class="day-row" data-day="5"><span class="day-glyph">金</span><span class="states">午前 <span class="chip chip-appt">●<span class="vh">完全予約制</span></span>　午後 <span class="chip chip-appt">●<span class="vh">完全予約制</span></span></span></div>
             <div class="day-row" data-day="6"><span class="day-glyph">土</span><span class="states">午前 <span class="chip chip-open">◎<span class="vh">予約なしOK</span></span>　午後 <span class="chip chip-appt">●<span class="vh">完全予約制</span></span><span class="sub">第2・第4週のみ／午前は10:00から</span></span></div>
             <div class="day-row" data-day="0"><span class="day-glyph">日</span><span class="states"><span class="off-dash">−<span class="vh">休診</span></span> 休診（祝日も休診）</span></div>
           </div>
           <ul class="hours-notes">
-            <li>精神科は担当医の診療日にご案内します。日程はお電話でご確認ください</li>
+            <li>水曜は内科のみの診療です。心療内科・精神科は、<span class="nowrap">月・火・金・土（第2・第4）に</span><span class="nowrap">診療しています</span></li>
+            <li>第5水曜は休診です</li>
           </ul>
         </div>
         <div class="call-card">
@@ -388,12 +386,14 @@
         <p class="doc-ruby">いしかわ よしひろ</p>
         <h3 class="doc-name-h"><span class="doc-name">院長　石川 賀弘</span><span class="doc-chip">内科</span></h3>
         <p class="pull-line">からだとこころ、<span class="nowrap">分けずに話せる</span>診察室です。</p>
-        <!-- [CONFIRM D9] 医師本人の承認待ちの草案 -->
+        <!-- [CONFIRM D9] 医師本人の承認待ちの草案。承認まで非公開（2026-10-07 公開時に外した）。承認されたらコメントを外す。
         <p>お待たせする時間は、できるだけ短く。診察の時間は、急がせない。</p>
         <p>数値のことも、眠りや気持ちのことも、分けずにお話しください。どこから診ていくかは、診察室で一緒に整理します。</p>
+        -->
         <div class="doc-sub"><span class="n">心療内科・精神科 担当医</span></div>
-        <!-- [CONFIRM D9] 医師本人の承認待ちの草案 -->
+        <!-- [CONFIRM D9] 医師本人の承認待ちの草案。承認まで非公開（2026-10-07）。
         <p class="doc-sub-line">心療内科・精神科の診察は、担当医がお話をうかがうところから始まります。話す順番も、うまくまとまっているかも、気にしなくて大丈夫です。会社にお伝えすることがあれば、その内容はご本人と一緒に決めます。</p>
+        -->
       </div>
       <aside class="doc-panel" aria-hidden="true">
         <!-- 院長ポートレートのスロット。写真が届いたら <picture> をここに置き、.doc-panel-quote を 『院長　石川 賀弘』 のキャプションに差し替え、styles.css:384 の .doc-body .pull-line{display:none} を削除すること。 -->
@@ -420,7 +420,7 @@
           <div class="spec-row"><dt>電話</dt><dd><a class="tel-big" href="tel:0662450378">06-6245-0378</a>（外来直通）</dd></div>
           <!-- 徒歩分数はこの行とアクセス図とヒーローの事実ストリップの3か所にある。変えるときは同じコミットで3か所とも。路線名は「その駅で使う線」だけ（全線の一覧は C13-b の返答後）。出口番号は C13-c の返答まで書かない。 -->
           <div class="spec-row"><dt>最寄駅</dt><dd>Osaka Metro 御堂筋線「本町駅」徒歩3分／堺筋線「堺筋本町駅」徒歩6分<small>※ 専用駐車場はありません。お車の際は近隣のコインパーキングをご利用ください</small></dd></div>
-          <div class="spec-row"><dt>休診日</dt><dd>木曜・日曜・祝日</dd></div>
+          <div class="spec-row"><dt>休診日</dt><dd>木曜・日曜・祝日・第5水曜</dd></div>
           <div class="spec-row"><dt>処方</dt><dd>院外処方</dd></div>
         </dl>
         <div class="access-side">
@@ -469,7 +469,7 @@
     </div>
   </section>
 
-  <p class="pg-updated wrap">最終更新：2026年9月9日</p>
+  <p class="pg-updated wrap">最終更新：2026年10月7日</p>
 
   <!-- 9.5 closing conversion band -->
   <section class="close-cta" data-reveal-mark>
@@ -497,7 +497,7 @@
       <span class="roundel r-shin">心</span>
     </div>
     <a class="foot-tel" href="tel:0662450378">06-6245-0378</a>
-    <p class="foot-meta">〒541-0054　大阪府大阪市中央区南本町3丁目1-12 カネセ中央ビル1階<br>午前 9:00–13:00（土曜〈第2・第4週のみ〉は10:00〜）／午後 14:00–17:45（受付）｜水曜午後・金曜・土曜午後は完全予約制｜休診：木・日・祝</p>
+    <p class="foot-meta">〒541-0054　大阪府大阪市中央区南本町3丁目1-12 カネセ中央ビル1階<br>午前 9:00–13:00（水曜は10:00–12:00、土曜〈第2・第4週のみ〉は10:00〜）／午後 14:00–17:45（受付）｜水曜午後・金曜・土曜午後は完全予約制｜水曜は内科のみ｜休診：木・日・祝・第5水曜</p>
     <nav class="foot-groups" id="site-index" aria-label="サイト内リンク">
       <div class="fg"><p class="fg-t">診療</p><a href="#naika">内科</a><a href="#seishinka">心療内科・精神科</a><a href="/seikatsushukanbyo.html">健診・生活習慣病</a><a href="/hataraku.html">はたらく方へ</a></div>
       <div class="fg"><p class="fg-t">はじめての方</p><a href="/hajimete.html">はじめての方へ</a><a href="#hours">診療時間</a><a href="#access">アクセス</a><a href="#docs">医師紹介</a></div>

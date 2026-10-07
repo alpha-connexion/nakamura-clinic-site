@@ -34,9 +34,9 @@
     {
       "@type": "MedicalWebPage",
       "name": "はじめて受診される方へ",
-      "description": "持ち物と、ご予約のきまり、費用をまとめたページです。オンライン診療についてもご案内します。",
+      "description": "持ち物と、ご予約のきまり、費用、予防接種をまとめたページです。",
       "inLanguage": "ja",
-      "lastReviewed": "2026-09-09",
+      "lastReviewed": "2026-10-07",
       "audience": {
         "@type": "Patient"
       },
@@ -105,7 +105,7 @@
        満たせず、「費用はお電話で」では代えられない（問い合わせ先の記載は別要件）。
        /shisetsu-kijun.html#hoken-gai に金額と主な副反応を掲載できたときに限り、
        診療名を出した文言に戻してよい。「在庫」など小売の語は使わない。 -->
-  <div class="notice"><div class="wrap">インフルエンザワクチンのご案内は、お電話でご確認ください。</div></div>
+  <div class="notice"><div class="wrap">インフルエンザの予防接種を行っています（10月1日から）。<a href="/hajimete.html#yobou">費用と副反応について</a></div></div>
 
   <!-- PLATE — /hajimete.html belongs to both lines: uses the 体×心 .roundels pair instead of a
        single glyph, and takes no c-nai/c-shin lane class (documented exception). -->
@@ -123,8 +123,8 @@
       <ol class="pg-acts">
         <li><a href="#mochimono">①お持ちいただくもの</a></li>
         <li><a href="#yoyaku">②ご予約について</a></li>
-        <li><a href="#online">③オンライン診療について</a></li>
-        <li><a href="#hiyou">④費用のこと</a></li>
+        <li><a href="#hiyou">③費用のこと</a></li>
+        <li><a href="#yobou">④予防接種</a></li>
       </ol>
     </div>
   </section>
@@ -171,28 +171,7 @@
     </div>
   </section>
 
-  <!-- ④ 費用のこと -->
-  <!-- オンライン診療 — 届出済み（2026-09-06）。説明の置き場はここ1か所。トップは短い案内ブロックからここへリンクする。
-       国の指針（オンライン診療の適切な実施に関する指針）と診療報酬の要件に基づく事実だけを書く：
-       ・初診オンラインでは 麻薬・向精神薬／基礎疾患不明の患者へのハイリスク薬／8日分以上 は処方できない（指針）。
-       ・「初診で向精神薬を処方しない」旨のウェブ掲示は施設基準の要件（令和6年〜）。令和8年改定でチェックリスト掲示・重複投薬チェックが追加 → [CONFIRM] 院内掲示ページに掲示文を載せるか事務に確認。
-       ・精神科のオンライン精神療法は、同じ医師による過去1年以内の対面診療がある患者に限る（算定要件）。
-       [CONFIRM C6] 対象科・初診の可否（内科）・予約方法・使うツール・費用（システム利用料の有無）が返ったら本文に足す。 -->
-  <section class="pg-sec pg-sec-alt" id="online">
-    <div class="wrap">
-      <div class="kicker" data-reveal><span lang="en">Online</span></div>
-      <h2>オンライン診療について</h2>
-      <p class="pg-body">スマートフォンやパソコンでの診察にも対応しています。対象となる診療、ご予約の方法、費用は、お電話でご確認ください。</p>
-      <h3 class="pg-sub">先にお伝えしておくこと</h3>
-      <ul class="pg-scope-list">
-        <li>心療内科・精神科のオンライン診療は、当院で対面の診察を受けたことのある方が対象です。はじめての方は、対面でお越しください。</li>
-        <li>オンラインでの初診では、睡眠薬や抗不安薬などの向精神薬はお出しできません。国の指針による決まりです。</li>
-        <li>お薬は、処方箋をもとに薬局でお受け取りいただきます。薬局によっては、オンラインでの服薬指導のあとに配送を受けられます。</li>
-        <li>症状によっては、医師の判断で対面での受診をお願いすることがあります。緊急の症状のときは、オンラインではなく、お電話ください。</li>
-      </ul>
-    </div>
-  </section>
-
+  <!-- ③ 費用のこと。オンライン診療の節（旧③）は 2026-10-07 にいったん外した——予約システムが動くまでは提供していない診療を載せない。原文は docs-internal/backlog/online-section.html。 -->
   <section class="pg-sec" id="hiyou">
     <div class="wrap">
       <div class="kicker" data-reveal><span lang="en">Fees</span></div>
@@ -201,6 +180,26 @@
       <p class="pg-body">診断書などの文書と、予防接種は保険外です。</p>
       <p class="pg-body">これらの文書は、診察のうえ医師が必要と判断した場合に作成します。</p>
       <p class="pg-body">文書の費用は院内に掲示しています（<a href="/shisetsu-kijun.html#hiyou">費用に関する掲示</a>）。</p>
+      <p class="pg-body">お支払いは現金のみです。</p>
+    </div>
+  </section>
+
+  <!-- ④ 予防接種 — 季節のご案内（2026-10-07）。医療広告ガイドライン 第3-2「予防接種の実施」：ワクチンの商品名・メーカー名は書かない／発症予防率などの効果は書かない／1回の費用（税込）と主な副反応を載せる。
+       副反応の文は厚生労働省「インフルエンザワクチン（季節性）」の説明に沿う。1,500円は大阪市の定期接種の自己負担額（令和8年度、10月1日〜1月31日）。
+       シーズンが終わったら節ごとコメントアウトし、.pg-acts の④とお知らせ帯も戻す。新型コロナは料金が届くまで書かない。 -->
+  <section class="pg-sec pg-sec-alt" id="yobou">
+    <div class="wrap">
+      <div class="kicker" data-reveal><span lang="en">Vaccination</span></div>
+      <h2 data-reveal>予防接種</h2>
+      <p class="pg-body">インフルエンザの予防接種を行っています（2026年10月1日から）。予防接種は健康保険が使えません（自費）。</p>
+      <h3 class="pg-sub">費用（1回・税込）</h3>
+      <ul class="pg-scope-list">
+        <li>一般の方：3,500円</li>
+        <li>大阪市の定期接種の対象の方：1,500円（接種日に65歳以上の大阪市民の方など。生活保護を受けている方などは無料になる場合があります。対象と条件は<a href="https://www.city.osaka.lg.jp/kenko/page/0000623095.html" target="_blank" rel="noopener">大阪市のページ</a>でご確認ください。）</li>
+      </ul>
+      <p class="pg-body">ご予約の方を優先します。ワクチンの在庫があれば、予約なしでも接種できます。大阪市以外の市町村の助成を使う方は、お住まいの市町村での手続きのあとに接種してください。</p>
+      <h3 class="pg-sub">主な副反応</h3>
+      <p class="pg-body">接種したところの赤み・はれ・痛み、発熱・頭痛・寒気・だるさなどで、通常2〜3日で治まります。まれに、アナフィラキシーなどの重い副反応が起こることがあります。接種後30分は院内でお待ちください。（<a href="https://www.mhlw.go.jp/stf/seisakunitsuite/bunya/kenkou_iryou/kenkou/kekkaku-kansenshou/yobou-sesshu/vaccine/influenza/index.html" target="_blank" rel="noopener">厚生労働省「インフルエンザワクチン（季節性）」</a>より）</p>
     </div>
   </section>
 
@@ -218,13 +217,13 @@
   </nav>
 
   <aside class="hours-mini" aria-label="診療時間の要約">
-    <p class="hm-times">午前 <span class="num">9:00–13:00</span>（土曜〈第2・第4週のみ〉は10:00〜）／午後 <span class="num">14:00–17:45</span>（受付）</p>
-    <p class="hm-off">休診：木・日・祝</p>
+    <p class="hm-times">午前 <span class="num">9:00–13:00</span>（水曜は10:00–12:00、土曜〈第2・第4週のみ〉は10:00〜）／午後 <span class="num">14:00–17:45</span>（受付）</p>
+    <p class="hm-off">休診：木・日・祝・第5水曜</p>
     <p class="hm-call">ご予約・ご相談は <a class="tel-big" href="tel:0662450378">06-6245-0378</a>（外来直通）</p>
     <p class="hm-links"><a href="/#hours">診療時間の詳しい表を見る<span aria-hidden="true">→</span></a></p>
   </aside>
 
-  <p class="pg-updated wrap">最終更新：2026年9月9日</p>
+  <p class="pg-updated wrap">最終更新：2026年10月7日</p>
 
   <!-- closing conversion band -->
   <section class="close-cta" data-reveal-mark>
@@ -253,7 +252,7 @@
       <span class="roundel r-shin">心</span>
     </div>
     <a class="foot-tel" href="tel:0662450378">06-6245-0378</a>
-    <p class="foot-meta">〒541-0054　大阪府大阪市中央区南本町3丁目1-12 カネセ中央ビル1階<br>午前 9:00–13:00（土曜〈第2・第4週のみ〉は10:00〜）／午後 14:00–17:45（受付）｜水曜午後・金曜・土曜午後は完全予約制｜休診：木・日・祝</p>
+    <p class="foot-meta">〒541-0054　大阪府大阪市中央区南本町3丁目1-12 カネセ中央ビル1階<br>午前 9:00–13:00（水曜は10:00–12:00、土曜〈第2・第4週のみ〉は10:00〜）／午後 14:00–17:45（受付）｜水曜午後・金曜・土曜午後は完全予約制｜水曜は内科のみ｜休診：木・日・祝・第5水曜</p>
     <nav class="foot-groups" id="site-index" aria-label="サイト内リンク">
       <div class="fg"><p class="fg-t">診療</p><a href="/#naika">内科</a><a href="/#seishinka">心療内科・精神科</a><a href="/seikatsushukanbyo.html">健診・生活習慣病</a><a href="/hataraku.html">はたらく方へ</a></div>
       <div class="fg"><p class="fg-t">はじめての方</p><a href="/hajimete.html">はじめての方へ</a><a href="/#hours">診療時間</a><a href="/#access">アクセス</a><a href="/#docs">医師紹介</a></div>

@@ -69,9 +69,10 @@ HITOTSU_NO_UKETSUKE_MAX = {
 SHINDANSHO_DEFAULT_MAX = 1
 SHINDANSHO_MAX = {
     "hataraku.html": 7,
-    # 文書料 table rows mirror the in-clinic 掲示 verbatim (休職用診断書 / 復職の診断書 / その他の診断書);
-    # the cap equals the row count and may never grow without the 掲示 itself changing.
-    "shisetsu-kijun.html": 3,
+    # 2026-10-07: the 費用に関する掲示 mirrors the clinic's 保険外項目（自費）料金一覧表 verbatim — 9 rows
+    # contain 診断書 (一般診断書×2, 診断書（…）×6, 死亡診断書). The cap equals that count and may only
+    # change when the clinic's own 掲示 changes.
+    "shisetsu-kijun.html": 9,
 }
 
 # Phone digit string allowed only inside these element classes.
@@ -642,8 +643,9 @@ def rule_jsonld(pages):
 # ---------------------------------------------------------------------------
 
 def rule_hours_consistency(pages):
-    canonical_times = "午前 9:00–13:00（土曜〈第2・第4週のみ〉は10:00〜）／午後 14:00–17:45（受付）"
-    canonical_off = "休診：木・日・祝"
+    # 2026-10-07: clerk answers — Wednesday reception 10:00–12:00 (内科のみ), 第5水曜 closed.
+    canonical_times = "午前 9:00–13:00（水曜は10:00–12:00、土曜〈第2・第4週のみ〉は10:00〜）／午後 14:00–17:45（受付）"
+    canonical_off = "休診：木・日・祝・第5水曜"
     for name, text in pages.items():
         hm_times = re.findall(r'<p class="hm-times">(.*?)</p>', text, re.S)
         hours_times = re.findall(r'<p class="hours-times">(.*?)</p>', text, re.S)

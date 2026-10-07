@@ -359,3 +359,14 @@
   .pg-seikatsu .pg-doc-table td:not(:first-child)::before{content:none}   /* two-column table: 「診察で行うこと」 x7 is noise under the h3 */
   .pg-hataraku .pg-doc-table td:not(:first-child){display:grid;grid-template-columns:76px minmax(0,1fr);column-gap:8px;align-items:baseline}   /* labels in a column, values hang — no orphans under the label */
 }
+
+/* 院内掲示ページの料金表（2026-10-07）：金額は折り返さず桁をそろえる。hataraku の診療時間カードの一行メモ。 */
+.pg-doc-page td.yen{white-space:nowrap;font-variant-numeric:tabular-nums;padding-inline:12px}
+.pg-doc-page .kijun-title + table{margin-bottom:24px}
+/* three price tables share one column grid so 金額 and 備考 line up from table to table */
+#hiyou table{table-layout:fixed}
+#hiyou th:nth-child(2),#hiyou td:nth-child(2){width:7.5em}
+#hiyou th:nth-child(3),#hiyou td:nth-child(3){width:12em}
+#hiyou .kijun-title{margin-top:20px}
+@media (max-width:639px){#hiyou th:nth-child(2),#hiyou td:nth-child(2){width:6.5em}#hiyou th:nth-child(3),#hiyou td:nth-child(3){width:5.5em}}
+.hm-note{font-size:var(--t-note);color:var(--ink-2)}
